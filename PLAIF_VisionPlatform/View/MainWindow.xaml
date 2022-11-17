@@ -1,0 +1,49 @@
+﻿<Window x:Class="PLAIF_VisionPlatform.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLAIF_VisionPlatform"
+        xmlns:UserControls="clr-namespace:PLAIF_VisionPlatform.View"
+        mc:Ignorable="d"
+        Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+        <UserControls:GraphicView Grid.Row="0" Grid.Column="0"/>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+            <Button Content="Start"/>
+            <Button Content="Stop"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+            <Button x:Name="startBtn" Height="50">
+                <Image Source="../resource/start.png"/> 
+            </Button>
+            <Button Height="50">
+                <Image Source="../resource/stop.png"/>
+            </Button>
+            <Button Height="50">
+                <Image Source="../resource/pause.png"/>
+            </Button>
+            <Button Height="50">
+                <Image Source="../resource/screenshot.png"/>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <Button Content="Start"/>
+            <Button Content="Stop"/>
+        </StackPanel>
+        <Image Grid.Row="0" Grid.Column="1" Source="{Binding ImageSource}"/>
+        <DockPanel Grid.Row="1" Grid.Column="0" >
+            <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
+            <ListView></ListView>
+        </DockPanel>
+    </Grid>
+</Window>
