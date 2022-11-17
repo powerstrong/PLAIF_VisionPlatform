@@ -14,7 +14,7 @@
                     <GradientStop Color="White"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <TextBlock Text="여기에는" FontSize="20" FontWeight="Bold" Margin="300,250,300,10" HorizontalAlignment="Center"/>
+            <TextBlock Text="여기에는" FontSize="20" FontWeight="Bold" Margin="200,200,300,10" HorizontalAlignment="Center"/>
             <TextBlock FontSize="20" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center">
                 <Run Foreground="Purple">2D/3D Graphic View</Run>가
             </TextBlock>

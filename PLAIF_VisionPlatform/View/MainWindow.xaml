@@ -36,10 +36,6 @@
                 <Image Source="../resource/screenshot.png"/>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <Button Content="Start"/>
-            <Button Content="Stop"/>
-        </StackPanel>
         <Image Grid.Row="0" Grid.Column="1" Source="{Binding ImageSource}"/>
         <DockPanel Grid.Row="1" Grid.Column="0" >
             <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
