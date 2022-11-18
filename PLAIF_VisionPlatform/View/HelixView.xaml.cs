@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using HelixToolkit.Wpf;
 
 namespace PLAIF_VisionPlatform.View
 {
     /// <summary>
-    /// GraphicView.xaml에 대한 상호 작용 논리
+    /// HelixView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class GraphicView : UserControl
+    public partial class HelixView : UserControl
     {
-        public GraphicView()
+        public HelixView()
         {
             InitializeComponent();
         }

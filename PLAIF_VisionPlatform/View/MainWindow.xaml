@@ -8,38 +8,54 @@
         mc:Ignorable="d"
         Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid.Background>
+            <!--<ImageBrush ImageSource="back.jpg" />-->
+            <RadialGradientBrush>
+                <GradientStop Color="#FF032534" Offset="0"/>
+                <GradientStop Color="#FF051C26" Offset="0.5"/>
+                <GradientStop Color="#FF041F36" Offset="1"/>
+            </RadialGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
-        <UserControls:GraphicView Grid.Row="0" Grid.Column="0"/>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
-            <Button Content="Start"/>
-            <Button Content="Stop"/>
-        </StackPanel>
+        <Grid Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <UserControls:GraphicView Grid.Row="0"/>
+                <DockPanel Grid.Row="1">
+                    <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
+                    <ListView></ListView>
+                </DockPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid Background="AliceBlue"></Grid>
+            <StackPanel Orientation="Vertical">
+                <TextBox Text="Settings Parameter" TextAlignment="Center"></TextBox>
+                <Button Content="Start"/>
+                <Button Content="Stop"/>
+            </StackPanel>
+        </Grid>
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
-            <Button x:Name="startBtn" Height="50">
-                <Image Source="../resource/start.png"/> 
+            <Button x:Name="startBtn" Height="50" Background="LightGreen">
+                <Image Source="../resource/start.png"/>
             </Button>
-            <Button Height="50">
+            <Button Height="50" Background="#FFFD6969">
                 <Image Source="../resource/stop.png"/>
             </Button>
-            <Button Height="50">
+            <Button Height="50" Background="Yellow">
                 <Image Source="../resource/pause.png"/>
             </Button>
-            <Button Height="50">
+            <Button Height="50" Background="#FF4B4BFF">
                 <Image Source="../resource/screenshot.png"/>
             </Button>
         </StackPanel>
         <Image Grid.Row="0" Grid.Column="1" Source="{Binding ImageSource}"/>
-        <DockPanel Grid.Row="1" Grid.Column="0" >
-            <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
-            <ListView></ListView>
-        </DockPanel>
     </Grid>
 </Window>
