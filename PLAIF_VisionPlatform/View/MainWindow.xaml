@@ -18,6 +18,7 @@
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
@@ -25,16 +26,24 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <UserControls:GraphicView Grid.Row="0"/>
-                <DockPanel Grid.Row="1">
+                <DockPanel Grid.Row="2">
                     <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
                     <ListView></ListView>
                 </DockPanel>
+                <!--<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Red" ShowsPreview="True" Height="3"/>-->
             </Grid>
         </Grid>
-        <Grid Grid.Column="1">
+        <GridSplitter Grid.Column="1"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Stretch"
+              Background="Yellow" 
+              ShowsPreview="True"
+              Width="3"/>
+        <Grid Grid.Column="2">
             <Grid Background="AliceBlue"></Grid>
             <StackPanel Orientation="Vertical">
                 <TextBox Text="Settings Parameter" TextAlignment="Center"></TextBox>
@@ -42,7 +51,7 @@
                 <Button Content="Stop"/>
             </StackPanel>
         </Grid>
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+        <StackPanel Grid.Column="3" Orientation="Vertical">
             <Button x:Name="startBtn" Height="50" Background="LightGreen">
                 <Image Source="../resource/start.png"/>
             </Button>
@@ -56,6 +65,5 @@
                 <Image Source="../resource/screenshot.png"/>
             </Button>
         </StackPanel>
-        <Image Grid.Row="0" Grid.Column="1" Source="{Binding ImageSource}"/>
     </Grid>
 </Window>
