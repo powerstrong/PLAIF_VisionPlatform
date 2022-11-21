@@ -52,13 +52,13 @@
             </StackPanel>
         </Grid>
         <StackPanel Grid.Column="3" Orientation="Vertical">
-            <Button x:Name="startBtn" Height="50" Background="LightGreen">
+            <Button x:Name="startBtn" Height="50" Background="LightGreen" Command="{Binding StartClick}">
                 <Image Source="../resource/start.png"/>
             </Button>
-            <Button Height="50" Background="#FFFD6969">
+            <Button Height="50" Background="#FFFD6969" Command="{Binding StopClick}">
                 <Image Source="../resource/stop.png"/>
             </Button>
-            <Button Height="50" Background="Yellow">
+            <Button Height="50" Background="Yellow" Click="Button_Click">
                 <Image Source="../resource/pause.png"/>
             </Button>
             <Button Height="50" Background="#FF4B4BFF">

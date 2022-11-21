@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PLAIF_VisionPlatform.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,14 @@ namespace PLAIF_VisionPlatform
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainViewModel();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
+            i += 1;
         }
     }
 }
