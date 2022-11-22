@@ -180,11 +180,12 @@ namespace Rosbridge.Client
                     await _socket.DisconnectAsync();
                 }
 
-                if (null != _receivingTask)
-                {
-                    await _receivingTask;
-                    _receivingTask = null;
-                }
+                // to do : 이 task 실행하면 코드가 멈춰버린다. 뭐하는 코드인가요?
+                //if (null != _receivingTask)
+                //{
+                //    await _receivingTask;
+                //    _receivingTask = null;
+                //}
 
                 CurrentState = State.Stopped;
             });
