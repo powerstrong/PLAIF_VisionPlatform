@@ -20,6 +20,12 @@ namespace PLAIF_VisionPlatform.Model
             return true;
         }
 
+        public bool Capture()
+        {
+            _rosmgr.Capture();
+            return true;
+        }
+
         public bool IsConnected() { return _rosmgr.IsConnected(); }
     }
 }

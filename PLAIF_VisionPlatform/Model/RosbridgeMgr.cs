@@ -1,10 +1,13 @@
-﻿using Rosbridge.Client;
+﻿using Newtonsoft.Json.Linq;
+using Rosbridge.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace PLAIF_VisionPlatform.Model
 {
@@ -17,7 +20,7 @@ namespace PLAIF_VisionPlatform.Model
         {
 
         }
-        
+
         public async void Connect(string uri)
         {
             if (_isConnected)
@@ -55,5 +58,41 @@ namespace PLAIF_VisionPlatform.Model
         }
 
         public bool IsConnected() { return _isConnected; }
+        public async void Capture()
+        {
+            ServiceCallMsg("/zivid_camera/capture", "[]");
+        }
+
+        private async void PublishMsg(string topic, string msg_type, string msg)
+        {
+            var pb = new Rosbridge.Client.Publisher(topic, msg_type, _md);
+            await pb.PublishAsync(JObject.Parse(msg));
+        }
+        private async void SubscribeMsg(string topic, string msg_type, string msg)
+        {
+            // rosbridge_client의 아래 함수 참고할 것..
+            //private async void Window_Loaded(object sender, RoutedEventArgs e)
+            // _subscriber.MessageReceived += _subscriber_MessageReceived;
+
+            //var ss = new Rosbridge.Client.Subscriber(topic, msg_type, _md);
+            //var obj = JObject.Parse(msg);
+            //await ss.SubscribeAsync(obj);
+        }
+        private async void ServiceCallMsg(string topic, string msg)
+        {
+            var sc = new ServiceClient(topic, _md);
+            JArray argsList = JArray.Parse(msg);
+            var result = await sc.Call(argsList.ToObject<List<dynamic>>());
+            
+            // UI 쓰레드 접근 시 사용..하나 여기선 밖에서 사용해야 할듯
+            //Dispatcher.Invoke(() =>
+            //{
+            //    try
+            //    {
+            //        s = result.ToString();
+            //    }
+            //    catch { }
+            //});
+        }
     }
 }

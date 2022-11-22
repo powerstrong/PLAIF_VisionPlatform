@@ -73,7 +73,7 @@
             <Button Height="50" Background="Yellow" Click="Button_Click">
                 <Image Source="../resource/pause.png"/>
             </Button>
-            <Button Height="50" Background="#FF4B4BFF">
+            <Button Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}">
                 <Image Source="../resource/screenshot.png"/>
             </Button>
         </StackPanel>

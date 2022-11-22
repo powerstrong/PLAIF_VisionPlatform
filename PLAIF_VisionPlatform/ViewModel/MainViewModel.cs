@@ -29,6 +29,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             StartClick = new DelegateCommand(DelegateTestCommand); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
             StopClick = new AsyncRelayCommand(AsyncTestCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand);
+            CaptureClick = new AsyncRelayCommand(CaptureCommand);
             _mainModel = new MainModel();
         }
 
@@ -75,7 +76,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             MessageBox.Show(w.ToString());
         }
 
-        private string uriText = "ws://192.168.218.250:9090";
+        private string uriText = "ws://192.168.1.75:9090";
 
         public string UriText
         {
@@ -101,17 +102,25 @@ namespace PLAIF_VisionPlatform.ViewModel
             ConnectButtonText = _mainModel.IsConnected() ? "Disconnecting..." : "Connecting..";
             Task<bool> task = Task.Run(() =>
             {
-                if (_mainModel.Connect(uriText))
-                {
-                    // to do : 메인모델의 상태가 바뀌기 전 값을 가져오고 있다. 내부에도 async가 있어서 그런듯한데...
-                    ConnectButtonText = _mainModel.IsConnected() ? "Connect to ROS" : "Disconnect from ROS";
-                }
+                _mainModel.Connect(uriText); 
                 
                 return true;
             });
-            await task;
-
+            task.Wait();
+            ConnectButtonText = _mainModel.IsConnected() ? "Connect to ROS" : "Disconnect from ROS";
         }
+
+        public async Task CaptureCommand()
+        {
+            Task<bool> task = Task.Run(() =>
+            {
+                _mainModel.Capture();
+
+                return true;
+            });
+            await task;
+        }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
