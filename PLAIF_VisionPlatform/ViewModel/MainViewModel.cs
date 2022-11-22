@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using PLAIF_VisionPlatform.Model;
 using PLAIF_VisionPlatform.ViewModel.Command;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,16 @@ namespace PLAIF_VisionPlatform.ViewModel
         public IAsyncRelayCommand StopClick { get; set; }
         public ICommand PauseClick { get; set; }
         public ICommand CaptureClick { get; set; }
+        public IAsyncRelayCommand ConnectClick { get; set; }
+
+        private MainModel _mainModel;
 
         public MainViewModel() 
         {
             StartClick = new DelegateCommand(DelegateTestCommand); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
             StopClick = new AsyncRelayCommand(AsyncTestCommand);
+            ConnectClick = new AsyncRelayCommand(ConnectCommand);
+            _mainModel = new MainModel();
         }
 
         //      private int progressValue;
@@ -64,15 +70,53 @@ namespace PLAIF_VisionPlatform.ViewModel
                 }
                 return 5;
             });
-
+            
             w = await task2;
             MessageBox.Show(w.ToString());
         }
 
+        private string uriText = "ws://192.168.218.250:9090";
+
+        public string UriText
+        {
+            get { return uriText; }
+            set { uriText = value; 
+				NotifyPropertyChanged(nameof(UriText));
+            }
+        }
+
+        private string connectButtonText = "Connect to ROS";
+
+        public string ConnectButtonText
+        {
+            get { return connectButtonText; }
+            set { connectButtonText = value; 
+				NotifyPropertyChanged(nameof(ConnectButtonText));
+            }
+        }
+
+
+        public async Task ConnectCommand()
+        {
+            ConnectButtonText = _mainModel.IsConnected() ? "Disconnecting..." : "Connecting..";
+            Task<bool> task = Task.Run(() =>
+            {
+                if (_mainModel.Connect(uriText))
+                {
+                    // to do : 메인모델의 상태가 바뀌기 전 값을 가져오고 있다. 내부에도 async가 있어서 그런듯한데...
+                    ConnectButtonText = _mainModel.IsConnected() ? "Connect to ROS" : "Disconnect from ROS";
+                }
+                
+                return true;
+            });
+            await task;
+
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
-        //private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

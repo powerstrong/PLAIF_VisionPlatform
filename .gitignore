@@ -1,3 +1,5 @@
 /.vs
 /PLAIF_VisionPlatform/obj
 /PLAIF_VisionPlatform/bin
+/Rosbridge/bin/Debug/net7.0-windows
+/Rosbridge/obj
