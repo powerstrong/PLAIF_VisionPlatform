@@ -64,17 +64,37 @@
             </StackPanel>-->
         </Grid>
         <StackPanel Grid.Column="3" Orientation="Vertical">
-            <Button x:Name="startBtn" Height="50" Background="LightGreen" Command="{Binding StartClick}">
+            <Button x:Name="startBtn" Height="50" Background="LightGreen" Command="{Binding StartClick}" Margin="1">
                 <Image Source="../resource/start.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
             </Button>
-            <Button Height="50" Background="#FFFD6969" Command="{Binding StopClick}">
+            <Button Height="50" Background="#FFFD6969" Command="{Binding StopClick}" Margin="1 0 1 1">
                 <Image Source="../resource/stop.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
             </Button>
-            <Button Height="50" Background="Yellow" Click="Button_Click">
+            <Button Height="50" Background="Yellow" Click="Button_Click" Margin="1 0 1 1">
                 <Image Source="../resource/pause.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
             </Button>
-            <Button Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}">
+            <Button Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 0 1 1">
                 <Image Source="../resource/screenshot.png"/>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
             </Button>
         </StackPanel>
     </Grid>

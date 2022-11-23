@@ -4,6 +4,34 @@
              xmlns:local="clr-namespace:PLAIF_VisionPlatform"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Button" x:Key="TabButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="{TemplateBinding Border.CornerRadius}" 
+                        Background="White" BorderBrush="#ccc" 
+                        BorderThickness="0,1,1,0" >
+                            <ContentPresenter x:Name="contentPresenter" 
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                      Content="{TemplateBinding Content}" 
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      Margin="{TemplateBinding Padding}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="TabButtonLast" BasedOn="{StaticResource TabButton}">
+            <Setter Property="Border.CornerRadius" Value="0,0,0,3" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="RoundButton8">
+            <Setter Property="Border.CornerRadius" Value="18" />
+        </Style>
+
+
     </Application.Resources>
 </Application>
