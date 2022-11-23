@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLAIF_VisionPlatform"
         xmlns:UserControls="clr-namespace:PLAIF_VisionPlatform.View"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
     <Grid>
@@ -29,13 +30,75 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <UserControls:GraphicView Grid.Row="0"/>
+
                 <DockPanel Grid.Row="2">
                     <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
                     <ListView d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="resulltListView">
                     </ListView>
                 </DockPanel>
-                <!--<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Red" ShowsPreview="True" Height="3"/>-->
+                <TabControl>
+                    <TabItem Header="2D">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="44*"/>
+                                <ColumnDefinition Width="527*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Background>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="#FF032534" Offset="0"/>
+                                    <GradientStop Color="#FF051C26" Offset="0.5"/>
+                                    <GradientStop Color="#FF041F36" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Grid.Background>
+                            <Image Source="{Binding Img2D}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0" Grid.ColumnSpan="2">
+                                <Image.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform x:Name="myScaleTransform"></ScaleTransform>
+                                        <RotateTransform x:Name="myRotaionTransform"></RotateTransform>
+                                    </TransformGroup>
+                                </Image.LayoutTransform>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseWheel">
+                                        <i:InvokeCommandAction Command="{Binding MouseWheel_2D_Img}"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="3D">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="13*"/>
+                                <ColumnDefinition Width="28*"/>
+                                <ColumnDefinition Width="530*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Background>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="#FF032534" Offset="0"/>
+                                    <GradientStop Color="#FF051C26" Offset="0.5"/>
+                                    <GradientStop Color="#FF041F36" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Grid.Background>
+                            <Image Source="{Binding ImgDepth}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,10,0,0" Grid.ColumnSpan="3">
+
+                            </Image>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Points">
+                        <Grid>
+                            <Grid.Background>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="#FF032534" Offset="0"/>
+                                    <GradientStop Color="#FF051C26" Offset="0.5"/>
+                                    <GradientStop Color="#FF041F36" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Grid.Background>
+                            <UserControls:GraphicView Grid.Row="0"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Red" ShowsPreview="True" Height="30"/>
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="1"
@@ -46,11 +109,11 @@
               Width="3"/>
         <Grid Grid.Column="2">
             <Grid Background="AliceBlue"></Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Vertical">
                     <TextBlock Text="Rosbridge Server URI" HorizontalAlignment="Left" Margin="10 0"></TextBlock>

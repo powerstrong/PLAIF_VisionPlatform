@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +27,7 @@ namespace PLAIF_VisionPlatform.Model
         public bool Capture()
         {
             _rosmgr.Capture();
+
             return true;
         }
 
