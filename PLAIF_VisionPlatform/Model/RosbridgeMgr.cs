@@ -15,10 +15,11 @@ namespace PLAIF_VisionPlatform.Model
     {
         private MessageDispatcher _md;
         private bool _isConnected = false;
+        MainModel _mainModel;
 
-        public RosbridgeMgr()
+        public RosbridgeMgr(MainModel mainModel)
         {
-
+            _mainModel = mainModel;
         }
 
         public async void Connect(string uri)

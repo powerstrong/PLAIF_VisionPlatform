@@ -11,7 +11,7 @@ namespace PLAIF_VisionPlatform.Model
         private RosbridgeMgr _rosmgr;
         public MainModel()
         {
-            _rosmgr = new RosbridgeMgr();
+            _rosmgr = new RosbridgeMgr(this);
         }
 
         public bool Connect(string uri)

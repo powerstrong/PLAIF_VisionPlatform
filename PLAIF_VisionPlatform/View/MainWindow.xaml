@@ -32,7 +32,8 @@
                 <UserControls:GraphicView Grid.Row="0"/>
                 <DockPanel Grid.Row="2">
                     <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
-                    <ListView></ListView>
+                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="resulltListView">
+                    </ListView>
                 </DockPanel>
                 <!--<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Red" ShowsPreview="True" Height="3"/>-->
             </Grid>
@@ -88,7 +89,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 0 1 1">
+            <Button Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 1 1 1">
                 <Image Source="../resource/screenshot.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
