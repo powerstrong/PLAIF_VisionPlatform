@@ -29,8 +29,6 @@ namespace PLAIF_VisionPlatform.ViewModel
         public ICommand CaptureClick { get; set; }
         public IAsyncRelayCommand ConnectClick { get; set; }
 
-        public ICommand MouseWheel_2D_Img { get; set; }
-
         private MainModel _mainModel;
 
         private BitmapImage img2D;
@@ -74,7 +72,6 @@ namespace PLAIF_VisionPlatform.ViewModel
             StopClick = new AsyncRelayCommand(AsyncTestCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand);
             CaptureClick = new AsyncRelayCommand(CaptureCommand);
-            MouseWheel_2D_Img = new AsyncRelayCommand<object>(MouseWheelCommand);
             _mainModel = new MainModel();
         }
 
@@ -168,31 +165,6 @@ namespace PLAIF_VisionPlatform.ViewModel
             Create2DBitMapImage();
             Create3DBitMapImage();
             CreatePointCloud();
-        }
-
-        public async Task MouseWheelCommand(object parameter)
-        {
-            MouseWheelEventArgs e = parameter as MouseWheelEventArgs;
-            if (e == null)
-            {
-                return;
-            }
-
-            //Task<bool> task = Task.Run(() =>
-            //{
-            //    if(e.Delta > 0)
-            //    {
-            //        myScaleTransform.ScaleX += 1.1;
-            //    }
-            //    else
-            //    {
-
-            //    }
-
-            //    return true;
-            //});
-
-            //await task;
         }
 
         private void Create2DBitMapImage()

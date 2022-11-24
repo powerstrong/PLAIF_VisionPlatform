@@ -33,5 +33,34 @@ namespace PLAIF_VisionPlatform
             int i = 0;
             i += 1;
         }
+
+        private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            //확대 되는 마우스 위치 포인트를 체크 할 것
+            //축소는 제한 비율은??
+            if(e.Delta > 0)
+            {
+                myScaleTransform.ScaleX *= 1.1;
+                myScaleTransform.ScaleY *= 1.1;
+
+                if (myScaleTransform.ScaleX > 2)
+                {
+                    myScaleTransform.ScaleX = 2;
+                    myScaleTransform.ScaleY = 2;
+                }
+            }
+            else
+            {
+                myScaleTransform.ScaleX /= 1.1;
+                myScaleTransform.ScaleY /= 1.1;
+
+                if (myScaleTransform.ScaleX < 1)
+                {
+                    myScaleTransform.ScaleX = 1;
+                    myScaleTransform.ScaleY = 1;
+                }
+            }
+
+        }
     }
 }
