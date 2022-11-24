@@ -32,6 +32,7 @@ namespace PLAIF_VisionPlatform.ViewModel
         public ICommand MouseWheel_2D_Img { get; set; }
 
         private MainModel _mainModel;
+        private RosbridgeMgr _rosmgr;
 
         private BitmapImage img2D;
 
@@ -70,12 +71,14 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         public MainViewModel() 
         {
+            _mainModel = new MainModel();
+            _rosmgr = new RosbridgeMgr(this);
+
             StartClick = new DelegateCommand(DelegateTestCommand); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
             StopClick = new AsyncRelayCommand(AsyncTestCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand);
             CaptureClick = new AsyncRelayCommand(CaptureCommand);
             MouseWheel_2D_Img = new AsyncRelayCommand<object>(MouseWheelCommand);
-            _mainModel = new MainModel();
         }
 
         //      private int progressValue;
@@ -144,22 +147,22 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         public async Task ConnectCommand()
         {
-            ConnectButtonText = _mainModel.IsConnected() ? "Disconnecting..." : "Connecting..";
+            ConnectButtonText = _rosmgr.IsConnected() ? "Disconnecting..." : "Connecting..";
             Task<bool> task = Task.Run(() =>
             {
-                _mainModel.Connect(uriText); 
+                _rosmgr.Connect(uriText); 
                 
                 return true;
             });
             task.Wait();
-            ConnectButtonText = _mainModel.IsConnected() ? "Connect to ROS" : "Disconnect from ROS";
+            ConnectButtonText = _rosmgr.IsConnected() ? "Connect to ROS" : "Disconnect from ROS";
         }
 
         public async Task CaptureCommand()
         {
             Task<bool> task = Task.Run(() =>
             {
-                _mainModel.Capture();
+                _rosmgr.Capture();
 
                 return true;
             });

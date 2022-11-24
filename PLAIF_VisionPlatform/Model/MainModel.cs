@@ -7,30 +7,16 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using PLAIF_VisionPlatform.ViewModel;
 
 namespace PLAIF_VisionPlatform.Model
 {
     class MainModel
     {
-        private RosbridgeMgr _rosmgr;
+        // MVVM의 모델이란 무엇일까.. 아직 명확하게 개념이 잡히지 않았다.
+        // 일단 로직은 VM에서 모두 처리하고, 모델은 데이터의 명세만 관리하는 것으로 생각합시다
         public MainModel()
         {
-            _rosmgr = new RosbridgeMgr(this);
         }
-
-        public bool Connect(string uri)
-        {
-            _rosmgr.Connect(uri);
-            return true;
-        }
-
-        public bool Capture()
-        {
-            _rosmgr.Capture();
-
-            return true;
-        }
-
-        public bool IsConnected() { return _rosmgr.IsConnected(); }
     }
 }
