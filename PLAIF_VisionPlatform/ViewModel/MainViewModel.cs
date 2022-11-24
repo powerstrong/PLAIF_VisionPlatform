@@ -75,6 +75,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             StartClick = new DelegateCommand(DelegateTestCommand); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
             StopClick = new AsyncRelayCommand(AsyncTestCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand);
+            CaptureClick = new AsyncRelayCommand(CaptureCommand);
         }
 
         //      private int progressValue;
