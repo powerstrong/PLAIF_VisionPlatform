@@ -40,5 +40,10 @@ namespace PLAIF_VisionPlatform.Model
         {
             return _subscribe_topics;
         }
+
+        public void AddSubscribeTopics(string topic, string msg_type)
+        {
+            _subscribe_topics.Add(new Tuple<string, string>(topic, msg_type));
+        }
     }
 }
