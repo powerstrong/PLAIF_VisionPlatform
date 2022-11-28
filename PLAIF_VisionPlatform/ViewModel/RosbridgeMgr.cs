@@ -40,23 +40,15 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             if (_isConnected)
             {
-                //foreach (var w in _childWindows)
-                //{
-                //    await w.CleanUp();
-                //    (w as Window).Close();
-                //}
-                //_childWindows.Clear();
-
                 foreach (var s in _subscribers)
                 {
-                    await s.UnsubscribeAsync();
+                    s.UnsubscribeAsync().Wait();
                 }
+                _isConnected = false;
                 _subscribers.Clear();
 
                 await _md.StopAsync();
                 _md = null;
-                
-                _isConnected = false;
             }
             else
             {
