@@ -82,6 +82,15 @@ namespace PLAIF_VisionPlatform
             DataContext = new MainViewModel();
         }
 
+        private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            var selected = sidebar.SelectedItem as NavButton;
+
+            navframe.Navigate(selected.Navlink);
+
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int i = 0;

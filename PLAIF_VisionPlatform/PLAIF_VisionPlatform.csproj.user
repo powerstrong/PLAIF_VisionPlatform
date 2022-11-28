@@ -13,6 +13,24 @@
     <Compile Update="View\HelixView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Settings View\CalibrationPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Settings View\CameraPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Settings View\ConnectionPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Settings View\LearningModelPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Settings View\PickPosePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Settings View\VisionParamPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="View\GraphicView.xaml">
@@ -22,6 +40,24 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Settings View\CalibrationPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Settings View\CameraPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Settings View\ConnectionPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Settings View\LearningModelPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Settings View\PickPosePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Settings View\VisionParamPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
