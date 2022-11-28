@@ -14,18 +14,24 @@
     </Page.DataContext>
     <Grid>
         <!--<TextBlock Text="ConnectionPage" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFB197FC" FontSize="60" FontWeight="Bold"/>-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
         <StackPanel Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Rosbridge Server URI" HorizontalAlignment="Left" Margin="10 0"></TextBlock>
-            <TextBlock Text="(e.g. : ws://192.168.1.50:9090)" Margin="10 0" HorizontalAlignment="Left"></TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="0 10 0 0">
+                <Bold>Rosbridge Server URI</Bold>     (e.g. : ws://192.168.1.50:9090)
+            </TextBlock>
+            <TextBox Text="{Binding UriText}" Margin="50 10 50 0"></TextBox>
+            <Button Content="{Binding ConnectButtonText}" Margin="50 5" Command="{Binding ConnectClick}"></Button>
         </StackPanel>
-        <StackPanel Grid.Column="1" Orientation="Vertical">
+        <!--<StackPanel Grid.Column="1" Orientation="Vertical">
             <TextBox Text="{Binding UriText}" Margin="0 0 10 0"></TextBox>
             <Button Content="{Binding ConnectButtonText}" Margin="0 0 10 0" Command="{Binding ConnectClick}"></Button>
+        </StackPanel>-->
+        <StackPanel VerticalAlignment="Bottom">
+            <TextBlock Text="ConnectionPage" FontFamily="ubuntu" Margin = "5 0" Foreground="#FF7764AB" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="-Linux 머신과 연결에 필요한 파라미터 제어" FontFamily="ubuntu" Margin = "5 0" Foreground="#FF548C57" />
+            <TextBlock Text="-입력한 IP, Port 번호로 연결 수립" FontFamily="ubuntu" Margin = "5 0" Foreground="#FF548C57" />
+            <TextBlock Text="-연결된 Subscriber 목록 보여주기" FontFamily="ubuntu" Margin = "5 0" Foreground="#FF548C57" />
+            <TextBlock Text="-현재 Publish, Subscribe, Service가 가능한데… 이걸로 어떤 기능을 만들 수 있을까? " FontFamily="ubuntu" Margin = "5 0" Foreground="#FF548C57" />
+            <TextBlock Text="-수동으로 ROS 메시지 보내기 기능이 필요할까?" FontFamily="ubuntu" Margin = "5 0" Foreground="#FF548C57" />
         </StackPanel>
     </Grid>
 </Page>

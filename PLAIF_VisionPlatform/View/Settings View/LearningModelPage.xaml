@@ -9,6 +9,10 @@
       Title="LearningModelPage">
 
     <Grid>
-        <TextBlock Text="LearningModelPage" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFB197FC" FontSize="60" FontWeight="Bold"/>
+        <StackPanel VerticalAlignment="Bottom">
+            <TextBlock Text="LearningModelPage" FontFamily="ubuntu" Margin = "5 0" VerticalAlignment="Top" Foreground="#FFB197FC" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="학습모델을 선정한다. 라디오 버튼으로 보여주면 될 듯 하다." FontFamily="ubuntu" Margin = "10 0" VerticalAlignment="Top" Foreground="#FF97FC9D" />
+            <TextBlock Text="상세 내용은 Vision팀과 협의 필요" FontFamily="ubuntu" Margin = "10 0" VerticalAlignment="Top" Foreground="#FF97FC9D" />
+        </StackPanel>
     </Grid>
 </Page>
