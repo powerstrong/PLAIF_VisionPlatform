@@ -8,6 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
+
     <Grid>
         <Grid.Background>
             <!--<ImageBrush ImageSource="back.jpg" />-->
@@ -46,20 +47,16 @@
                                     <GradientStop Color="#FF041F36" Offset="1"/>
                                 </RadialGradientBrush>
                             </Grid.Background>
-                            <Image x:Name="Image_2D_Control" Source="{Binding Img2D}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" MouseWheel="Image_MouseWheel">
-                                <Image.LayoutTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform x:Name="myScaleTransform"></ScaleTransform>
-                                        <RotateTransform x:Name="myRotaionTransform"></RotateTransform>
-                                    </TransformGroup>
-                                </Image.LayoutTransform>
-
-                                <!--<i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="KeyDown">
-                                        <i:InvokeCommandAction Command="{Binding MouseWheel_2D_Img}"></i:InvokeCommandAction>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>-->
-                            </Image>
+                            <Border Name="border2D" Grid.Row="1" ClipToBounds="True">
+                                <Image x:Name="Image_2D_Control" Source="{Binding Img2D}"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
+                                    <!--<Image.LayoutTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform x:Name="myScaleTransform" ScaleX="1" ScaleY="1"></ScaleTransform>
+                                            <TranslateTransform x:Name="myTranslateTransform"> </TranslateTransform>
+                                        </TransformGroup>
+                                    </Image.LayoutTransform>-->
+                                </Image>
+                            </Border>
                         </Grid>
                     </TabItem>
                     <TabItem Header="3D">
@@ -71,8 +68,16 @@
                                     <GradientStop Color="#FF041F36" Offset="1"/>
                                 </RadialGradientBrush>
                             </Grid.Background>
-                            <Image Source="{Binding ImgDepth}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" MouseWheel="Image_MouseWheel">
-                            </Image>
+                            <Border Name="border3D" Grid.Row="1" ClipToBounds="True">
+                                <Image x:Name="Image_Depth_Control" Source="{Binding ImgDepth}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
+                                    <Image.LayoutTransform>
+                                        <TransformGroup>
+                                            <!--<ScaleTransform x:Name="myScaleTransform_3D"></ScaleTransform>
+                                        <TranslateTransform x:Name="myTranslateTransform_3D"></TranslateTransform>-->
+                                        </TransformGroup>
+                                    </Image.LayoutTransform>
+                                </Image>
+                            </Border>
                         </Grid>
                     </TabItem>
                     <TabItem Header="Points">
