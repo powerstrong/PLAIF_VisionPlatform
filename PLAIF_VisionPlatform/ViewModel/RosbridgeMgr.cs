@@ -14,7 +14,7 @@ using System.Windows.Threading;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
-    class RosbridgeMgr
+    public sealed class RosbridgeMgr
     {
         private MessageDispatcher _md;
         private bool _isConnected = false;
@@ -23,12 +23,17 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         List<Subscriber> _subscribers;
 
-        public RosbridgeMgr(MainViewModel mainViewModel)
+        private RosbridgeMgr() 
+        {
+            _rosbrdgModel = new RosbridgeModel();
+            _subscribers = new List<Subscriber>();
+        }
+        private static readonly Lazy<RosbridgeMgr> _instance = new Lazy<RosbridgeMgr>(() => new RosbridgeMgr());
+        public static RosbridgeMgr Instance => _instance.Value;
+
+        public void SetMainModel(MainViewModel mainViewModel)
         {
             _mainViewModel = mainViewModel;
-            _rosbrdgModel = new RosbridgeModel();
-
-            _subscribers = new List<Subscriber>();
         }
 
         public async void Connect(string uri)

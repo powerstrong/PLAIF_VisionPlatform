@@ -21,7 +21,7 @@ using System.Windows.Media;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
-    class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         public DelegateCommand StartClick { get; set; }
         public IAsyncRelayCommand StopClick { get; set; }
@@ -70,11 +70,11 @@ namespace PLAIF_VisionPlatform.ViewModel
         public MainViewModel() 
         {
             _mainModel = new MainModel();
-            _rosmgr = new RosbridgeMgr(this);
+            _rosmgr = RosbridgeMgr.Instance;
+            _rosmgr.SetMainModel(this);
 
             StartClick = new DelegateCommand(DelegateTestCommand); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
             StopClick = new AsyncRelayCommand(AsyncTestCommand);
-            ConnectClick = new AsyncRelayCommand(ConnectCommand);
             CaptureClick = new AsyncRelayCommand(CaptureCommand);
         }
 
@@ -119,40 +119,6 @@ namespace PLAIF_VisionPlatform.ViewModel
             
             w = await task2;
             MessageBox.Show(w.ToString());
-        }
-
-        private string uriText = "ws://192.168.1.75:9090";
-
-        public string UriText
-        {
-            get { return uriText; }
-            set { uriText = value; 
-				NotifyPropertyChanged(nameof(UriText));
-            }
-        }
-
-        private string connectButtonText = "Connect to ROS";
-
-        public string ConnectButtonText
-        {
-            get { return connectButtonText; }
-            set { connectButtonText = value; 
-				NotifyPropertyChanged(nameof(ConnectButtonText));
-            }
-        }
-
-
-        public async Task ConnectCommand()
-        {
-            ConnectButtonText = _rosmgr.IsConnected() ? "Disconnecting..." : "Connecting..";
-            Task<bool> task = Task.Run(() =>
-            {
-                _rosmgr.Connect(uriText); 
-                
-                return true;
-            });
-            task.Wait();
-            ConnectButtonText = _rosmgr.IsConnected() ? "Connect to ROS" : "Disconnect from ROS";
         }
 
         public async Task CaptureCommand()

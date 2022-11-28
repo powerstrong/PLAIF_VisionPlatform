@@ -10,7 +10,7 @@
       Title="ConnectionPage">
 
     <Page.DataContext>
-        <local1:MainViewModel/>
+        <local1:ConnectionViewModel/>
     </Page.DataContext>
     <Grid>
         <!--<TextBlock Text="ConnectionPage" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FFB197FC" FontSize="60" FontWeight="Bold"/>-->
