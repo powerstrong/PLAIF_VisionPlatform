@@ -102,10 +102,9 @@ namespace PLAIF_VisionPlatform.ViewModel
             switch (e.Message["topic"]!.ToString())
             {
                 case RosbridgeModel.RosTopics.chatter:
-                    Debug.Print("[chatter] : " + msg);
+                    Debug.Print("[chatter] : " + msg); // 메시지 크기가 큰 경우 주의할 것
                     break;
                 case RosbridgeModel.RosTopics.zvd_point_xyz:
-                    Debug.Print("[zvd_point_xyz] : " + msg);
                     break;
             }
 
