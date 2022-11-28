@@ -80,15 +80,14 @@ namespace PLAIF_VisionPlatform
             #endregion
 
             DataContext = new MainViewModel();
+            navframe.Navigate(new Uri(@"/View/Settings View/ConnectionPage.xaml", UriKind.Relative));
         }
 
         private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             var selected = sidebar.SelectedItem as NavButton;
-
-            navframe.Navigate(selected.Navlink);
-
+            if (selected is not null)
+                navframe.Navigate(selected.Navlink);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
