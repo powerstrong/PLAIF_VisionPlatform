@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Numerics;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
@@ -131,40 +132,70 @@ namespace PLAIF_VisionPlatform.ViewModel
             });
             task.Wait();
 
-            Create2DBitMapImage();
-            Create3DBitMapImage();
-            CreatePointCloud();
+            //Create2DBitMapImage("");
+            //Create3DBitMapImage();
+            //CreatePointCloud();
         }
 
-        private void Create2DBitMapImage()
+        public void Create2DBitMapImage(string message)
         {
-            using (StreamReader file = File.OpenText("2DImage_json.json")) //"2DImage_json.json" //PointCloudImage_json //DepthImage_json
+
+            byte[] bByte = Convert.FromBase64String(message);
+
+            //2D Image
+            Mat rgba = new Mat(1200, 1944, MatType.CV_8UC4, bByte);
+            Mat rgb = new Mat();
+            Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
+
+
+            // window Form과 연결할 경우가 아니면, 문제없다.
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
             {
-                using (JsonTextReader readder = new JsonTextReader(file))
+                try
                 {
-                    JObject json = (JObject)JToken.ReadFrom(readder);
-
-                    if (json != null)
-                    {
-                        string strData = json["data"].ToString();
-                        //byte[] bByte = Encoding.UTF8.GetBytes(strData);
-
-                        byte[] bByte = Convert.FromBase64String(strData);
-
-                        //2D Image
-                        Mat rgba = new Mat(1200, 1944, MatType.CV_8UC4, bByte);
-                        Mat rgb = new Mat();
-                        Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
-                        //Boolean Save = Cv2.ImWrite("TEST2D_RGB.jpg", rgb);
-
-                        BitmapImage img = new BitmapImage();
-                        img.BeginInit();
-                        img.StreamSource = rgb.ToMemoryStream();
-                        img.EndInit();
-                        Img2D = img;
-                    }
+                    BitmapImage img = new BitmapImage();
+                    img.BeginInit();
+                    img.StreamSource = rgb.ToMemoryStream();
+                    img.EndInit();
+                    Img2D = img;
                 }
-            }
+                catch
+                {
+
+                }
+            }));
+
+            #region json파일로 읽어서 보여주기 - 나중에 디버깅할때 필요할까?
+
+            //using (StreamReader file = File.OpenText("2dimage_json.json")) //"2dimage_json.json" //pointcloudimage_json //depthimage_json
+            //{
+            //    using (JsonTextReader readder = new JsonTextReader(file))
+            //    {
+            //        JObject json = (JObject)JToken.ReadFrom(readder);
+
+            //        if (json != null)
+            //        {
+            //            string strdata = json["data"].ToString();
+            //            //byte[] bbyte = encoding.utf8.getbytes(strdata);
+
+            //            byte[] bbyte = Convert.FromBase64String(strdata);
+
+            //            //2d image
+            //            Mat rgba = new Mat(1200, 1944, MatType.CV_8UC4, bbyte);
+            //            Mat rgb = new Mat();
+            //            Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGB2BGR);
+            //            //boolean save = cv2.imwrite("test2d_rgb.jpg", rgb);
+
+            //            BitmapImage img = new BitmapImage();
+            //            img.BeginInit();
+            //            img.StreamSource = rgb.ToMemoryStream();
+            //            img.EndInit();
+            //            Img2D = img;
+            //        }
+            //    }
+            //}
+
+            #endregion
         }
 
         private void Create3DBitMapImage()

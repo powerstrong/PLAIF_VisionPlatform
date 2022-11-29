@@ -14,8 +14,7 @@ namespace PLAIF_VisionPlatform.Model
         public static class RosTopics
         {
             public const string zvd_point_xyz   = "/zivid_camera/normals/xyz";
-            public const string zvd_color_xyz   = "/zivid_camera/color/image_color";
-            public const string zvd_color_image = "/zivid_camera/depth/image";
+            public const string zvd_color_image = "/zivid_camera/color/image_color";
             public const string zvd_depth_image = "/zivid_camera/depth/image";
             public const string chatter         = "chatter";
 
@@ -29,7 +28,6 @@ namespace PLAIF_VisionPlatform.Model
             _subscribe_topics = new List<Tuple<string, string>>
             {
                 new Tuple<string, string>(RosTopics.zvd_point_xyz  , "sensor_msgs/PointCloud2"),
-                new Tuple<string, string>(RosTopics.zvd_color_xyz  , "sensor_msgs/PointCloud2"),
                 new Tuple<string, string>(RosTopics.zvd_color_image, "sensor_msgs/Image"),
                 new Tuple<string, string>(RosTopics.zvd_depth_image, "sensor_msgs/Image"),
                 new Tuple<string, string>(RosTopics.chatter        , "std_msgs/String"),

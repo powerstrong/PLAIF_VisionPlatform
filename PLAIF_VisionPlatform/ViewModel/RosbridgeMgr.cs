@@ -8,9 +8,11 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using static PLAIF_VisionPlatform.Model.RosbridgeModel;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
@@ -105,17 +107,13 @@ namespace PLAIF_VisionPlatform.ViewModel
                     Debug.Print("[chatter] : " + msg); // 메시지 크기가 큰 경우 주의할 것
                     break;
                 case RosbridgeModel.RosTopics.zvd_point_xyz:
+                    //_mainViewModel.Create2DBitMapImage(e.Message["msg"]["data"].ToString());
+                    break;
+                case RosTopics.zvd_color_image:
+                    _mainViewModel.Create2DBitMapImage(e.Message["msg"]["data"].ToString());
                     break;
             }
 
-            //Dispatcher.Invoke(() =>
-            //{
-            //    try
-            //    {
-            //        _mainViewModel.temp();
-            //    }
-            //    catch { }
-            //});
         }
 
         private async void SubscribeMsg(string topic, string msg_type)
