@@ -198,119 +198,217 @@ namespace PLAIF_VisionPlatform.ViewModel
             #endregion
         }
 
-        private void Create3DBitMapImage()
+        public void Create3DBitMapImage(string message)
         {
-            using (StreamReader file = File.OpenText("DepthImage_json.json")) //"2DImage_json.json" //PointCloudImage_json //DepthImage_json
+            byte[] bByte = Convert.FromBase64String(message);
+
+            //Depth Image
+            Mat depth = new Mat(1200, 1944, MatType.CV_32FC1, bByte);
+
+            #region Method 1
+            double min;
+            double max;
+            Mat depthAdj = new Mat();
+            Cv2.MinMaxIdx(depth, out min, out max);
+            Cv2.ConvertScaleAbs(depth, depthAdj, 255 / max);
+            #endregion
+
+            #region Method 2
+            //double min;
+            //double max;
+            //Mat depthAdj = new Mat();
+            //Mat falseColorsMap = new Mat();
+            //Cv2.MinMaxIdx(depth, out min, out max);
+
+            //// expand your range to 0..255. Similar to histEq();
+            //depth.ConvertTo(depthAdj, MatType.CV_8UC1, 255 / (max - min), -min);
+            ////map.convertTo(adjMap, CV_8UC1, 255 / (max - min), -min);
+
+            //// this is great. It converts your grayscale image into a tone-mapped one, 
+            //// much more pleasing for the eye
+            //// function is found in contrib module, so include contrib.hpp 
+            //// and link accordingly
+            //Cv2.ApplyColorMap(depthAdj, falseColorsMap, ColormapTypes.Autumn);
+            //Cv2.CvtColor(falseColorsMap, falseColorsMap, ColorConversionCodes.BGRA2RGB);
+
+            #endregion
+
+            // window Form과 연결할 경우가 아니면, 문제없다.
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
             {
-                using (JsonTextReader readder = new JsonTextReader(file))
+                try
                 {
-                    JObject json = (JObject)JToken.ReadFrom(readder);
-
-                    if (json != null)
-                    {
-                        string strData = json["data"].ToString();
-                        //byte[] bByte = Encoding.UTF8.GetBytes(strData);
-
-                        byte[] bByte = Convert.FromBase64String(strData);
-
-                        //Depth Image
-                        Mat depth = new Mat(1200, 1944, MatType.CV_32FC1, bByte);
-                        //Mat rgb = new Mat();
-                        //Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
-                        //Boolean Save = Cv2.ImWrite("TESTDepth.jpg", depth);
-
-                        #region Method 1
-                        double min;
-                        double max;
-                        Mat depthAdj = new Mat();
-                        Cv2.MinMaxIdx(depth, out min, out max);
-                        Cv2.ConvertScaleAbs(depth, depthAdj, 255 / max);
-                        // Boolean Save = Cv2.ImWrite("TESTDepthBefore.jpg", depth);
-                        //Save = Cv2.ImWrite("TESTDepthAfter.jpg", depthAdj);
-                        #endregion
-
-                        #region Method 2
-                        //double min;
-                        //double max;
-                        //Mat depthAdj = new Mat();
-                        //Mat falseColorsMap = new Mat();
-                        //Cv2.MinMaxIdx(depth, out min, out max);
-
-                        //// expand your range to 0..255. Similar to histEq();
-                        //depth.ConvertTo(depthAdj, MatType.CV_8UC1, 255 / (max - min), -min);
-                        ////map.convertTo(adjMap, CV_8UC1, 255 / (max - min), -min);
-
-                        //// this is great. It converts your grayscale image into a tone-mapped one, 
-                        //// much more pleasing for the eye
-                        //// function is found in contrib module, so include contrib.hpp 
-                        //// and link accordingly
-                        //Cv2.ApplyColorMap(depthAdj, falseColorsMap, ColormapTypes.Autumn);
-                        //Cv2.CvtColor(falseColorsMap, falseColorsMap, ColorConversionCodes.BGRA2RGB);
-
-                        #endregion
-
-                        BitmapImage img = new BitmapImage();
-                        img.BeginInit();
-                        img.StreamSource = depthAdj.ToMemoryStream();
-                        img.EndInit();
-                        ImgDepth = img;
-                    }
+                    BitmapImage img = new BitmapImage();
+                    img.BeginInit();
+                    img.StreamSource = depthAdj.ToMemoryStream();
+                    img.EndInit();
+                    ImgDepth = img;
                 }
-            }
+                catch
+                {
+
+                }
+            }));
+
+            #region json파일로 읽어서 보여주기 - 나중에 디버깅할때 필요할까?
+            //using (StreamReader file = File.OpenText("DepthImage_json.json")) //"2DImage_json.json" //PointCloudImage_json //DepthImage_json
+            //{
+            //    using (JsonTextReader readder = new JsonTextReader(file))
+            //    {
+            //        JObject json = (JObject)JToken.ReadFrom(readder);
+
+            //        if (json != null)
+            //        {
+            //            string strData = json["data"].ToString();
+            //            //byte[] bByte = Encoding.UTF8.GetBytes(strData);
+
+            //            byte[] bByte = Convert.FromBase64String(strData);
+
+            //            //Depth Image
+            //            Mat depth = new Mat(1200, 1944, MatType.CV_32FC1, bByte);
+            //            //Mat rgb = new Mat();
+            //            //Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
+            //            //Boolean Save = Cv2.ImWrite("TESTDepth.jpg", depth);
+
+            //            #region Method 1
+            //            double min;
+            //            double max;
+            //            Mat depthAdj = new Mat();
+            //            Cv2.MinMaxIdx(depth, out min, out max);
+            //            Cv2.ConvertScaleAbs(depth, depthAdj, 255 / max);
+            //            // Boolean Save = Cv2.ImWrite("TESTDepthBefore.jpg", depth);
+            //            //Save = Cv2.ImWrite("TESTDepthAfter.jpg", depthAdj);
+            //            #endregion
+
+            //            #region Method 2
+            //            //double min;
+            //            //double max;
+            //            //Mat depthAdj = new Mat();
+            //            //Mat falseColorsMap = new Mat();
+            //            //Cv2.MinMaxIdx(depth, out min, out max);
+
+            //            //// expand your range to 0..255. Similar to histEq();
+            //            //depth.ConvertTo(depthAdj, MatType.CV_8UC1, 255 / (max - min), -min);
+            //            ////map.convertTo(adjMap, CV_8UC1, 255 / (max - min), -min);
+
+            //            //// this is great. It converts your grayscale image into a tone-mapped one, 
+            //            //// much more pleasing for the eye
+            //            //// function is found in contrib module, so include contrib.hpp 
+            //            //// and link accordingly
+            //            //Cv2.ApplyColorMap(depthAdj, falseColorsMap, ColormapTypes.Autumn);
+            //            //Cv2.CvtColor(falseColorsMap, falseColorsMap, ColorConversionCodes.BGRA2RGB);
+
+            //            #endregion
+
+            //            BitmapImage img = new BitmapImage();
+            //            img.BeginInit();
+            //            img.StreamSource = depthAdj.ToMemoryStream();
+            //            img.EndInit();
+            //            ImgDepth = img;
+            //        }
+            //    }
+            //}
+            #endregion
         }
 
-        private void CreatePointCloud()
+        public void CreatePointCloud(string message)
         {
-            using (StreamReader file = File.OpenText("PointCloudImage_json.json")) //"2DImage_json.json" //PointCloudImage_json //DepthImage_json
+
+            byte[] bByte = Convert.FromBase64String(message);
+
+            //PointCloud2
+            int width = 1944;
+            int height = 1200;
+            int row_step = 31104;
+            int point_step = 16;
+            int size = bByte.Length;
+            size = size / point_step;
+
+            //Calculator
+            Vector3[] pcl = new Vector3[size];
+
+            for (int n = 0; n < size; n++)
             {
-                using (JsonTextReader readder = new JsonTextReader(file))
-                {
-                    JObject json = (JObject)JToken.ReadFrom(readder);
+                int x_posi = n * point_step + 0;
+                int y_posi = n * point_step + 4;
+                int z_posi = n * point_step + 8;
 
-                    if (json != null)
-                    {
-                        string strData = json["data"].ToString();
-                        //byte[] bByte = Encoding.UTF8.GetBytes(strData);
+                float x = BitConverter.ToSingle(bByte, x_posi);
+                float y = BitConverter.ToSingle(bByte, y_posi);
+                float z = BitConverter.ToSingle(bByte, z_posi);
 
-                        byte[] bByte = Convert.FromBase64String(strData);
+                pcl[n] = new Vector3(x, y, z); //new Vector3(y, z, x);
 
-                        //PointCloud2
-                        int width = 1944;
-                        int height = 1200;
-                        int row_step = 31104;
-                        int point_step = 16;
-                        int size = bByte.Length;
-                        size = size / point_step;
+                //Log
+               // Console.WriteLine("pclCoordinates:x=" + pcl[n].X + ",y=" + pcl[n].Y + ",z=" + pcl[n].Z);
 
-                        //Calculator
-                        Vector3[] pcl = new Vector3[size];
-
-                        for (int n = 0; n < size; n++)
-                        {
-                            int x_posi = n * point_step + 0;
-                            int y_posi = n * point_step + 4;
-                            int z_posi = n * point_step + 8;
-
-                            float x = BitConverter.ToSingle(bByte, x_posi);
-                            float y = BitConverter.ToSingle(bByte, y_posi);
-                            float z = BitConverter.ToSingle(bByte, z_posi);
-
-                            pcl[n] = new Vector3(x, y, z); //new Vector3(y, z, x);
-
-                            //var str = pcl[n].ToString();
-                            //if (!str.Contains("NaN"))
-                            //{
-                            //    var str2 = string.Format("{0:s} {1:s} {2:s}", pcl[n].X.ToString(), pcl[n].Y.ToString(), pcl[n].Z.ToString());
-                            //}
-
-                            //Log
-                            Console.WriteLine("pclCoordinates:x=" + pcl[n].X + ",y=" + pcl[n].Y + ",z=" + pcl[n].Z);
-                        }
-
-                        PointCloud = pcl;
-                    }
-                }
             }
+
+            // window Form과 연결할 경우가 아니면, 문제없다.
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
+            {
+                try
+                {
+                    PointCloud = pcl;
+                }
+                catch
+                {
+
+                }
+            }));
+
+            #region json파일로 읽어서 보여주기 - 나중에 디버깅할때 필요할까?
+            //using (StreamReader file = File.OpenText("PointCloudImage_json.json")) //"2DImage_json.json" //PointCloudImage_json //DepthImage_json
+            //{
+            //    using (JsonTextReader readder = new JsonTextReader(file))
+            //    {
+            //        JObject json = (JObject)JToken.ReadFrom(readder);
+
+            //        if (json != null)
+            //        {
+            //            string strData = json["data"].ToString();
+            //            //byte[] bByte = Encoding.UTF8.GetBytes(strData);
+
+            //            byte[] bByte = Convert.FromBase64String(strData);
+
+            //            //PointCloud2
+            //            int width = 1944;
+            //            int height = 1200;
+            //            int row_step = 31104;
+            //            int point_step = 16;
+            //            int size = bByte.Length;
+            //            size = size / point_step;
+
+            //            //Calculator
+            //            Vector3[] pcl = new Vector3[size];
+
+            //            for (int n = 0; n < size; n++)
+            //            {
+            //                int x_posi = n * point_step + 0;
+            //                int y_posi = n * point_step + 4;
+            //                int z_posi = n * point_step + 8;
+
+            //                float x = BitConverter.ToSingle(bByte, x_posi);
+            //                float y = BitConverter.ToSingle(bByte, y_posi);
+            //                float z = BitConverter.ToSingle(bByte, z_posi);
+
+            //                pcl[n] = new Vector3(x, y, z); //new Vector3(y, z, x);
+
+            //                //var str = pcl[n].ToString();
+            //                //if (!str.Contains("NaN"))
+            //                //{
+            //                //    var str2 = string.Format("{0:s} {1:s} {2:s}", pcl[n].X.ToString(), pcl[n].Y.ToString(), pcl[n].Z.ToString());
+            //                //}
+
+            //                //Log
+            //                Console.WriteLine("pclCoordinates:x=" + pcl[n].X + ",y=" + pcl[n].Y + ",z=" + pcl[n].Z);
+            //            }
+
+            //            PointCloud = pcl;
+            //        }
+            //    }
+            //}
+            #endregion
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
