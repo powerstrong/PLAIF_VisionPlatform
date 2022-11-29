@@ -33,6 +33,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Styles.xaml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="DataTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\GraphicView.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PLAIF_VisionPlatform.ViewModel
+namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
     class ConnectionViewModel : INotifyPropertyChanged
     {

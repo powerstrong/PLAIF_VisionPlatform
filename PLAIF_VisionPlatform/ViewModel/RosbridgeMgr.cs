@@ -83,7 +83,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             ServiceCallMsg("/zivid_camera/capture", "[]");
         }
 
-        private async void PublishMsg(string topic, string msg_type, string msg)
+        public async void PublishMsg(string topic, string msg_type, string msg)
         {
             var pb = new Rosbridge.Client.Publisher(topic, msg_type, _md);
             await pb.PublishAsync(JObject.Parse(msg));
@@ -111,7 +111,7 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         }
 
-        private async void SubscribeMsg(string topic, string msg_type)
+        public async void SubscribeMsg(string topic, string msg_type)
         {
             var s = new Subscriber(topic, msg_type, _md);
             s.MessageReceived += _subscriber_MessageReceived;
@@ -119,21 +119,11 @@ namespace PLAIF_VisionPlatform.ViewModel
             _subscribers.Add(s);
         }
 
-        private async void ServiceCallMsg(string topic, string msg)
+        public async void ServiceCallMsg(string topic, string msg)
         {
             var sc = new ServiceClient(topic, _md);
             JArray argsList = JArray.Parse(msg);
             var result = await sc.Call(argsList.ToObject<List<dynamic>>());
-
-            // UI 쓰레드 접근 시 사용..하나 여기선 밖에서 사용해야 할듯
-            //Dispatcher.Invoke(() =>
-            //{
-            //    try
-            //    {
-            //        s = result.ToString();
-            //    }
-            //    catch { }
-            //});
         }
     }
 }

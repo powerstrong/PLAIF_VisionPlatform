@@ -93,15 +93,15 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Red" ShowsPreview="True" Height="3"/>
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#FF00F9FF" ShowsPreview="True" Height="1"/>
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="1"
               HorizontalAlignment="Center"
               VerticalAlignment="Stretch"
-              Background="Yellow" 
+              Background="#FF00F9FF" 
               ShowsPreview="True"
-              Width="3"/>
+              Width="1"/>
         <Grid Grid.Column="2">
             <Grid Background="AliceBlue"></Grid>
             <Grid>
@@ -136,7 +136,11 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <Frame x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="29*"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Grid.ColumnSpan="2"/>
                 </Grid>
             </Grid>
             <!--=<StackPanel Orientation="Vertical">

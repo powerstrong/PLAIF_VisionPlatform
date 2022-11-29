@@ -28,7 +28,6 @@ namespace PLAIF_VisionPlatform.ViewModel
         public IAsyncRelayCommand StopClick { get; set; }
         public ICommand PauseClick { get; set; }
         public ICommand CaptureClick { get; set; }
-        public IAsyncRelayCommand ConnectClick { get; set; }
 
         private MainModel _mainModel;
         private RosbridgeMgr _rosmgr;
