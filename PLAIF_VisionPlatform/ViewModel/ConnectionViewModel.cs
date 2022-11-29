@@ -49,7 +49,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 return true;
             });
             task.Wait();
-            ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Connect to ROS" : "Disconnect from ROS";
+            ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnect from ROS" : "Connect to ROS";
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
