@@ -46,7 +46,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
             Task<bool> task = Task.Run(() =>
             {
-                Process.Start(@"./bash/ssh-creater.bat");
+                //Process.Start(@"./bash/ssh-creater.bat");
                 return true;
             });
             await task;
