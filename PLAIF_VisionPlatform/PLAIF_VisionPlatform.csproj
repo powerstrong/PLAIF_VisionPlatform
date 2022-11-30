@@ -76,4 +76,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="bash\ssh-creater.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

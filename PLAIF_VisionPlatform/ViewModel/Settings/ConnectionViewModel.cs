@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,10 +12,12 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
     class ConnectionViewModel : INotifyPropertyChanged
     {
+        public IAsyncRelayCommand? SshkeyClick { get; set; }
         public IAsyncRelayCommand? ConnectClick { get; set; }
 
         public ConnectionViewModel()
         {
+            SshkeyClick = new AsyncRelayCommand(SshkeyCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand);
         }
         private string uriText = "ws://192.168.1.75:9090";
@@ -39,6 +42,17 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
+        public async Task SshkeyCommand()
+        {
+            Task<bool> task = Task.Run(() =>
+            {
+                Process.Start(@"./bash/ssh-creater.bat");
+                return true;
+            });
+            await task;
+            return;
+        }
+        
         public async Task ConnectCommand()
         {
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnecting..." : "Connecting..";
