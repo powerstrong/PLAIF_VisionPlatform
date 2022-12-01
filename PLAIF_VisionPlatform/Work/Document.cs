@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PLAIF_VisionPlatform.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -22,8 +23,10 @@ namespace PLAIF_VisionPlatform.Work
         private Document() 
         {
             userinfo = new Userinfo();
+            jsonUtil = new JsonUtil();
         }
 
         public Userinfo userinfo { get; set; }
+        public JsonUtil jsonUtil { get; set; }
     }
 }

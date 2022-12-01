@@ -19,6 +19,8 @@ using System.Windows.Media.Imaging;
 using System.Numerics;
 using System.Windows.Media;
 using System.Windows.Threading;
+using PLAIF_VisionPlatform.Utilities;
+using PLAIF_VisionPlatform.Work;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
@@ -130,10 +132,6 @@ namespace PLAIF_VisionPlatform.ViewModel
                 return true;
             });
             task.Wait();
-
-            //Create2DBitMapImage("");
-            //Create3DBitMapImage();
-            //CreatePointCloud();
         }
 
         public void Create2DBitMapImage(string message)
@@ -145,7 +143,6 @@ namespace PLAIF_VisionPlatform.ViewModel
             Mat rgba = new Mat(1200, 1944, MatType.CV_8UC4, bByte);
             Mat rgb = new Mat();
             Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
-
 
             // window Form과 연결할 경우가 아니면, 문제없다.
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
@@ -163,6 +160,7 @@ namespace PLAIF_VisionPlatform.ViewModel
 
                 }
             }));
+
 
             #region json파일로 읽어서 보여주기 - 나중에 디버깅할때 필요할까?
 
