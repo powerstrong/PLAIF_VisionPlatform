@@ -9,8 +9,8 @@
 
             <ResourceDictionary.MergedDictionaries>
 
-                <!--<ResourceDictionary Source="Styles.xaml"/>
-                <ResourceDictionary Source="DataTemplates.xaml"/>-->
+                <!--<ResourceDictionary Source="Styles.xaml"/>-->
+                <ResourceDictionary Source="DataTemplate.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
 

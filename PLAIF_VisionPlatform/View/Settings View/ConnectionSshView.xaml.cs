@@ -10,19 +10,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PLAIF_VisionPlatform.View.Settings_View
 {
     /// <summary>
-    /// LearingModelPage.xaml에 대한 상호 작용 논리
+    /// ConnectionSshView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class LearningModelPage : Page
+    public partial class ConnectionSshView : Window
     {
-        public LearningModelPage()
+        public ConnectionSshView()
         {
             InitializeComponent();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext).Password = ((PasswordBox)sender).Password; }
         }
     }
 }

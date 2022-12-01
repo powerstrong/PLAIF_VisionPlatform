@@ -22,7 +22,7 @@
     <Compile Update="View\Settings View\ConnectionPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Settings View\LearningModelPage.xaml.cs">
+    <Compile Update="View\Settings View\ConnectionSshView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Settings View\PickPosePage.xaml.cs">
@@ -59,7 +59,7 @@
     <Page Update="View\Settings View\ConnectionPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Settings View\LearningModelPage.xaml">
+    <Page Update="View\Settings View\ConnectionSshView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Settings View\PickPosePage.xaml">

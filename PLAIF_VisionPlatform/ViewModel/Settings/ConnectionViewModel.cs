@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,12 +13,14 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
     class ConnectionViewModel : INotifyPropertyChanged
     {
-        public IAsyncRelayCommand? SshkeyClick { get; set; }
+        public RelayCommand SshCreateClick { get; set; }
+        public IAsyncRelayCommand? SshDeleteClick { get; set; }
         public IAsyncRelayCommand? ConnectClick { get; set; }
 
         public ConnectionViewModel()
         {
-            SshkeyClick = new AsyncRelayCommand(SshkeyCommand);
+            SshCreateClick = new RelayCommand(SshCreateCommand);
+            //SshDeleteClick = new AsyncRelayCommand(SshDeleteCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand);
         }
         private string uriText = "ws://192.168.1.75:9090";
@@ -42,15 +45,11 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-        public async Task SshkeyCommand()
+        ConnectionSshViewService sshViewService = new ConnectionSshViewService();
+
+        private void SshCreateCommand()
         {
-            Task<bool> task = Task.Run(() =>
-            {
-                //Process.Start(@"./bash/ssh-creater.bat");
-                return true;
-            });
-            await task;
-            return;
+            sshViewService.CreateWindow();
         }
         
         public async Task ConnectCommand()
