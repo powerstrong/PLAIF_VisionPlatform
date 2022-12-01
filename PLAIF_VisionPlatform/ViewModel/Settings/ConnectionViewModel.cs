@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
@@ -51,12 +52,39 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
             sshViewService.CreateWindow();
         }
+
+        private bool ValidateIPv4(string ipString)
+        {
+            if (String.IsNullOrWhiteSpace(ipString))
+            {
+                return false;
+            }
+
+            string[] splitValues = ipString.Split('.');
+            if (splitValues.Length != 4)
+            {
+                return false;
+            }
+
+            byte tempForParsing;
+
+            return splitValues.All(r => byte.TryParse(r, out tempForParsing));
+        }
         
         public async Task ConnectCommand()
         {
+            string ip_address = Document.Instance.userinfo.ip_address;
+            if (ValidateIPv4(ip_address) == false)
+            {
+                MessageBox.Show("입력한 IP 주소가 형식에 맞지 않습니다");
+                return;
+            }
+
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnecting..." : "Connecting..";
             Task<bool> task = Task.Run(() =>
             {
+                string uri = String.Format("ws://{0}:9090", ip_address);
+
                 RosbridgeMgr.Instance.Connect(uriText);
 
                 return true;

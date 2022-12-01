@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using PLAIF_VisionPlatform.ViewModel.Command;
+using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,35 +24,40 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         private void OKWindow(Window window)
         {
+            var userinfo = Document.Instance.userinfo;
+            userinfo.ip_address = _ipAddress;
+            userinfo.username = _username;
+            userinfo.password = _password;
+
             if (window != null)
             {
                 window.Close();
             }
         }
 
-        private string ipAddress;
+        private string _ipAddress;
 
         public string IpAddress
         {
-            get { return ipAddress; }
-            set { ipAddress = value; }
+            get { return _ipAddress; }
+            set { _ipAddress = value; }
         }
 
-        private string password;
+        private string _password;
 
         public string Password
         {
-            get { return password; }
-            set { password = value; }
+            get { return _password; }
+            set { _password = value; }
         }
 
         
-        private string username;
+        private string _username;
 
         public string Username
         {
-            get { return username; }
-            set { username = value; }
+            get { return _username; }
+            set { _username = value; }
         }
 
 
