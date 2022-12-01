@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <None Remove="resource\apply_now.png" />
-    <None Remove="resource\calibration.png" />
     <None Remove="resource\file_dialog.png" />
     <None Remove="resource\pause.png" />
     <None Remove="resource\screenshot.png" />
@@ -43,9 +42,6 @@
   <ItemGroup>
     <Resource Include="resource\apply_now.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resource\calibration.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="resource\file_dialog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

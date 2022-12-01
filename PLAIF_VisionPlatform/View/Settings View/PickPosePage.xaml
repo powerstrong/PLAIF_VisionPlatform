@@ -9,6 +9,34 @@
       Title="PickPosePage">
 
     <Grid>
-        <TextBlock Text="PickPosePage" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFB197FC" FontSize="60" FontWeight="Bold"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <StackPanel>
+                <Button Margin="10" Content="Import polygon file (*.ply)" FontSize="14" Height="30"></Button>
+                <Button Margin="10 5" Content="이 자리에는 Pick pose 3D View가 들어올 예정" Foreground="DarkBlue" FontSize="20" Height="200"></Button>
+                <TextBlock Text="Pick poses list" Margin="10 5 0 0" FontSize="14"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <ListBox Margin="10 5 0 5" Height="150" FontSize="14"></ListBox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <StackPanel>
+                            <Button Content="Add" Margin="10 5" FontSize="14" Height="30"/>
+                            <Button Content="Delete" Margin="10 5" FontSize="14" Height="30"/>
+                            <Button Content="Modify" Margin="10 5" FontSize="14" Height="30"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
