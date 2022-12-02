@@ -5,9 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PLAIF_VisionPlatform.View.Settings_View"
       mc:Ignorable="d" 
+      xmlns:vm="clr-namespace:PLAIF_VisionPlatform.ViewModel.Settings"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CameraPage">
 
+    <Page.DataContext>
+        <vm:CameraViewModel/>
+    </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15"/>
@@ -29,9 +33,10 @@
                 </TextBlock>
                 <TextBox Margin="0" Height="80" TextAlignment="Center"
                      AcceptsReturn="True"
-                     TextWrapping="Wrap"/>
+                     TextWrapping="Wrap"
+                     Text="{Binding CalibrationMatrix}"    />
                 <TextBlock Text="Camera name" Margin="0 15 0 5" FontSize="14"/>
-                <TextBox FontSize="14"></TextBox>
+                <TextBox FontSize="14" Text="{Binding CameraName}"/>
                 <TextBlock Text="Zivid Studio setting file" Margin="0 15 0 5" FontSize="14">
                     <TextBlock.ToolTip>
                         <ToolTip>
@@ -45,11 +50,10 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-
-                    <TextBox Grid.Column="0" FontSize="14" Width="Auto"></TextBox>
-                    <Button Grid.Column="1" Content="..." Width="30" FontSize="14"></Button>
+                    <TextBox Grid.Column="0" FontSize="14" Width="Auto" Text="{Binding ZividSettingFile}" IsReadOnly="True"></TextBox>
+                    <Button Grid.Column="1" Content="Choose setting file.." Width="140" FontSize="14" Command="{Binding ZividSettingClick}"></Button>
                 </Grid>
                     
                     

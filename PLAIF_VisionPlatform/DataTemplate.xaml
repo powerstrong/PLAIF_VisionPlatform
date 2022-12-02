@@ -7,13 +7,8 @@
 
 <!--Data Templates apply Views to ViewModel objects displayed in the UI-->
 
-    <DataTemplate DataType="{x:Type viewmodelsettings:ConnectionViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodelsettings:ConnectionViewModel}">
         <viewsettings:ConnectionSshView/>
-    </DataTemplate>
-
-    <!--Connection Page-->
-    <!--<DataTemplate DataType="{x:Type viewmodel:ConnectionViewModel}">
-        <view:ConnectionPage/>
     </DataTemplate>-->
 
 </ResourceDictionary>

@@ -6,8 +6,12 @@
       xmlns:local="clr-namespace:PLAIF_VisionPlatform.View.Settings_View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:vm="clr-namespace:PLAIF_VisionPlatform.ViewModel.Settings"
       Title="VisionParamPage">
 
+    <Page.DataContext>
+        <vm:VisionParamViewModel/>
+    </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15"/>
@@ -27,7 +31,7 @@
                         </ToolTip>
                     </TextBlock.ToolTip>
                 </TextBlock>
-                <TextBox Margin="0" TextAlignment="Center" FontSize="14"/>
+                <TextBox Margin="0" TextAlignment="Center" FontSize="14" Text="{Binding ActionName}"/>
                 <TextBlock Text="Resize" Margin="0 15 0 5" FontSize="14">
                     <TextBlock.ToolTip>
                         <ToolTip>
@@ -40,9 +44,9 @@
                 </TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="w" Margin="10 0" FontSize="14" Width="14" TextAlignment="Right"/>
-                    <TextBox Width="100" FontSize="14"/>
+                    <TextBox Width="100" FontSize="14" Text="{Binding W}"/>
                     <TextBlock Text="h" Margin="20 0 10 0" FontSize="14" Width="14" TextAlignment="Right"/>
-                    <TextBox Width="100" FontSize="14"/>
+                    <TextBox Width="100" FontSize="14" Text="{Binding H}"/>
                 </StackPanel>
                 <TextBlock Text="ROI (Region of interest)" Margin="0 15 0 5" FontSize="14">
                     <TextBlock.ToolTip>
@@ -56,15 +60,15 @@
                 </TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="xs" Margin="10 0" FontSize="14" Width="14"/>
-                    <TextBox Width="100" FontSize="14"/>
+                    <TextBox Width="100" FontSize="14" Text="{Binding Xs}"/>
                     <TextBlock Text="xe" Margin="20 0 10 0" FontSize="14" Width="14"/>
-                    <TextBox Width="100" FontSize="14"/>
+                    <TextBox Width="100" FontSize="14" Text="{Binding Xe}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 5">
                     <TextBlock Text="ys" Margin="10 0" FontSize="14" Width="14"/>
-                    <TextBox Width="100" FontSize="14"/>
+                    <TextBox Width="100" FontSize="14" Text="{Binding Ys}"/>
                     <TextBlock Text="ye" Margin="20 0 10 0" FontSize="14" Width="14"/>
-                    <TextBox Width="100" FontSize="14"/>
+                    <TextBox Width="100" FontSize="14" Text="{Binding Ye}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
