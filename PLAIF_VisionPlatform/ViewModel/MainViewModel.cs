@@ -25,7 +25,7 @@ using PLAIF_VisionPlatform.Interface;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
-    public class MainViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged, Observer
     {
         public ICommand ImportClick { get; set; }
         public ICommand ExportClick { get; set; }
@@ -80,6 +80,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             ImportClick = new RelayCommand<object>(ImportCommand, CanExcute_ImportButton); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
             ExportClick = new RelayCommand<object>(ExportCommand, CanExcute_ExportButton);
             CaptureClick = new RelayCommand<object>(CaptureCommand, CanExcute_CaptureButton);
+            Document.Instance.updater.Add(this);
         }
 
         public void ImportCommand(object msg)
@@ -96,6 +97,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 task1.Wait();
 
                 Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
+                Document.Instance.updater.Notify();
             }
             catch
             {
@@ -438,9 +440,9 @@ namespace PLAIF_VisionPlatform.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Update()
+        public new void Update()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

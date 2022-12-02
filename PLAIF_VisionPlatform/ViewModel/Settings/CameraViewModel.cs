@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Win32;
+using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,28 @@ using System.Windows.Input;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    internal class CameraViewModel : ViewModelBase, INotifyPropertyChanged
+    internal class CameraViewModel : INotifyPropertyChanged, Observer
     {
         ICommand ZividSettingClick;
 
         public CameraViewModel()
         {
+            Document.Instance.updater.Add(this);
             ZividSettingClick = new RelayCommand(OnZividSettingClick);
+
+            this.Update();
         }
-        
+
+        ~CameraViewModel()
+        {
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["Cam1"]["calibration"]["matrix"] = CalibrationMatrix;
+
+        }
+
         public new void Update()
         {
-            //CalibrationMatrix = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["Cam1"]["calibration"]["matrix"].ToString();
-            //CameraName = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["camera"].ToString();
+            CalibrationMatrix = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["Cam1"]["calibration"]["matrix"].ToString();
+            CameraName = "topic 이름에서 camera name이 들어가는 부분 변경 필요";
         }
 
         private string calibrationMatrix;

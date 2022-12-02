@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    class ConnectionViewModel : ViewModelBase, INotifyPropertyChanged
+    class ConnectionViewModel : INotifyPropertyChanged, Observer
     {
         public RelayCommand SshCreateClick { get; set; }
         public IAsyncRelayCommand? SshDeleteClick { get; set; }
@@ -22,6 +22,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         public ConnectionViewModel()
         {
+            Document.Instance.updater.Add(this);
             SshCreateClick = new RelayCommand(SshCreateCommand);
             //SshDeleteClick = new AsyncRelayCommand(SshDeleteCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand, CanExcute_ConnectionButton);
@@ -77,9 +78,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Update()
+        public new void Update()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

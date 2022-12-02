@@ -145,7 +145,7 @@
             </StackPanel>-->
         </Grid>
         <StackPanel Grid.Column="3" Orientation="Vertical">
-            <Button x:Name="ImportBtn" Height="50" Background="#FF00AEEF" Command="{Binding ImportClick}" Margin="1">
+            <Button x:Name="ImportBtn" Height="50" Background="#FF00AEEF" Command="{Binding ImportClick}" Margin="1" ToolTip="Import">
                 <Image Source="../resource/Import.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -153,7 +153,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="ExportBtn" Height="50" Background="#FFF05051" Command="{Binding ExportClick}" Margin="1 0 1 1">
+            <Button x:Name="ExportBtn" Height="50" Background="#FFF05051" Command="{Binding ExportClick}" Margin="1 0 1 1" ToolTip="Export">
                 <Image Source="../resource/export.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -169,7 +169,7 @@
                     </Style>
                 </Button.Resources>
             </Button>-->
-            <Button x:Name="CaptureBtn" Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 1 1 1">
+            <Button x:Name="CaptureBtn" Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 1 1 1" ToolTip="Capture screenshot">
                 <Image Source="../resource/screenshot.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">

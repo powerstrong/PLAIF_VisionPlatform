@@ -17,12 +17,13 @@ using System.Windows.Controls;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    class ConnectionSshViewModel : ViewModelBase, INotifyPropertyChanged
+    class ConnectionSshViewModel : INotifyPropertyChanged, Observer
     {
         public RelayCommand<Window> OKWindowCommand { get; private set; }
 
         public ConnectionSshViewModel()
         {
+            Document.Instance.updater.Add(this);
             OKWindowCommand = new RelayCommand<Window>(OKWindow);
             var userinfo = Document.Instance.userinfo;
             IpAddress = userinfo.ip_address;
@@ -98,7 +99,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         public void Update()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

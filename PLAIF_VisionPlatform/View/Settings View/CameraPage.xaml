@@ -31,7 +31,7 @@
                         </ToolTip>
                     </TextBlock.ToolTip>
                 </TextBlock>
-                <TextBox Margin="0" Height="80" TextAlignment="Center"
+                <TextBox Margin="0" Height="Auto" TextAlignment="Center"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
                      Text="{Binding CalibrationMatrix}"    />

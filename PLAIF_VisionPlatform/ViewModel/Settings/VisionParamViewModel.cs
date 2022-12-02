@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PLAIF_VisionPlatform.Interface;
+using PLAIF_VisionPlatform.Work;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,9 +9,15 @@ using System.Threading.Tasks;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    internal class VisionParamViewModel : ViewModelBase, INotifyPropertyChanged
+    internal class VisionParamViewModel : INotifyPropertyChanged, Observer
     {
-		private string? actionName;
+		public VisionParamViewModel()
+		{
+            Document.Instance.updater.Add(this);
+            this.Update();
+        }
+
+        private string? actionName;
 
 		public string ActionName
         {
@@ -64,6 +72,17 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 			get { return ye; }
 			set { ye = value; }
 		}
+
+        public new void Update()
+		{
+            ActionName = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["action"]["action_name"].ToString();
+            W = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][0].ToString();
+            H = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][1].ToString();
+            Xs = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][0].ToString();
+            Xe = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][1].ToString();
+            Ys = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][2].ToString();
+            Ye = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][3].ToString();
+        }
 
 		public event PropertyChangedEventHandler? PropertyChanged;
     }

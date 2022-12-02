@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    class CalibrationViewModel : ViewModelBase, INotifyPropertyChanged
+    class CalibrationViewModel : INotifyPropertyChanged
     {
         public RelayCommand OpenClick { get; set; }
         public IAsyncRelayCommand? SendClick { get; set; }
