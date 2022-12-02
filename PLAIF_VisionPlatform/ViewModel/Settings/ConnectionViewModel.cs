@@ -26,16 +26,6 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             //SshDeleteClick = new AsyncRelayCommand(SshDeleteCommand);
             ConnectClick = new AsyncRelayCommand(ConnectCommand);
         }
-        private string uriText = "ws://192.168.1.75:9090";
-        public string UriText
-        {
-            get { return uriText; }
-            set
-            {
-                uriText = value;
-                NotifyPropertyChanged(nameof(UriText));
-            }
-        }
         private string connectButtonText = "Connect to ROS";
 
         public string ConnectButtonText
@@ -75,9 +65,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             task.Wait();
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnect from ROS" : "Connect to ROS";
 
-            // 연결 수립 후 yaml 데이터 가져오기
-            string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, ip_address);
-            PowershellUtil.RunPowershell(cmdGetYaml);
+            //// 연결 수립 후 yaml 데이터 가져오기
+            //string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, ip_address);
+            //PowershellUtil.RunPowershell(cmdGetYaml);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
