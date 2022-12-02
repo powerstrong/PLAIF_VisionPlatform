@@ -21,10 +21,11 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using PLAIF_VisionPlatform.Utilities;
 using PLAIF_VisionPlatform.Work;
+using PLAIF_VisionPlatform.Interface;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public DelegateCommand StartClick { get; set; }
         public IAsyncRelayCommand StopClick { get; set; }
@@ -412,6 +413,11 @@ namespace PLAIF_VisionPlatform.ViewModel
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }

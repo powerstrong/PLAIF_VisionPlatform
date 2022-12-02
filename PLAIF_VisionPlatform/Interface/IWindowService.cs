@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PLAIF_VisionPlatform.Work
+namespace PLAIF_VisionPlatform.Interface
 {
     interface IWindowService
     {

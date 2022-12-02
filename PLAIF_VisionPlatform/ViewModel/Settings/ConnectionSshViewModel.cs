@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Utilities;
 using PLAIF_VisionPlatform.ViewModel.Command;
 using PLAIF_VisionPlatform.Work;
@@ -16,13 +17,17 @@ using System.Windows.Controls;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    class ConnectionSshViewModel : INotifyPropertyChanged
+    class ConnectionSshViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public RelayCommand<Window> OKWindowCommand { get; private set; }
 
         public ConnectionSshViewModel()
         {
             OKWindowCommand = new RelayCommand<Window>(OKWindow);
+            var userinfo = Document.Instance.userinfo;
+            IpAddress = userinfo.ip_address;
+            Username = userinfo.username;
+            Password = userinfo.password;
         }
 
         private void OKWindow(Window window)
@@ -32,11 +37,11 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                 MessageBox.Show("입력한 IP 주소가 형식에 맞지 않습니다");
                 return;
             }
-            if(_username== null)
-            {
-                MessageBox.Show("사용자 이름을 입력하세요");
-                return;
-            }
+            //if(_username== null)
+            //{
+            //    MessageBox.Show("사용자 이름을 입력하세요");
+            //    return;
+            //}
 
             var userinfo = Document.Instance.userinfo;
             userinfo.ip_address = _ipAddress;
@@ -89,6 +94,11 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }

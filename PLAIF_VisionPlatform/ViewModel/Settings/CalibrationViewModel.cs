@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Win32;
+using PLAIF_VisionPlatform.Interface;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    class CalibrationViewModel : INotifyPropertyChanged
+    class CalibrationViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public RelayCommand OpenClick { get; set; }
         public IAsyncRelayCommand? SendClick { get; set; }
@@ -61,6 +62,11 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }

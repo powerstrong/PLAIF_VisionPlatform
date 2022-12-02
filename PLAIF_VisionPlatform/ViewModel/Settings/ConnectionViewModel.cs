@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Utilities;
 using PLAIF_VisionPlatform.Work;
 using System;
@@ -13,7 +14,7 @@ using System.Windows;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    class ConnectionViewModel : INotifyPropertyChanged
+    class ConnectionViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public RelayCommand SshCreateClick { get; set; }
         public IAsyncRelayCommand? SshDeleteClick { get; set; }
@@ -75,13 +76,19 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnect from ROS" : "Connect to ROS";
 
             // 연결 수립 후 yaml 데이터 가져오기
-
+            string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, ip_address);
+            PowershellUtil.RunPowershell(cmdGetYaml);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }
