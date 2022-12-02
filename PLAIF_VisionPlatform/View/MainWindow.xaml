@@ -145,31 +145,31 @@
             </StackPanel>-->
         </Grid>
         <StackPanel Grid.Column="3" Orientation="Vertical">
-            <Button x:Name="startBtn" Height="50" Background="LightGreen" Command="{Binding StartClick}" Margin="1">
-                <Image Source="../resource/start.png"/>
+            <Button x:Name="ImportBtn" Height="50" Background="#FF00AEEF" Command="{Binding ImportClick}" Margin="1">
+                <Image Source="../resource/Import.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="8"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Height="50" Background="#FFFD6969" Command="{Binding StopClick}" Margin="1 0 1 1">
-                <Image Source="../resource/stop.png"/>
+            <Button x:Name="ExportBtn" Height="50" Background="#FFF05051" Command="{Binding ExportClick}" Margin="1 0 1 1">
+                <Image Source="../resource/export.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="8"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button Height="50" Background="Yellow" Click="Button_Click" Margin="1 0 1 1">
+            <!--<Button Height="50" Background="Yellow" Click="Button_Click" Margin="1 0 1 1">
                 <Image Source="../resource/pause.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="8"/>
                     </Style>
                 </Button.Resources>
-            </Button>
-            <Button Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 1 1 1">
+            </Button>-->
+            <Button x:Name="CaptureBtn" Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 1 1 1">
                 <Image Source="../resource/screenshot.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">

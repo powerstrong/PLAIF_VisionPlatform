@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using PLAIF_VisionPlatform.Model;
+using PLAIF_VisionPlatform.Work;
 using Rosbridge.Client;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,20 @@ namespace PLAIF_VisionPlatform.ViewModel
 {
     public sealed class RosbridgeMgr
     {
-        private MessageDispatcher _md;
-        private bool _isConnected = false;
+        private MessageDispatcher _md; 
         private MainViewModel _mainViewModel;
         private RosbridgeModel _rosbrdgModel;
+
+        private bool _isConnected;
+
+        public bool IsConnected
+        {
+            get { return _isConnected; }
+            set { 
+                _isConnected = value;
+                Document.Instance.IsConnected = value;
+            }
+        }
 
         List<Subscriber> _subscribers;
 
@@ -29,6 +40,7 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             _rosbrdgModel = new RosbridgeModel();
             _subscribers = new List<Subscriber>();
+            IsConnected = false;
         }
         private static readonly Lazy<RosbridgeMgr> _instance = new Lazy<RosbridgeMgr>(() => new RosbridgeMgr());
         public static RosbridgeMgr Instance => _instance.Value;
@@ -40,13 +52,13 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         public async void Connect(string uri)
         {
-            if (_isConnected)
+            if (IsConnected)
             {
                 foreach (var s in _subscribers)
                 {
                     s.UnsubscribeAsync().Wait();
                 }
-                _isConnected = false;
+                IsConnected = false;
                 _subscribers.Clear();
 
                 await _md.StopAsync();
@@ -72,12 +84,11 @@ namespace PLAIF_VisionPlatform.ViewModel
                     return;
                 }
 
-                _isConnected = true;
+                IsConnected = true;
             }
             //ToggleConnected();
         }
 
-        public bool IsConnected() { return _isConnected; }
         public async void Capture()
         {
             ServiceCallMsg("/zivid_camera/capture", "[]");

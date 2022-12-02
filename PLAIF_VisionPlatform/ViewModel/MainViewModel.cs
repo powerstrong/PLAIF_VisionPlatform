@@ -27,8 +27,9 @@ namespace PLAIF_VisionPlatform.ViewModel
 {
     public class MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        public DelegateCommand StartClick { get; set; }
-        public IAsyncRelayCommand StopClick { get; set; }
+        public ICommand ImportClick { get; set; }
+        public ICommand ExportClick { get; set; }
+
         public ICommand PauseClick { get; set; }
         public ICommand CaptureClick { get; set; }
 
@@ -76,63 +77,85 @@ namespace PLAIF_VisionPlatform.ViewModel
             _rosmgr = RosbridgeMgr.Instance;
             _rosmgr.SetMainModel(this);
 
-            StartClick = new DelegateCommand(DelegateTestCommand); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
-            StopClick = new AsyncRelayCommand(AsyncTestCommand);
-            CaptureClick = new AsyncRelayCommand(CaptureCommand);
+            ImportClick = new RelayCommand<object>(ImportCommand, CanExcute_ImportButton); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
+            ExportClick = new RelayCommand<object>(ExportCommand, CanExcute_ExportButton);
+            CaptureClick = new RelayCommand<object>(CaptureCommand, CanExcute_CaptureButton);
         }
 
-        //      private int progressValue;
-        //      public int ProgressValue
-        //      {
-        //          get { return progressValue; }
-        //          set
-        //          {
-        //              progressValue = value;
-        //              NotifyPropertyChanged(nameof(ProgressValue));
-        //          }
-        //      }
-
-        public void DelegateTestCommand(object msg)
+        public void ImportCommand(object msg)
         {
-
-        }
-
-        public async Task AsyncTestCommand()
-        {
-            int w = 0;
-
-            // Task.Run을 통해 Task를 생성하고 비동기 작업을 바로 실행
-            Task task = Task.Run(() =>
+            try
             {
-                // 여기 안에 오래 걸리는 작업을 넣어준다
-                for (int i = 0; i < 10; i++)
+                Task task1 = Task.Run(() =>
                 {
-                    Thread.Sleep(500);
-                }
-            });
-            Task<int> task2 = Task.Run(() =>
+                    //Import File to Linux
+                    string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                    PowershellUtil.RunPowershell(cmdGetYaml);
+                });
+
+                task1.Wait();
+
+                Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
+            }
+            catch
             {
-                for (int i = 0; i < 10; i++)
-                {
-                    Thread.Sleep(1000);
-                    w = i;
-                }
-                return 5;
-            });
-            
-            w = await task2;
-            MessageBox.Show(w.ToString());
+                MessageBox.Show("정상적으로 Import되지 않았습니다.");
+            }
+
         }
 
-        public async Task CaptureCommand()
+        public bool CanExcute_ImportButton(object parameter)
         {
-            Task<bool> task = Task.Run(() =>
-            {
-                _rosmgr.Capture();
+            return Document.Instance.IsConnected ? true : false;
+        }
 
-                return true;
-            });
-            task.Wait();
+        public void ExportCommand(object parameter)
+        {
+            try
+            {
+                Task task1 = Task.Run(() =>
+                {
+                    //Export File to Linux
+                    string cmdGetYaml = String.Format("scp config_file.yaml {1}@{2}:~/catkin_ws/config/config_file", System.IO.Directory.GetCurrentDirectory(), Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                    PowershellUtil.RunPowershell(cmdGetYaml);
+                });
+
+                task1.Wait();
+            }
+            catch
+            {
+                MessageBox.Show("Config File을 찾을 수 없습니다.");
+            }
+
+        }
+
+        public bool CanExcute_ExportButton(object parameter)
+        {
+            return Document.Instance.IsConnected ? true : false;
+        }
+
+        public void CaptureCommand(object parameter)
+        {
+            try
+            {
+                Task<bool> task = Task.Run(() =>
+                {
+                    _rosmgr.Capture();
+
+                    return true;
+                });
+                task.Wait();
+            }
+            catch
+            {
+                MessageBox.Show("Capture가 정상적으로 진행되지 않았습니다.");
+            }
+
+        }
+
+        public bool CanExcute_CaptureButton(object parameter)
+        {
+            return Document.Instance.IsConnected ? true : false;
         }
 
         public void Create2DBitMapImage(string message)

@@ -24,7 +24,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
             SshCreateClick = new RelayCommand(SshCreateCommand);
             //SshDeleteClick = new AsyncRelayCommand(SshDeleteCommand);
-            ConnectClick = new AsyncRelayCommand(ConnectCommand);
+            ConnectClick = new AsyncRelayCommand(ConnectCommand, CanExcute_ConnectionButton);
         }
         private string connectButtonText = "Connect to ROS";
 
@@ -54,7 +54,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                 return;
             }
 
-            ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnecting..." : "Connecting..";
+            ConnectButtonText = RosbridgeMgr.Instance.IsConnected ? "Disconnecting..." : "Connecting..";
             Task<bool> task = Task.Run(() =>
             {
                 string uri = String.Format("ws://{0}:9090", ip_address);
@@ -63,11 +63,12 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                 return true;
             });
             task.Wait();
-            ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnect from ROS" : "Connect to ROS";
+            ConnectButtonText = RosbridgeMgr.Instance.IsConnected ? "Disconnect from ROS" : "Connect to ROS";
+        }
 
-            //// 연결 수립 후 yaml 데이터 가져오기
-            //string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, ip_address);
-            //PowershellUtil.RunPowershell(cmdGetYaml);
+        public bool CanExcute_ConnectionButton()
+        {
+            return Document.Instance.IsExistSSHCod? true : false;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

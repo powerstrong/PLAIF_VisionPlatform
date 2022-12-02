@@ -10,7 +10,9 @@
 
   <ItemGroup>
     <None Remove="resource\apply_now.png" />
+    <None Remove="resource\export.png" />
     <None Remove="resource\file_dialog.png" />
+    <None Remove="resource\Import.png" />
     <None Remove="resource\pause.png" />
     <None Remove="resource\screenshot.png" />
     <None Remove="resource\send_green.png" />
@@ -43,8 +45,14 @@
     <Resource Include="resource\apply_now.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="resource\export.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="resource\file_dialog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resource\Import.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="resource\pause.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -50,6 +50,10 @@ namespace PLAIF_VisionPlatform.Work
             userinfo = new Userinfo();
             jsonUtil = new JsonUtil();
             updater = new Updater();
+
+            IsConnected = false;
+            IsExistSSHCod = true;
+
             GetUserInfo();
         }
 
@@ -71,5 +75,9 @@ namespace PLAIF_VisionPlatform.Work
         public Userinfo userinfo { get; set; }
         public JsonUtil jsonUtil { get; set; }
         public Updater updater { get; set; }
+
+        public bool IsExistSSHCod { get; set; }
+        public bool IsConnected { get; set; }
+
     }
 }
