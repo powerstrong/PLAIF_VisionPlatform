@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using PLAIF_VisionPlatform.Utilities;
 using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
@@ -53,28 +54,10 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             sshViewService.CreateWindow();
         }
 
-        private bool ValidateIPv4(string ipString)
-        {
-            if (String.IsNullOrWhiteSpace(ipString))
-            {
-                return false;
-            }
-
-            string[] splitValues = ipString.Split('.');
-            if (splitValues.Length != 4)
-            {
-                return false;
-            }
-
-            byte tempForParsing;
-
-            return splitValues.All(r => byte.TryParse(r, out tempForParsing));
-        }
-        
         public async Task ConnectCommand()
         {
             string ip_address = Document.Instance.userinfo.ip_address;
-            if (ValidateIPv4(ip_address) == false)
+            if (PowershellUtil.ValidateIPv4(ip_address) == false)
             {
                 MessageBox.Show("입력한 IP 주소가 형식에 맞지 않습니다");
                 return;
@@ -84,13 +67,15 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             Task<bool> task = Task.Run(() =>
             {
                 string uri = String.Format("ws://{0}:9090", ip_address);
-
-                RosbridgeMgr.Instance.Connect(uriText);
+                RosbridgeMgr.Instance.Connect(uri);
 
                 return true;
             });
             task.Wait();
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected() ? "Disconnect from ROS" : "Connect to ROS";
+
+            // 연결 수립 후 yaml 데이터 가져오기
+
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
