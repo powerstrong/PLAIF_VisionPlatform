@@ -79,5 +79,7 @@ namespace PLAIF_VisionPlatform.Work
         public bool IsExistSSHCod { get; set; }
         public bool IsConnected { get; set; }
 
+        public string ZividSettingFile { get; set; }
+
     }
 }

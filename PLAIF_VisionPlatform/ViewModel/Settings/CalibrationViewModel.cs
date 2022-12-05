@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Win32;
 using PLAIF_VisionPlatform.Interface;
+using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

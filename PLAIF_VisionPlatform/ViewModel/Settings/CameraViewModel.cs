@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
@@ -34,8 +35,16 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         public void Update()
         {
-            CalibrationMatrix = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"]!.ToString();
-            CameraName = "topic 이름에서 camera name 부분 변경 필요";
+            try
+            {
+                CalibrationMatrix = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"]!.ToString();
+                CameraName = "topic 이름에서 camera name 부분 변경 필요";
+            }
+            catch
+            {
+                MessageBox.Show("Import가 필요합니다.");
+            }
+
         }
 
         private string calibrationMatrix;
@@ -63,7 +72,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         public string ZividSettingFile
         {
             get { return zividSettingFile; }
-            set { zividSettingFile = value; 
+            set { zividSettingFile = value;
+                Document.Instance.ZividSettingFile = value;
                 NotifyPropertyChanged(nameof(zividSettingFile));
             }
         }

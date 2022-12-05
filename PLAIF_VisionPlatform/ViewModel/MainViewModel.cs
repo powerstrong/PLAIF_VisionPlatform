@@ -118,7 +118,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 Task task1 = Task.Run(() =>
                 {
                     //Export File to Linux
-                    string cmdGetYaml = String.Format("scp config_file.yaml {1}@{2}:~/catkin_ws/config/config_file", System.IO.Directory.GetCurrentDirectory(), Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                    string cmdGetYaml = String.Format("scp config_file.yaml {0}@{1}:~/catkin_ws/config/config_file", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
                     PowershellUtil.RunPowershell(cmdGetYaml);
                 });
 
@@ -127,6 +127,27 @@ namespace PLAIF_VisionPlatform.ViewModel
             catch
             {
                 MessageBox.Show("Config File을 찾을 수 없습니다.");
+            }
+
+            try
+            {
+                Task task2 = Task.Run(() =>
+                {
+                    string strZividSettingFilePath = Document.Instance.ZividSettingFile;
+
+                    if(strZividSettingFilePath != null && strZividSettingFilePath != "")
+                    {
+                        //Export File to Linux
+                        string cmdGetYaml = String.Format("scp {0} {1}@{2}:~/catkin_ws/config/config_file", strZividSettingFilePath, Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                        PowershellUtil.RunPowershell(cmdGetYaml);
+                    }
+                });
+
+                task2.Wait();
+            }
+            catch
+            {
+                MessageBox.Show("Zivid Setting File을 찾을 수 없습니다.");
             }
 
         }
