@@ -25,7 +25,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         public PickposeViewModel()
         {
             Document.Instance.updater.Add(this);
-            this.Update();
+            this.UpdateFromJson();
 
             ImportPlyClick = new RelayCommand(ImportPlyCommand);
             AddClick = new RelayCommand(AddCommand);
@@ -59,9 +59,14 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             _pickPoseDefineViewService.CreateWindow();
         }
 
-        public void Update()
+        public void UpdateFromJson()
         {
-            
+
+        }
+
+        public void UpdateToJson()
+        {
+
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

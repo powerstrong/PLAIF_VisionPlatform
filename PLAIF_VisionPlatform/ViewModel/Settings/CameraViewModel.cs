@@ -25,26 +25,66 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             Document.Instance.updater.Add(this);
             ZividSettingClick = new RelayCommand(OnZividSettingClick);
 
-            this.Update();
+            this.UpdateFromJson();
         }
 
         ~CameraViewModel()
         {
-            Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"] = CalibrationMatrix;
+
+
         }
 
-        public void Update()
+        public void UpdateFromJson()
         {
             try
             {
                 CalibrationMatrix = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"]!.ToString();
-                CameraName = "topic 이름에서 camera name 부분 변경 필요";
+
+                string strTopicColor = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["topics"]!["color"]!.ToString();
+                string[] strTopicList = strTopicColor.Split('/');
+                CameraName = strTopicList[1];
             }
             catch
             {
                 MessageBox.Show("Import가 필요합니다.");
             }
+        }
 
+        public void UpdateToJson()
+        {
+            try
+            {
+                //Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"] = CalibrationMatrix;
+
+                //make topic list from cameraname
+                Dictionary<string, string> dicTopicList = new Dictionary<string, string>();
+
+                //get topic key list
+                JToken jt = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["topics"]!;
+                foreach (JProperty j in jt)
+                {
+                    dicTopicList.Add(j.Name, Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["topics"]![j.Name]!.ToString());
+                }
+         
+                //change cameraname to topics
+                string[] strarrTemp;
+                foreach (KeyValuePair<string,string> item in dicTopicList)
+                {
+                    strarrTemp = item.Value.Split('/');
+                    strarrTemp[1] = CameraName;
+
+                    string strTemp = "";
+                    for (int i = 1; i < strarrTemp.Length; i++)
+                    {
+                        strTemp += "/" + strarrTemp[i];
+                    }
+                    Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["topics"]![item.Key] = strTemp;
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         private string calibrationMatrix;

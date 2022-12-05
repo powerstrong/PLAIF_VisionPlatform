@@ -97,7 +97,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 task1.Wait();
 
                 Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
-                Document.Instance.updater.Notify();
+                Document.Instance.updater.NotifyFromJson();
             }
             catch
             {
@@ -115,6 +115,9 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             try
             {
+                Document.Instance.updater.NotifyToJson();
+                Document.Instance.jsonUtil.Save("config_file.yaml", JsonUtil.FileType.Type_Yaml);
+
                 Task task1 = Task.Run(() =>
                 {
                     //Export File to Linux
@@ -461,7 +464,12 @@ namespace PLAIF_VisionPlatform.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Update()
+        public void UpdateFromJson()
+        {
+
+        }
+
+        public void UpdateToJson()
         {
 
         }

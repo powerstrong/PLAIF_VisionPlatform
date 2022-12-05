@@ -31,11 +31,19 @@ namespace PLAIF_VisionPlatform.Work
             observers.Remove(ob);
         }
 
-        public void Notify()
+        public void NotifyFromJson()
         {
             foreach (Observer ob in observers)
             {
-                ob.Update();
+                ob.UpdateFromJson();
+            }
+        }
+
+        public void NotifyToJson()
+        {
+            foreach (Observer ob in observers)
+            {
+                ob.UpdateToJson();
             }
         }
     }

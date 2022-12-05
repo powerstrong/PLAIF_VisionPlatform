@@ -8,6 +8,7 @@ namespace PLAIF_VisionPlatform.Interface
 {
     public interface Observer
     {
-        void Update();
+        void UpdateFromJson();
+        void UpdateToJson();
     }
 }

@@ -97,7 +97,12 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Update()
+        public void UpdateFromJson()
+        {
+
+        }
+
+        public void UpdateToJson()
         {
 
         }

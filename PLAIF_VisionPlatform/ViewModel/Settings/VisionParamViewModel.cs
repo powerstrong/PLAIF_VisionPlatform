@@ -1,4 +1,5 @@
 ﻿using PLAIF_VisionPlatform.Interface;
+using PLAIF_VisionPlatform.View.Settings_View;
 using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 		public VisionParamViewModel()
 		{
             Document.Instance.updater.Add(this);
-            this.Update();
+            this.UpdateFromJson();
         }
 
         private string? actionName;
@@ -90,8 +91,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-        public void Update()
-		{
+        public void UpdateFromJson()
+        {
             try
             {
                 ActionName = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["action"]["action_name"].ToString();
@@ -106,7 +107,17 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             {
                 MessageBox.Show("Import가 필요합니다.");
             }
+        }
 
+        public void UpdateToJson()
+        {
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["action"]["action_name"] = ActionName;
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][0] = W;
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][1] = H;
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][0] = Xs;
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][1] = Xe;
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][2] = Ys;
+            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][3] = Ye;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

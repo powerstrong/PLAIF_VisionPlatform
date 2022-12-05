@@ -10,6 +10,8 @@ namespace PLAIF_VisionPlatform.Interface
     {
         void Add(Observer ob);
         void Remove(Observer ob);
-        void Notify();
+        void NotifyFromJson();
+
+        void NotifyToJson();
     }
 }

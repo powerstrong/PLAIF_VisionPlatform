@@ -31,7 +31,7 @@
                         </ToolTip>
                     </TextBlock.ToolTip>
                 </TextBlock>
-                <TextBox Margin="0" TextAlignment="Center" FontSize="14" Text="{Binding ActionName}"/>
+                <TextBox Margin="0" TextAlignment="Left" FontSize="14" Text="{Binding ActionName}"/>
                 <TextBlock Text="Resize" Margin="0 15 0 5" FontSize="14">
                     <TextBlock.ToolTip>
                         <ToolTip>
