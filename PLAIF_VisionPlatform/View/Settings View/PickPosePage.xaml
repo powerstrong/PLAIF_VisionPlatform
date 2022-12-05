@@ -20,8 +20,8 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1">
             <StackPanel>
-                <Button Margin="10" Content="Import polygon file (*.ply)" FontSize="14" Height="30" Command="{Binding ImportPlyClick}"></Button>
-                <Button Margin="10 5" Content="이 자리에는 Pick pose 3D View가 들어올 예정" Foreground="DarkBlue" FontSize="20" Height="200"></Button>
+                <Button Margin="10" Content="Import polygon file of the object (*.ply)" FontSize="14" Height="30" Command="{Binding ImportPlyClick}"></Button>
+                <Button Margin="10 5" Content="(Pick pose 3D View)" Foreground="DarkBlue" FontSize="20" Height="200"></Button>
                 <TextBlock Text="Pick poses list" Margin="10 5 0 0" FontSize="14"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -30,7 +30,21 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
-                        <ListBox Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}"/>
+                        <ListBox Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding X}"/>
+                                        <TextBlock Text="{Binding Y}"/>
+                                        <TextBlock Text="{Binding Z}"/>
+                                        <TextBlock Text="{Binding Rx}"/>
+                                        <TextBlock Text="{Binding Ry}"/>
+                                        <TextBlock Text="{Binding Rz}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                     <Grid Grid.Column="1">
                         <StackPanel>

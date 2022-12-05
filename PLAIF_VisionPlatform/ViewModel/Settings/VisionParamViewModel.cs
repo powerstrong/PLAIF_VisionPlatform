@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,58 +23,73 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 		public string ActionName
         {
 			get { return actionName; }
-			set { actionName = value; }
-		}
+            set { 
+				actionName = value; 
+                NotifyPropertyChanged(nameof(actionName));
+            }
+        }
 
 		private string w;
 
 		public string W
 		{
 			get { return w; }
-			set { w = value; }
-		}
+			set { w = value; 
+                NotifyPropertyChanged(nameof(w));
+            }
+        }
 
 		private string h;
 
 		public string H
 		{
 			get { return h; }
-			set { h = value; }
-		}
+			set { h = value; 
+                NotifyPropertyChanged(nameof(h));
+            }
+        }
 
 		private string xs;
 
 		public string Xs
 		{
 			get { return xs; }
-			set { xs = value; }
-		}
+			set { xs = value; 
+                NotifyPropertyChanged(nameof(xs));
+            }
+        }
 
 		private string xe;
 
 		public string Xe
 		{
 			get { return xe; }
-			set { xe = value; }
-		}
+			set { xe = value; 
+                NotifyPropertyChanged(nameof(xe));
+            }
+        }
 
 		private string ys;
 
 		public string Ys
 		{
 			get { return ys; }
-			set { ys = value; }
-		}
+			set { ys = value; 
+                NotifyPropertyChanged(nameof(ys));
+            }
+        }
 
 		private string ye;
 
 		public string Ye
 		{
 			get { return ye; }
-			set { ye = value; }
-		}
+			set { ye = value; 
+                NotifyPropertyChanged(nameof(ye));
+            }
+        }
 
-        public new void Update()
+        public void Update()
 		{
             ActionName = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["action"]["action_name"].ToString();
             W = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][0].ToString();
@@ -84,6 +100,10 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             Ye = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][3].ToString();
         }
 
-		public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

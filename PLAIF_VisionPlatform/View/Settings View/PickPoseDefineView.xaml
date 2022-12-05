@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLAIF_VisionPlatform.View.Settings_View"
         mc:Ignorable="d"
-        Title="Define Pick pose" Height="310" Width="400">
+        Title="Define Pick pose" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.3*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
@@ -32,11 +32,11 @@
         <Label Grid.Row="3" Grid.Column="1"  Content="Z" Margin="0 5"/>
         <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Z, Mode=TwoWay}" Margin="0 5"/>
         <Label Grid.Row="4" Grid.Column="1"  Content="RX" Margin="0 5"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding RX, Mode=TwoWay}" Margin="0 5"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Rx, Mode=TwoWay}" Margin="0 5"/>
         <Label Grid.Row="5" Grid.Column="1"  Content="RY" Margin="0 5"/>
-        <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding RY, Mode=TwoWay}" Margin="0 5"/>
+        <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Ry, Mode=TwoWay}" Margin="0 5"/>
         <Label Grid.Row="6" Grid.Column="1"  Content="RZ" Margin="0 5"/>
-        <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding RZ, Mode=TwoWay}" Margin="0 5"/>
+        <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Rz, Mode=TwoWay}" Margin="0 5"/>
         <StackPanel Grid.Row="7" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5">
             <Button Content="OK" Width="60" Margin="10 0"/>
             <Button Content="Cancel" Width="60"/>

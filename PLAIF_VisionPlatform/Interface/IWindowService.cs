@@ -23,4 +23,16 @@ namespace PLAIF_VisionPlatform.Interface
             view.Show();
         }
     }
+
+    class PickPoseDefineViewService : IWindowService
+    {
+        public void CreateWindow()
+        {
+             var view = new PickPoseDefineView
+             {
+                DataContext = new PickPoseDefineViewModel()
+            };
+            view.Show();
+        }
+    }
 }

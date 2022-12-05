@@ -78,7 +78,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public new void Update()
+        public void Update()
         {
 
         }

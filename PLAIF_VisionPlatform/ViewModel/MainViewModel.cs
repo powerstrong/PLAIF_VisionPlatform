@@ -87,14 +87,14 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             try
             {
-                Task task1 = Task.Run(() =>
-                {
-                    //Import File to Linux
-                    string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
-                    PowershellUtil.RunPowershell(cmdGetYaml);
-                });
+                //Task task1 = Task.Run(() =>
+                //{
+                //    //Import File to Linux
+                //    string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                //    PowershellUtil.RunPowershell(cmdGetYaml);
+                //});
 
-                task1.Wait();
+                //task1.Wait();
 
                 Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
                 Document.Instance.updater.Notify();
@@ -440,7 +440,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public new void Update()
+        public void Update()
         {
 
         }

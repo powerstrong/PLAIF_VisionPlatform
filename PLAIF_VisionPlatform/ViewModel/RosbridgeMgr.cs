@@ -66,23 +66,23 @@ namespace PLAIF_VisionPlatform.ViewModel
             }
             else
             {
-                try
-                {
-                    _md = new MessageDispatcher(new Socket(new Uri(uri)), new MessageSerializerV2_0());
-                    _md.StartAsync().Wait();
+                //try
+                //{
+                //    _md = new MessageDispatcher(new Socket(new Uri(uri)), new MessageSerializerV2_0());
+                //    _md.StartAsync().Wait();
                     
-                    foreach (var tuple in _rosbrdgModel.GetSubscribeTopics())
-                    {
-                        SubscribeMsg(tuple.Item1, tuple.Item2);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message,
-                         "Error!! Could not connect to the rosbridge server", MessageBoxButton.OK, MessageBoxImage.Error);
-                    _md = null;
-                    return;
-                }
+                //    foreach (var tuple in _rosbrdgModel.GetSubscribeTopics())
+                //    {
+                //        SubscribeMsg(tuple.Item1, tuple.Item2);
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message,
+                //         "Error!! Could not connect to the rosbridge server", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    _md = null;
+                //    return;
+                //}
 
                 IsConnected = true;
             }
