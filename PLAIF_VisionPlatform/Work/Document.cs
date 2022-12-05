@@ -1,4 +1,5 @@
 ﻿using PLAIF_VisionPlatform.Interface;
+using PLAIF_VisionPlatform.Model;
 using PLAIF_VisionPlatform.Utilities;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace PLAIF_VisionPlatform.Work
         {
             foreach (Observer ob in observers)
             {
-                ob.UpdateFromJson();
+                ob.UpdateToJson();
             }
         }
 
@@ -43,7 +44,7 @@ namespace PLAIF_VisionPlatform.Work
         {
             foreach (Observer ob in observers)
             {
-                ob.UpdateToJson();
+                ob.UpdateFromJson();
             }
         }
     }
@@ -58,6 +59,7 @@ namespace PLAIF_VisionPlatform.Work
             userinfo = new Userinfo();
             jsonUtil = new JsonUtil();
             updater = new Updater();
+            pickPoses = new List<Pickpose>();
 
             IsConnected = false;
             IsExistSSHCod = true;
@@ -80,6 +82,7 @@ namespace PLAIF_VisionPlatform.Work
             }
         }
 
+        public List<Pickpose> pickPoses { get; set; }
         public Userinfo userinfo { get; set; }
         public JsonUtil jsonUtil { get; set; }
         public Updater updater { get; set; }

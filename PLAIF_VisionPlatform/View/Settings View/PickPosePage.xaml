@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PLAIF_VisionPlatform.View.Settings_View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       xmlns:vm="clr-namespace:PLAIF_VisionPlatform.ViewModel.Settings"
       Title="PickPosePage">
 
@@ -23,37 +23,23 @@
                 <Button Margin="10" Content="Import polygon file of the object (*.ply)" FontSize="14" Height="30" Command="{Binding ImportPlyClick}"></Button>
                 <Button Margin="10 5" Content="(Pick pose 3D View)" Foreground="DarkBlue" FontSize="20" Height="200"></Button>
                 <TextBlock Text="Pick poses list" Margin="10 5 0 0" FontSize="14"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="100"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0">
-                        <ListBox Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}"/>
-                                        <TextBlock Text="{Binding X}"/>
-                                        <TextBlock Text="{Binding Y}"/>
-                                        <TextBlock Text="{Binding Z}"/>
-                                        <TextBlock Text="{Binding Rx}"/>
-                                        <TextBlock Text="{Binding Ry}"/>
-                                        <TextBlock Text="{Binding Rz}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <StackPanel>
-                            <Button Content="Add" Margin="10 5" FontSize="14" Height="30" Command="{Binding AddClick}"/>
-                            <Button Content="Delete" Margin="10 5" FontSize="14" Height="30" Command="{Binding DelClick}"/>
-                            <Button Content="Modify" Margin="10 5" FontSize="14" Height="30" Command="{Binding ModClick}"/>
-                        </StackPanel>
-                    </Grid>
-                </Grid>
+                <ListView Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="x" DisplayMemberBinding="{Binding X}" Width="53"/>
+                            <GridViewColumn Header="y" DisplayMemberBinding="{Binding Y}" Width="53"/>
+                            <GridViewColumn Header="z" DisplayMemberBinding="{Binding Z}" Width="53"/>
+                            <GridViewColumn Header="rx" DisplayMemberBinding="{Binding RX}" Width="53"/>
+                            <GridViewColumn Header="ry" DisplayMemberBinding="{Binding RY}" Width="53"/>
+                            <GridViewColumn Header="rz" DisplayMemberBinding="{Binding RZ}" Width="53"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Add" Margin="10 5 10 0" FontSize="14" Width="80" Height="30" Command="{Binding AddClick}"/>
+                    <Button Content="Delete" Margin="10 5 10 0" FontSize="14" Width="80" Command="{Binding DelClick}"/>
+                    <Button Content="Modify" Margin="10 5 10 0" FontSize="14" Width="80" Command="{Binding ModClick}"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>

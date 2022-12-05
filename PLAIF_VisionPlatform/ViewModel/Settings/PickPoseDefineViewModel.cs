@@ -1,19 +1,56 @@
 ﻿using PLAIF_VisionPlatform.Interface;
+using PLAIF_VisionPlatform.Model;
+using PLAIF_VisionPlatform.Utilities;
 using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
     internal class PickPoseDefineViewModel : INotifyPropertyChanged
     {
+        public RelayCommand<Window> OKClick { get; private set; }
+        public RelayCommand<Window> CancelClick { get; private set; }
+
+
         public PickPoseDefineViewModel()
         {
+            OKClick = new RelayCommand<Window>(OKCommand);
+            CancelClick = new RelayCommand<Window>(CancelCommand);
+        }
+
+        private void OKCommand(Window window)
+        {
+            var pose = new Pickpose(
+                Double.Parse(_x),
+                Double.Parse(_y),
+                Double.Parse(_z),
+                Double.Parse(_rx),
+                Double.Parse(_ry),
+                Double.Parse(_rz));
+            Document.Instance.pickPoses.Add(pose);
+            Document.Instance.updater.NotifyToJson();
+
+            if (window != null)
+            {
+                window.Close();
+            }
+        }
+
+        private void CancelCommand(Window window)
+        {
+            if (window != null)
+            {
+                window.Close();
+            }
         }
 
         public PickPoseDefineViewModel(string x, string y, string z, string rx, string ry, string rz)

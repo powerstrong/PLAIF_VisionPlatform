@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLAIF_VisionPlatform.View.Settings_View"
         mc:Ignorable="d"
+        x:Name="PPDView"
         Title="Define Pick pose" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -38,8 +39,10 @@
         <Label Grid.Row="6" Grid.Column="1"  Content="RZ" Margin="0 5"/>
         <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Rz, Mode=TwoWay}" Margin="0 5"/>
         <StackPanel Grid.Row="7" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5">
-            <Button Content="OK" Width="60" Margin="10 0"/>
-            <Button Content="Cancel" Width="60"/>
+            <Button Content="OK" Width="60" Margin="10 0" Command="{Binding OKClick}"
+                            CommandParameter="{Binding ElementName=PPDView}"/>
+            <Button Content="Cancel" Width="60" Command="{Binding CancelClick}"
+                            CommandParameter="{Binding ElementName=PPDView}"/>
         </StackPanel>
     </Grid>
 </Window>

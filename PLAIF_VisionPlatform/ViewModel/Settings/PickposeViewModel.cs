@@ -1,9 +1,12 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Win32;
 using PLAIF_VisionPlatform.Interface;
+using PLAIF_VisionPlatform.Model;
+using PLAIF_VisionPlatform.View.Settings_View;
 using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -12,9 +15,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using YamlDotNet.Core;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
+    public class PickPoseList : ObservableCollection<Pickpose>
+    {
+        public PickPoseList()
+        {
+            Add(new Pickpose(0,0,0,0,0,0));
+        }
+    }
+
+
     internal class PickposeViewModel : INotifyPropertyChanged, Observer
     {
         public ICommand? ImportPlyClick { get; set; }
@@ -25,12 +38,14 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         public PickposeViewModel()
         {
             Document.Instance.updater.Add(this);
-            this.UpdateFromJson();
 
             ImportPlyClick = new RelayCommand(ImportPlyCommand);
             AddClick = new RelayCommand(AddCommand);
             DelClick = new RelayCommand(DelCommand);
             ModClick = new RelayCommand(ModCommand);
+            _pickPoses = new PickPoseList();
+            
+            this.UpdateFromJson();
         }
 
         public void ImportPlyCommand()
@@ -44,6 +59,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         }
 
         PickPoseDefineViewService _pickPoseDefineViewService = new PickPoseDefineViewService();
+
+        private readonly PickPoseList _pickPoses;
+        public PickPoseList PickPoses { get => _pickPoses; }
 
         private void AddCommand()
         {
@@ -61,7 +79,11 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         public void UpdateFromJson()
         {
-
+            PickPoses.Clear();
+            foreach (var pp in Document.Instance.pickPoses)
+            {
+                PickPoses.Add(pp);
+            }
         }
 
         public void UpdateToJson()
