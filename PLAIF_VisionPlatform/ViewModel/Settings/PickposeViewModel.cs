@@ -19,15 +19,6 @@ using YamlDotNet.Core;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
-    public class PickPoseList : ObservableCollection<Pickpose>
-    {
-        public PickPoseList()
-        {
-            Add(new Pickpose(0,0,0,0,0,0));
-        }
-    }
-
-
     internal class PickposeViewModel : INotifyPropertyChanged, Observer
     {
         public ICommand? ImportPlyClick { get; set; }
@@ -43,7 +34,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             AddClick = new RelayCommand(AddCommand);
             DelClick = new RelayCommand(DelCommand);
             ModClick = new RelayCommand(ModCommand);
-            _pickPoses = new PickPoseList();
+            _pickPoses = new ObservableCollection<Pickpose>();
             
             this.UpdateFromJson();
         }
@@ -60,8 +51,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         PickPoseDefineViewService _pickPoseDefineViewService = new PickPoseDefineViewService();
 
-        private readonly PickPoseList _pickPoses;
-        public PickPoseList PickPoses { get => _pickPoses; }
+        private readonly ObservableCollection<Pickpose> _pickPoses;
+        public ObservableCollection<Pickpose> PickPoses { get => _pickPoses; }
 
         private void AddCommand()
         {
