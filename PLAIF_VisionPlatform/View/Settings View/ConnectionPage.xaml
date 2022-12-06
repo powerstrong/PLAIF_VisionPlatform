@@ -17,7 +17,7 @@
         <StackPanel Grid.Column="0" Orientation="Vertical">
             <Button Content="SSH 연결 생성" Width="150" Margin="5 10 5 5" Command="{Binding SshCreateClick}"/>
             <Button Content="SSH 연결 삭제" Width="150" Margin="5" Command="{Binding SshDeleteClick}"/>
-            <Button Content="{Binding ConnectButtonText}" Width="150" Height="50" Margin="15" Command="{Binding ConnectClick}"></Button>
+            <Button Content="{Binding ConnectButtonText}" Width="150" Height="50" Margin="15" Command="{Binding ConnectClick}" Style="{StaticResource btn_font14_red}"></Button>
         </StackPanel>
         <StackPanel VerticalAlignment="Bottom">
             <TextBlock Text="ConnectionPage" FontFamily="ubuntu" Margin = "5 0" Foreground="#FF7764AB" FontSize="24" FontWeight="Bold"/>

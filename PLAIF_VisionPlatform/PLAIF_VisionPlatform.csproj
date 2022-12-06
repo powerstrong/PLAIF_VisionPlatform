@@ -20,9 +20,9 @@
     <None Remove="resource\stop.png" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Page Remove="Styles.xaml" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <Content Include="resource\plaif.ico" />
@@ -75,11 +75,11 @@
     <Folder Include="Themes\" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <None Include="Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <None Update="bash\ssh-creater.bat">

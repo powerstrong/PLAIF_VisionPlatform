@@ -20,9 +20,9 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1">
             <StackPanel>
-                <Button Margin="10" Content="Import polygon file of the object (*.ply)" FontSize="14" Height="30" Command="{Binding ImportPlyClick}"></Button>
+                <Button Margin="10" Content="Import polygon file of the object (*.ply)" Height="30" Command="{Binding ImportPlyClick}"></Button>
                 <Button Margin="10 5" Content="(Pick pose 3D View)" Foreground="DarkBlue" FontSize="20" Height="200"></Button>
-                <TextBlock Text="Pick poses list" Margin="10 5 0 0" FontSize="14"/>
+                <TextBlock Text="Pick poses list" Margin="10 5 0 0"/>
                 <ListView Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}">
                     <ListView.View>
                         <GridView>
@@ -36,9 +36,9 @@
                     </ListView.View>
                 </ListView>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Add" Margin="10 5 10 0" FontSize="14" Width="80" Height="30" Command="{Binding AddClick}"/>
-                    <Button Content="Delete" Margin="10 5 10 0" FontSize="14" Width="80" Command="{Binding DelClick}"/>
-                    <Button Content="Modify" Margin="10 5 10 0" FontSize="14" Width="80" Command="{Binding ModClick}"/>
+                    <Button Content="Add" Margin="10 5 10 0" Width="80" Height="30" Command="{Binding AddClick}"/>
+                    <Button Content="Delete" Margin="10 5 10 0" Width="80" Command="{Binding DelClick}"/>
+                    <Button Content="Modify" Margin="10 5 10 0" Width="80" Command="{Binding ModClick}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

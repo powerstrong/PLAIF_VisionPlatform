@@ -21,12 +21,12 @@
 
         <Grid Grid.Column="1">
             <StackPanel>
-                <TextBlock Text="Calibration matrix" Margin="0 10 0 5" FontSize="14">
+                <TextBlock Text="Calibration matrix" Margin="0 10 0 5">
                     <TextBlock.ToolTip>
                         <ToolTip>
                             <StackPanel>
-                                <TextBlock FontWeight="Bold" FontSize="14">캘리브레이션 매트릭스</TextBlock>
-                                <TextBlock>직접 값을 입력합니다. 지수형 포맷을 지원합니다.</TextBlock>
+                                <TextBlock FontWeight="Bold">캘리브레이션 매트릭스</TextBlock>
+                                <TextBlock FontSize="12">직접 값을 입력합니다. 지수형 포맷을 지원합니다.</TextBlock>
                             </StackPanel>
                         </ToolTip>
                     </TextBlock.ToolTip>
@@ -35,14 +35,14 @@
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
                      Text="{Binding CalibrationMatrix}"    />
-                <TextBlock Text="Camera name" Margin="0 15 0 5" FontSize="14"/>
-                <TextBox FontSize="14" Text="{Binding CameraName}"/>
-                <TextBlock Text="Zivid Studio setting file" Margin="0 15 0 5" FontSize="14">
+                <TextBlock Text="Camera name" Margin="0 15 0 5"/>
+                <TextBox Text="{Binding CameraName}"/>
+                <TextBlock Text="Zivid Studio setting file" Margin="0 15 0 5">
                     <TextBlock.ToolTip>
                         <ToolTip>
                             <StackPanel>
-                                <TextBlock FontWeight="Bold" FontSize="14">Zivid Studio settings file</TextBlock>
-                                <TextBlock>Zivid Studio의 설정 파일을 Linux 머신에 전달합니다. 입력이 없는 경우, 기존 설정 값을 사용합니다.</TextBlock>
+                                <TextBlock FontWeight="Bold">Zivid Studio settings file</TextBlock>
+                                <TextBlock FontSize="12">Zivid Studio의 설정 파일을 Linux 머신에 전달합니다. 입력이 없는 경우, 기존 설정 값을 사용합니다.</TextBlock>
                             </StackPanel>
                         </ToolTip>
                     </TextBlock.ToolTip>
@@ -52,8 +52,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" FontSize="14" Width="Auto" Text="{Binding ZividSettingFile}" IsReadOnly="True"></TextBox>
-                    <Button Grid.Column="1" Content="Choose setting file.." Width="140" FontSize="14" Command="{Binding ZividSettingClick}"></Button>
+                    <TextBox Grid.Column="0" Width="Auto" Text="{Binding ZividSettingFile}" IsReadOnly="True"></TextBox>
+                    <Button Grid.Column="1" Content="Choose setting file.." Width="140" Command="{Binding ZividSettingClick}"></Button>
                 </Grid>
                     
                     
