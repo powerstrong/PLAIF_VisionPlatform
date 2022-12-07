@@ -90,12 +90,6 @@ namespace PLAIF_VisionPlatform
                 navframe.Navigate(selected.Navlink);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            int i = 0;
-            i += 1;
-        }
-
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Image? img = sender as Image;

@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PLAIF_VisionPlatform.Model;
 using PLAIF_VisionPlatform.Work;
 using Rosbridge.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
@@ -94,12 +96,21 @@ namespace PLAIF_VisionPlatform.ViewModel
             ServiceCallMsg("/zivid_camera/capture", "[]");
         }
 
+        public async void Start_Action()
+        {
+            string topic = "/camera01_result0a_action/goal";
+            string msg_type = "plaif_vision_msgs/VisionActionGoal";
+            string msg = "{}";
+
+            PublishMsg(topic, msg_type, msg);
+        }
+
         public async void PublishMsg(string topic, string msg_type, string msg)
         {
             var pb = new Rosbridge.Client.Publisher(topic, msg_type, _md);
             await pb.PublishAsync(JObject.Parse(msg));
         }
-        
+
         private void _subscriber_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             string msg = e.Message["msg"]!.ToString();
@@ -117,6 +128,12 @@ namespace PLAIF_VisionPlatform.ViewModel
                     break;
                 case RosbridgeModel.RosTopics.zvd_depth_image:
                     _mainViewModel.Create3DBitMapImage(e.Message["msg"]["data"].ToString());
+                    break;
+                case RosbridgeModel.RosTopics.vision_result:
+
+                    break;
+                case RosbridgeModel.RosTopics.vision_result_img:
+                    _mainViewModel.Create2DResultImage(e.Message["msg"]["data"].ToString());
                     break;
             }
 

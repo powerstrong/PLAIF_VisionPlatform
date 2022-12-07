@@ -161,14 +161,14 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <!--<Button Height="50" Background="Yellow" Click="Button_Click" Margin="1 0 1 1">
-                <Image Source="../resource/pause.png"/>
+            <Button x:Name="StartBtn" Height="50" Background="#FF71DB4D" Command="{Binding StartClick}" Margin="1 0 1 1" ToolTip="Start">
+                <Image Source="../resource/start.png"/>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="8"/>
                     </Style>
                 </Button.Resources>
-            </Button>-->
+            </Button>
             <Button x:Name="CaptureBtn" Height="50" Background="#FF4B4BFF" Command="{Binding CaptureClick}" Margin="1 1 1 1" ToolTip="Capture screenshot">
                 <Image Source="../resource/screenshot.png"/>
                 <Button.Resources>

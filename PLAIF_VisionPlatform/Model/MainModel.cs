@@ -47,4 +47,24 @@ namespace PLAIF_VisionPlatform.Model
             RZ = rz;
         }
     }
+
+    public class CalMatrixRow
+    {
+        public CalMatrixRow()
+        {
+
+        }
+
+        public CalMatrixRow(double _M0, double _M1, double _M2, double _M3)
+        {
+            M0 = _M0;
+            M1 = _M1;
+            M2 = _M2;
+            M3 = _M3;
+        }
+        public double M0 { get; set; }
+        public double M1 { get; set; }
+        public double M2 { get; set; }
+        public double M3 { get; set; }
+    }
 }

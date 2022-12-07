@@ -36,7 +36,7 @@ namespace PLAIF_VisionPlatform.Work
         {
             foreach (Observer ob in observers)
             {
-                ob.UpdateToJson();
+                ob.UpdateFromJson();
             }
         }
 
@@ -44,7 +44,7 @@ namespace PLAIF_VisionPlatform.Work
         {
             foreach (Observer ob in observers)
             {
-                ob.UpdateFromJson();
+                ob.UpdateToJson();
             }
         }
     }

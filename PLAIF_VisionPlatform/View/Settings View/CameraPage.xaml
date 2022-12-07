@@ -31,10 +31,18 @@
                         </ToolTip>
                     </TextBlock.ToolTip>
                 </TextBlock>
-                <TextBox Margin="0" Height="Auto" TextAlignment="Center"
+                <!--<TextBox Margin="0" Height="Auto" TextAlignment="Center"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
-                     Text="{Binding CalibrationMatrix}"    />
+                     Text="{Binding CalibrationMatrix}"    />-->
+                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding CalMatrix}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn MinWidth="80" Width="Auto" Header="0" Binding="{Binding M0}"></DataGridTextColumn>
+                        <DataGridTextColumn MinWidth="80" Width="Auto" Header="1" Binding="{Binding M1}"></DataGridTextColumn>
+                        <DataGridTextColumn MinWidth="80" Width="Auto" Header="2" Binding="{Binding M2}"></DataGridTextColumn>
+                        <DataGridTextColumn MinWidth="80" Width="Auto" Header="3" Binding="{Binding M3}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
                 <TextBlock Text="Camera name" Margin="0 15 0 5"/>
                 <TextBox Text="{Binding CameraName}"/>
                 <TextBlock Text="Zivid Studio setting file" Margin="0 15 0 5">

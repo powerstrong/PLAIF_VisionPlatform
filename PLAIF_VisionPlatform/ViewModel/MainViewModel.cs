@@ -30,7 +30,7 @@ namespace PLAIF_VisionPlatform.ViewModel
         public ICommand ImportClick { get; set; }
         public ICommand ExportClick { get; set; }
 
-        public ICommand PauseClick { get; set; }
+        public ICommand StartClick { get; set; }
         public ICommand CaptureClick { get; set; }
 
         private MainModel _mainModel;
@@ -80,6 +80,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             ImportClick = new RelayCommand<object>(ImportCommand, CanExcute_ImportButton); // AsyncRelayCommand로 하면 async 함수를 넣을 수 있다.
             ExportClick = new RelayCommand<object>(ExportCommand, CanExcute_ExportButton);
             CaptureClick = new RelayCommand<object>(CaptureCommand, CanExcute_CaptureButton);
+            StartClick = new RelayCommand<object>(StartCommand, CanExcute_StartButton);
             Document.Instance.updater.Add(this);
         }
 
@@ -176,10 +177,31 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 MessageBox.Show("Capture가 정상적으로 진행되지 않았습니다.");
             }
-
         }
 
         public bool CanExcute_CaptureButton(object parameter)
+        {
+            return Document.Instance.IsConnected ? true : false;
+        }
+
+        public void StartCommand(object parameter)
+        {
+            try
+            {
+                Task<bool> task = Task.Run(() =>
+                {
+                    _rosmgr.Start_Action();
+
+                    return true;
+                });
+                task.Wait();
+            }
+            catch
+            {
+                MessageBox.Show("Start가 정상적으로 진행되지 않았습니다.");
+            }
+        }
+        public bool CanExcute_StartButton(object parameter)
         {
             return Document.Instance.IsConnected ? true : false;
         }
@@ -243,6 +265,33 @@ namespace PLAIF_VisionPlatform.ViewModel
             //}
 
             #endregion
+        }
+
+        public void Create2DResultImage(string message)
+        {
+            byte[] bByte = Convert.FromBase64String(message);
+
+            //2D Image
+            Mat rgb = new Mat(1200, 1944, MatType.CV_8UC3, bByte);
+            //Mat rgb = new Mat();
+            //Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
+
+            // window Form과 연결할 경우가 아니면, 문제없다.
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
+            {
+                try
+                {
+                    BitmapImage img = new BitmapImage();
+                    img.BeginInit();
+                    img.StreamSource = rgb.ToMemoryStream();
+                    img.EndInit();
+                    Img2D = img;
+                }
+                catch
+                {
+
+                }
+            }));
         }
 
         public void Create3DBitMapImage(string message)

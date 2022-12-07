@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Work;
+using PLAIF_VisionPlatform.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,6 +40,15 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             try
             {
                 CalibrationMatrix = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"]!.ToString();
+
+                //임시 테스트 코드
+                List<CalMatrixRow> calMat = new List<CalMatrixRow>();
+                calMat.Add(new CalMatrixRow(00, 01, 02, 03));
+                calMat.Add(new CalMatrixRow(10, 11, 12, 13));
+                calMat.Add(new CalMatrixRow(20, 21, 22, 23));
+                calMat.Add(new CalMatrixRow(30, 31, 32, 33));
+
+                CalMatrix = calMat;
 
                 string strTopicColor = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["topics"]!["color"]!.ToString();
                 string[] strTopicList = strTopicColor.Split('/');
@@ -84,6 +94,16 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             catch
             {
 
+            }
+        }
+
+        private List<CalMatrixRow> calMatrix;
+
+        public List<CalMatrixRow> CalMatrix
+        {
+            get { return calMatrix; }
+            set { calMatrix = value;
+                NotifyPropertyChanged(nameof(calMatrix));
             }
         }
 
