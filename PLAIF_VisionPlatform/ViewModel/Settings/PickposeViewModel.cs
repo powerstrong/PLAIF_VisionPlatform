@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 using YamlDotNet.Core;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
@@ -81,6 +82,27 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
 
         }
+
+        private void vp_raw_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //rawmodel.Rawview_MouseDown(sender, e);
+        }
+
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
+
+            return false;
+        }
+
+        private Model3D geometryModel;
+
+        public Model3D GeometryModel { get => geometryModel; set => SetProperty(ref geometryModel, value); }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

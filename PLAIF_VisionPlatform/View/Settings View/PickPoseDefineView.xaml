@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PLAIF_VisionPlatform.View.Settings_View"
         mc:Ignorable="d"
         x:Name="PPDView"
-        Title="Define Pick pose" Height="300" Width="300">
+        Title="Define Pick pose" Height="320" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
