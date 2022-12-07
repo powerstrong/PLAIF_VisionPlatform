@@ -32,12 +32,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <DockPanel Grid.Row="2">
-                    <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="resulltListView">
-                    </ListView>
-                </DockPanel>
-                <TabControl>
+                <TabControl Grid.Row="0">
                     <TabItem Header="2D">
                         <Grid>
                             <Grid.Background>
@@ -49,12 +44,6 @@
                             </Grid.Background>
                             <Border Name="border2D" Grid.Row="1" ClipToBounds="True">
                                 <Image x:Name="Image_2D_Control" Source="{Binding Img2D}"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
-                                    <!--<Image.LayoutTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform x:Name="myScaleTransform" ScaleX="1" ScaleY="1"></ScaleTransform>
-                                            <TranslateTransform x:Name="myTranslateTransform"> </TranslateTransform>
-                                        </TransformGroup>
-                                    </Image.LayoutTransform>-->
                                 </Image>
                             </Border>
                         </Grid>
@@ -70,12 +59,6 @@
                             </Grid.Background>
                             <Border Name="border3D" Grid.Row="1" ClipToBounds="True">
                                 <Image x:Name="Image_Depth_Control" Source="{Binding ImgDepth}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
-                                    <Image.LayoutTransform>
-                                        <TransformGroup>
-                                            <!--<ScaleTransform x:Name="myScaleTransform_3D"></ScaleTransform>
-                                        <TranslateTransform x:Name="myTranslateTransform_3D"></TranslateTransform>-->
-                                        </TransformGroup>
-                                    </Image.LayoutTransform>
                                 </Image>
                             </Border>
                         </Grid>
@@ -93,7 +76,14 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#FF00F9FF" ShowsPreview="True" Height="1"/>
+                
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF00F9FF" ShowsPreview="True" Height="5"/>
+                
+                <DockPanel Grid.Row="2">
+                    <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
+                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="resulltListView">
+                    </ListView>
+                </DockPanel>
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="1"
@@ -101,7 +91,7 @@
               VerticalAlignment="Stretch"
               Background="#FF00F9FF" 
               ShowsPreview="True"
-              Width="1"/>
+              Width="5"/>
         <Grid Grid.Column="2">
             <Grid Background="AliceBlue"></Grid>
             <Grid>
