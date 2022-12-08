@@ -43,32 +43,27 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             }
         }
 
-        public HelixViewport3D view3d { get; set; }
-        public MainWindow main_window { get; set; }
+        private HelixViewInterface _hvi;
+
         public Model3D GeometryModel { get; set; } //this is bound to the viewport
         protected const int POINTSIZE = 6; //display size for magnetometer points
 
         private Model3DGroup modelGroup;
 
-        public ViewportGeometryModel() { }
-
         /// <summary>
         /// Initializes a new instance of the MagViewerGeometryModel class.
         /// </summary>
-        public ViewportGeometryModel(HelixViewport3D view, MainWindow main)
+        public ViewportGeometryModel(HelixViewInterface hvi)
         {
-            view3d = view;
-            main_window = main;
             m_pointsVisual = new PointsVisual3D { Color = Colors.Red, Size = POINTSIZE };
+            _hvi = hvi;
 
-            //generated points are only used on startup so there is something to see in the viewport
-            Points = new Point3DCollection(GeneratePoints(100, 10.3));
+            Points = new Point3DCollection();
             m_pointsVisual.Points = Points;
-            m_pointsVisual.SetName("calpoints");
-            view3d.Children.Add(m_pointsVisual);
-
-            DrawRefCircles(view3d); //this creates an empty model and attaches it to the viewport
+            hvi.AddValue(m_pointsVisual);
         }
+
+        
 
         public void DrawRefCircles(HelixViewport3D viewport, double radius = 1, bool bEnable = false)
         {

@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Model;
 using PLAIF_VisionPlatform.View.Settings_View;
+using PLAIF_VisionPlatform.ViewModel.HelixView;
 using PLAIF_VisionPlatform.Work;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,13 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         public ICommand? AddClick { get; set; }
         public ICommand? DelClick { get; set; }
         public ICommand? ModClick { get; set; }
+
+        private ViewportGeometryModel vgm;
+        public ViewportGeometryModel Vgm
+        {
+            get { return vgm; }
+            set { vgm = value; }
+        }
 
         public PickposeViewModel()
         {
@@ -62,6 +70,10 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         private void DelCommand()
         {
+            vgm.Points.Add(new Point3D(1, 0, 0));
+            vgm.Points.Add(new Point3D(1, 1, 0));
+            vgm.Points.Add(new Point3D(0, 1, 0));
+            vgm.Points.Add(new Point3D(1, 1, 0));
         }
 
         private void ModCommand()
