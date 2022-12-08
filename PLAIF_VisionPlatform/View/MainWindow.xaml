@@ -9,6 +9,10 @@
         mc:Ignorable="d"
         Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
 
+    <Window.Resources>
+        <ResourceDictionary Source="/Styles.xaml"></ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <Grid.Background>
             <!--<ImageBrush ImageSource="back.jpg" />-->
@@ -32,8 +36,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TabControl Grid.Row="0">
-                    <TabItem Header="2D">
+                <TabControl Grid.Row="0" Style="{DynamicResource ResourceKey=styleTabControl}">
+                    <TabItem Header="2D" Style="{DynamicResource ResourceKey=styleTabItemLeft}">
                         <Grid>
                             <Grid.Background>
                                 <RadialGradientBrush>
@@ -48,7 +52,7 @@
                             </Border>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="3D">
+                    <TabItem Header="3D" Style="{DynamicResource ResourceKey=styleTabItemDefault}">
                         <Grid>
                             <Grid.Background>
                                 <RadialGradientBrush>
@@ -63,7 +67,7 @@
                             </Border>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Points">
+                    <TabItem Header="Points" Style="{DynamicResource ResourceKey=styleTabItemRight}">
                         <Grid>
                             <Grid.Background>
                                 <RadialGradientBrush>
@@ -84,7 +88,7 @@
                     <ListView  x:Name="resulltListView" ItemsSource="{Binding Path=Vision_Result}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}" Width="70"/>
+                                <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}" Width="70" />
                                 <GridViewColumn Header="Model ID" DisplayMemberBinding="{Binding ModelID}" Width="70"/>
                                 <GridViewColumn Header="Maching Score" DisplayMemberBinding="{Binding Matching_Score}" Width="120"/>
                                 <GridViewColumn Header="Position(X Y Z [mm])" DisplayMemberBinding="{Binding strPosition}" Width="280"/>

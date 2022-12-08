@@ -36,7 +36,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             ModClick = new RelayCommand(ModCommand);
             _pickPoses = new ObservableCollection<Pickpose>();
             
-            this.UpdateFromJson();
+            this.UpdateToJson();
         }
 
         public void ImportPlyCommand()
@@ -70,16 +70,20 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         public void UpdateFromJson()
         {
+            //PickPoses.Clear();
+            //foreach (var pp in Document.Instance.pickPoses)
+            //{
+            //    PickPoses.Add(pp);
+            //}
+        }
+
+        public void UpdateToJson()
+        {
             PickPoses.Clear();
             foreach (var pp in Document.Instance.pickPoses)
             {
                 PickPoses.Add(pp);
             }
-        }
-
-        public void UpdateToJson()
-        {
-
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

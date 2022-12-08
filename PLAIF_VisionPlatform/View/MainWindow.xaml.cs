@@ -102,8 +102,8 @@ namespace PLAIF_VisionPlatform
                 transform.ScaleX += zoom;
                 transform.ScaleY += zoom;
 
-                if (transform.ScaleX > 2) transform.ScaleX = 2;
-                if (transform.ScaleY > 2) transform.ScaleY = 2;
+                if (transform.ScaleX > 3) transform.ScaleX = 3;
+                if (transform.ScaleY > 3) transform.ScaleY = 3;
                 if (transform.ScaleX < 1) transform.ScaleX = 1;
                 if (transform.ScaleY < 1) transform.ScaleY = 1;
             }
