@@ -60,6 +60,7 @@ namespace PLAIF_VisionPlatform.Work
             jsonUtil = new JsonUtil();
             updater = new Updater();
             pickPoses = new List<Pickpose>();
+            visionResult = new List<Vision_Result>();
 
             IsConnected = false;
             IsExistSSHCod = true;
@@ -83,6 +84,8 @@ namespace PLAIF_VisionPlatform.Work
         }
 
         public List<Pickpose> pickPoses { get; set; }
+
+        public List<Vision_Result> visionResult { get; set; }
         public Userinfo userinfo { get; set; }
         public JsonUtil jsonUtil { get; set; }
         public Updater updater { get; set; }

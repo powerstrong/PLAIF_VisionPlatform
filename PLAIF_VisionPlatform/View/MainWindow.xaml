@@ -81,7 +81,15 @@
                 
                 <DockPanel Grid.Row="2">
                     <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="resulltListView">
+                    <ListView  x:Name="resulltListView" ItemsSource="{Binding Path=Vision_Result}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}" Width="70"/>
+                                <GridViewColumn Header="Model ID" DisplayMemberBinding="{Binding ModelID}" Width="70"/>
+                                <GridViewColumn Header="Maching Score" DisplayMemberBinding="{Binding Matching_Score}" Width="120"/>
+                                <GridViewColumn Header="Position(X Y Z [mm])" DisplayMemberBinding="{Binding strPosition}" Width="280"/>
+                            </GridView>
+                        </ListView.View>
                     </ListView>
                 </DockPanel>
             </Grid>
