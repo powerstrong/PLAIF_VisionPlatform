@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Windows.Media;
 
-namespace PLAIF_VisionPlatform.Model
+namespace PLAIF_VisionPlatform.ViewModel.HelixView
 {
     internal class ViewportGeometryModel
     {
@@ -49,6 +49,8 @@ namespace PLAIF_VisionPlatform.Model
         protected const int POINTSIZE = 6; //display size for magnetometer points
 
         private Model3DGroup modelGroup;
+
+        public ViewportGeometryModel() { }
 
         /// <summary>
         /// Initializes a new instance of the MagViewerGeometryModel class.
@@ -131,8 +133,8 @@ namespace PLAIF_VisionPlatform.Model
             for (int i = 0; i < n; i++)
             {
                 double t = Math.PI * 2 * i / (n - 1);
-                double u = (t * 24) + (time * 5);
-                var pt = new Point3D(Math.Cos(t) * (R + (Q * Math.Cos(u))), Math.Sin(t) * (R + (Q * Math.Cos(u))), Q * Math.Sin(u));
+                double u = t * 24 + time * 5;
+                var pt = new Point3D(Math.Cos(t) * (R + Q * Math.Cos(u)), Math.Sin(t) * (R + Q * Math.Cos(u)), Q * Math.Sin(u));
                 pc.Add(pt);
             }
             return pc;

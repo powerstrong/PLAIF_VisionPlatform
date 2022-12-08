@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
-namespace PLAIF_VisionPlatform.Work
+namespace PLAIF_VisionPlatform.ViewModel.HelixView
 {
     class LabeledCoordSysVis3D : CoordinateSystemVisual3D
     {
@@ -67,7 +67,7 @@ namespace PLAIF_VisionPlatform.Work
         public LabeledCoordSysVis3D()
         {
             base.OnGeometryChanged();
-            this.OnGeometryChanged();
+            OnGeometryChanged();
         }
 
         #endregion
@@ -83,12 +83,12 @@ namespace PLAIF_VisionPlatform.Work
             get
             {
                 //return (double)this.GetValue(AxisLabelSizeProperty);
-                return (int)this.GetValue(AxisLabelFontSizeProperty);
+                return (int)GetValue(AxisLabelFontSizeProperty);
             }
 
             set
             {
-                this.SetValue(AxisLabelFontSizeProperty, value);
+                SetValue(AxisLabelFontSizeProperty, value);
             }
         }
 
@@ -105,7 +105,7 @@ namespace PLAIF_VisionPlatform.Work
 
             set
             {
-                this.SetValue(XAxisLabelProperty, value);
+                SetValue(XAxisLabelProperty, value);
             }
         }
 
@@ -122,7 +122,7 @@ namespace PLAIF_VisionPlatform.Work
 
             set
             {
-                this.SetValue(YAxisLabelProperty, value);
+                SetValue(YAxisLabelProperty, value);
             }
         }
 
@@ -139,7 +139,7 @@ namespace PLAIF_VisionPlatform.Work
 
             set
             {
-                this.SetValue(ZAxisLabelProperty, value);
+                SetValue(ZAxisLabelProperty, value);
             }
         }
 
@@ -172,24 +172,24 @@ namespace PLAIF_VisionPlatform.Work
 
             var xlabel = new BillboardTextVisual3D();
             xlabel.Text = XAxisLabel.ToString();
-            xlabel.Foreground = new SolidColorBrush(this.XAxisColor);
+            xlabel.Foreground = new SolidColorBrush(XAxisColor);
             xlabel.FontSize = LabelFontSize;
             xlabel.Position = new Point3D(ArrowLengths * 1.2, 0, 0);
-            this.Children.Add(xlabel);
+            Children.Add(xlabel);
 
             var ylabel = new BillboardTextVisual3D();
             ylabel.Text = YAxisLabel.ToString();
-            ylabel.Foreground = new SolidColorBrush(this.YAxisColor);
+            ylabel.Foreground = new SolidColorBrush(YAxisColor);
             ylabel.FontSize = LabelFontSize;
             ylabel.Position = new Point3D(0, ArrowLengths * 1.2, 0);
-            this.Children.Add(ylabel);
+            Children.Add(ylabel);
 
             var zlabel = new BillboardTextVisual3D();
             zlabel.Text = ZAxisLabel.ToString();
-            zlabel.Foreground = new SolidColorBrush(this.ZAxisColor);
+            zlabel.Foreground = new SolidColorBrush(ZAxisColor);
             zlabel.FontSize = LabelFontSize;
             zlabel.Position = new Point3D(0, 0, ArrowLengths * 1.2);
-            this.Children.Add(zlabel);
+            Children.Add(zlabel);
         }
 
         #endregion
