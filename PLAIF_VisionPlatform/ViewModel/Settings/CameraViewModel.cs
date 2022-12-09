@@ -47,7 +47,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                     List<CalMatrixRow> calMat = new List<CalMatrixRow>();
                     foreach (JToken token in JtokenMatrix)
                     {
-                        calMat.Add(new CalMatrixRow(Convert.ToDouble(token[0]), Convert.ToDouble(token[1]), Convert.ToDouble(token[2]), Convert.ToDouble(token[3])));
+                        calMat.Add(new CalMatrixRow(Convert.ToSingle(token[0]), Convert.ToSingle(token[1]), Convert.ToSingle(token[2]), Convert.ToSingle(token[3])));
                     }
 
                     CalMatrix = calMat;

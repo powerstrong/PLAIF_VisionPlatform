@@ -55,17 +55,17 @@ namespace PLAIF_VisionPlatform.Model
 
         }
 
-        public CalMatrixRow(double _M0, double _M1, double _M2, double _M3)
+        public CalMatrixRow(Single _M0, Single _M1, Single _M2, Single _M3)
         {
             M0 = _M0;
             M1 = _M1;
             M2 = _M2;
             M3 = _M3;
         }
-        public double M0 { get; set; }
-        public double M1 { get; set; }
-        public double M2 { get; set; }
-        public double M3 { get; set; }
+        public Single M0 { get; set; }
+        public Single M1 { get; set; }
+        public Single M2 { get; set; }
+        public Single M3 { get; set; }
     }
 
     public class Vision_Result
