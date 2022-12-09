@@ -23,7 +23,7 @@
             </RadialGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="1.6*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="60"/>
@@ -31,7 +31,7 @@
         <Grid Grid.Column="0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1.25*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -86,12 +86,41 @@
                 <DockPanel Grid.Row="2">
                     <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
                     <ListView  x:Name="resulltListView" ItemsSource="{Binding Path=Vision_Result}">
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.Resources>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}" Width="70" />
-                                <GridViewColumn Header="Model ID" DisplayMemberBinding="{Binding ModelID}" Width="70"/>
-                                <GridViewColumn Header="Maching Score" DisplayMemberBinding="{Binding Matching_Score}" Width="120"/>
-                                <GridViewColumn Header="Position(X Y Z [mm])" DisplayMemberBinding="{Binding strPosition}" Width="280"/>
+                                <GridViewColumn Header="Index" Width="70">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Index}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Model ID" Width="70">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding ModelID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Maching Score" Width="120">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Matching_Score}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Position(X Y Z [mm])" Width="280">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding strPosition}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

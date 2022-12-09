@@ -24,14 +24,55 @@
                 <Button Margin="10 5" Content="(Pick pose 3D View)" Foreground="DarkBlue" FontSize="20" Height="200"></Button>
                 <TextBlock Text="Pick poses list" Margin="10 5 0 0"/>
                 <ListView Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}">
+                    <ListView.Resources>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.Resources>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="x" DisplayMemberBinding="{Binding X}" Width="53"/>
-                            <GridViewColumn Header="y" DisplayMemberBinding="{Binding Y}" Width="53"/>
-                            <GridViewColumn Header="z" DisplayMemberBinding="{Binding Z}" Width="53"/>
-                            <GridViewColumn Header="rx" DisplayMemberBinding="{Binding RX}" Width="53"/>
-                            <GridViewColumn Header="ry" DisplayMemberBinding="{Binding RY}" Width="53"/>
-                            <GridViewColumn Header="rz" DisplayMemberBinding="{Binding RZ}" Width="53"/>
+                            <GridViewColumn Header="x" Width="53">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding X}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="y" Width="53">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding Y}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="z" Width="53">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding Z}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="rx" Width="53">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding RX}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="ry" Width="53">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding RY}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="rz" Width="53">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding RZ}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
