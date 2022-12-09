@@ -2,22 +2,15 @@
 using Microsoft.Win32;
 using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Model;
-using PLAIF_VisionPlatform.View.Settings_View;
 using PLAIF_VisionPlatform.ViewModel.HelixView;
 using PLAIF_VisionPlatform.Work;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
-using YamlDotNet.Core;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
@@ -54,7 +47,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             ofd.Filter = "Polygon Files(*.ply)|*.PLY|All files (*.*)|*.*";
             if (ofd.ShowDialog() == true)
             {
-                MessageBox.Show("공사중입니다..");
+                FileStream fs = new FileStream(ofd.FileName, mode:FileMode.Open);
+                const int max_chunk_size = 100000; // 정확히 무슨 뜻인지 모르겠다.
+                Ply.Net.PlyParser.Dataset ds = Ply.Net.PlyParser.Parse(fs, max_chunk_size);
             }
         }
 
