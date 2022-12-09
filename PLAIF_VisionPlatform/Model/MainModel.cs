@@ -67,4 +67,30 @@ namespace PLAIF_VisionPlatform.Model
         public double M2 { get; set; }
         public double M3 { get; set; }
     }
+
+    public class Vision_Result
+    {
+        public Vision_Result()
+        {
+
+        }
+
+        public Vision_Result(int _Index, int _ModelID, double _Matching_Score, Vector3 _position, Vector4 _orientation)
+        {
+            Index               = _Index;
+            ModelID             = _ModelID;
+            Matching_Score      = _Matching_Score;           
+            position            = _position;
+            strPosition         = string.Format("[{0} {1} {2}]", position.X, position.Y, position.Z);
+            orientation         = _orientation;
+        }
+
+        public int Index { get; set; }
+
+        public int ModelID { get; set; }
+        public double Matching_Score { get; set; }
+        public string strPosition { get; set; }
+        public Vector3 position { get; set; }
+        public Vector4 orientation { get; set; }
+    }
 }

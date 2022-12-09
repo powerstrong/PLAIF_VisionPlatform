@@ -17,7 +17,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 		public VisionParamViewModel()
 		{
             Document.Instance.updater.Add(this);
-            this.UpdateFromJson();
+            //this.UpdateFromJson();
         }
 
         private string? actionName;

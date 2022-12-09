@@ -36,7 +36,7 @@ namespace PLAIF_VisionPlatform.Model
                 new Tuple<string, string>(RosTopics.zvd_point_xyz  , "sensor_msgs/PointCloud2"),
                 new Tuple<string, string>(RosTopics.zvd_color_image, "sensor_msgs/Image"),
                 new Tuple<string, string>(RosTopics.zvd_depth_image, "sensor_msgs/Image"),
-                new Tuple<string, string>(RosTopics.vision_result  , "plaif_vision_msgs/VisionActionGoal"),
+                new Tuple<string, string>(RosTopics.vision_result  , "plaif_vision_msgs/VisionActionResult"),
                 new Tuple<string, string>(RosTopics.vision_result_img, "sensor_msgs/Image"),
                 new Tuple<string, string>(RosTopics.chatter        , "std_msgs/String"),
             };

@@ -23,6 +23,7 @@ using PLAIF_VisionPlatform.Utilities;
 using PLAIF_VisionPlatform.Work;
 using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.ViewModel.HelixView;
+using System.Collections.ObjectModel;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
@@ -71,6 +72,24 @@ namespace PLAIF_VisionPlatform.ViewModel
             }
         }
 
+        private bool isImported;
+
+        public bool IsImported
+        {
+            get { return isImported; }
+            set { 
+                isImported = value;          
+                Document.Instance.IsImported = value;
+                NotifyPropertyChanged(nameof(IsImported));
+            }
+        }
+
+        private readonly ObservableCollection<Vision_Result> _vision_Result;
+        public ObservableCollection<Vision_Result> Vision_Result 
+        { 
+            get { return _vision_Result; }
+        }
+
 
         public MainViewModel() 
         {
@@ -82,6 +101,11 @@ namespace PLAIF_VisionPlatform.ViewModel
             ExportClick = new RelayCommand<object>(ExportCommand, CanExcute_ExportButton);
             CaptureClick = new RelayCommand<object>(CaptureCommand, CanExcute_CaptureButton);
             StartClick = new RelayCommand<object>(StartCommand, CanExcute_StartButton);
+
+            _vision_Result = new ObservableCollection<Vision_Result>();
+
+            IsImported = false;
+
             Document.Instance.updater.Add(this);
         }
 
@@ -100,12 +124,14 @@ namespace PLAIF_VisionPlatform.ViewModel
 
                 Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
                 Document.Instance.updater.NotifyFromJson();
+
+                IsImported = true;
             }
             catch
             {
+                IsImported = false;
                 MessageBox.Show("정상적으로 Import되지 않았습니다.");
             }
-
         }
 
         public bool CanExcute_ImportButton(object parameter)
@@ -518,6 +544,97 @@ namespace PLAIF_VisionPlatform.ViewModel
             set { vgm = value; }
         }
 
+        public void ParsingVisionResult(JToken message)
+        {
+            //Model ID
+            List<int> ModelID = new List<int>();
+            foreach (JToken token in message["id"]!)
+            {
+                ModelID.Add(((int)token));
+            }
+
+            //Matching Score
+            List<double> Matching_Score = new List<double>();
+            for (int i = 0; i < ModelID.Count(); i++)
+            {
+                Matching_Score.Add(100);
+            }
+
+            //Position
+            List<Vector3> position = new List<Vector3>();
+            List<Vector4> orientation = new List<Vector4>();
+            foreach (JToken token in message["pos"]!["poses"]!)
+            {
+                Vector3 vec3 = new Vector3();
+                vec3.X = ((float)token["position"]!["x"]!) * 1000f;
+                vec3.Y = ((float)token["position"]!["y"]!) * 1000f;
+                vec3.Z = ((float)token["position"]!["z"]!) * 1000f;
+                position.Add(vec3);
+
+                Vector4 vec4 = new Vector4();
+                vec4.X = ((float)token["orientation"]!["x"]!) * 1000f;
+                vec4.Y = ((float)token["orientation"]!["y"]!) * 1000f;
+                vec4.Z = ((float)token["orientation"]!["z"]!) * 1000f;
+                vec4.W = ((float)token["orientation"]!["w"]!) * 1000f;
+                orientation.Add(vec4);            
+            }
+
+
+            ////통신이 되지 않아서 임시 코드
+            ////Model ID
+            //List<int> ModelID = new List<int>();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    ModelID.Add(((int)0));
+            //}
+
+            ////Matching Score
+            //List<double> Matching_Score = new List<double>();
+            //for (int i = 0; i < ModelID.Count(); i++)
+            //{
+            //    Matching_Score.Add(100);
+            //}
+
+            ////Position
+            //List<Vector3> position = new List<Vector3>();
+            //List<Vector4> orientation = new List<Vector4>();
+            //for (int i = 0; i < ModelID.Count(); i++)
+            //{
+            //    Vector3 vec3 = new Vector3();
+            //    vec3.X = 0.00003f;
+            //    vec3.Y = 0.00003f;
+            //    vec3.Z = 0.00003f;
+            //    position.Add(vec3);
+
+            //    Vector4 vec4 = new Vector4();
+            //    vec4.X = 0.00003f;
+            //    vec4.Y = 0.00003f;
+            //    vec4.Z = 0.00003f;
+            //    vec4.W = 0.00003f;
+            //    orientation.Add(vec4);
+            //}
+
+            Document.Instance.visionResult.Clear();
+            for (int i = 0; i < ModelID.Count(); i++)
+            {
+                Vision_Result vs = new Vision_Result(i, ModelID[i], Matching_Score[i], position[i], orientation[i]);
+                Document.Instance.visionResult.Add(vs);
+            }
+
+            // window Form과 연결할 경우가 아니면, 문제없다.
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
+            {
+                try
+                {
+                    Document.Instance.updater.NotifyFromJson();
+                }
+                catch
+                {
+
+                }
+            }));   
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -526,7 +643,11 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         public void UpdateFromJson()
         {
-
+            Vision_Result.Clear();
+            foreach(var result in Document.Instance.visionResult)
+            {
+                Vision_Result.Add(result);
+            }
         }
 
         public void UpdateToJson()

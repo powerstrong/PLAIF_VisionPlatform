@@ -7,7 +7,11 @@
         xmlns:UserControls="clr-namespace:PLAIF_VisionPlatform.View"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:helix="http://helix-toolkit.org/wpf" xmlns:hv="clr-namespace:PLAIF_VisionPlatform.ViewModel.HelixView"
         mc:Ignorable="d"
-        Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
+        Title="PLAIF AI Vision Platform" Width="1150" Height="768" Background="#FF272525">
+
+    <Window.Resources>
+        <ResourceDictionary Source="/Styles.xaml"></ResourceDictionary>
+    </Window.Resources>
 
     <Grid>
         <Grid.Background>
@@ -19,7 +23,7 @@
             </RadialGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="60"/>
@@ -27,18 +31,13 @@
         <Grid Grid.Column="0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1.25*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <DockPanel Grid.Row="2">
-                    <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="resulltListView">
-                    </ListView>
-                </DockPanel>
-                <TabControl>
-                    <TabItem Header="2D">
+                <TabControl Grid.Row="0" Style="{DynamicResource ResourceKey=styleTabControl}">
+                    <TabItem Header="2D" Style="{DynamicResource ResourceKey=styleTabItemLeft}">
                         <Grid>
                             <Grid.Background>
                                 <RadialGradientBrush>
@@ -49,17 +48,11 @@
                             </Grid.Background>
                             <Border Name="border2D" Grid.Row="1" ClipToBounds="True">
                                 <Image x:Name="Image_2D_Control" Source="{Binding Img2D}"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
-                                    <!--<Image.LayoutTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform x:Name="myScaleTransform" ScaleX="1" ScaleY="1"></ScaleTransform>
-                                            <TranslateTransform x:Name="myTranslateTransform"> </TranslateTransform>
-                                        </TransformGroup>
-                                    </Image.LayoutTransform>-->
                                 </Image>
                             </Border>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="3D">
+                    <TabItem Header="3D" Style="{DynamicResource ResourceKey=styleTabItemDefault}">
                         <Grid>
                             <Grid.Background>
                                 <RadialGradientBrush>
@@ -70,17 +63,11 @@
                             </Grid.Background>
                             <Border Name="border3D" Grid.Row="1" ClipToBounds="True">
                                 <Image x:Name="Image_Depth_Control" Source="{Binding ImgDepth}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
-                                    <Image.LayoutTransform>
-                                        <TransformGroup>
-                                            <!--<ScaleTransform x:Name="myScaleTransform_3D"></ScaleTransform>
-                                        <TranslateTransform x:Name="myTranslateTransform_3D"></TranslateTransform>-->
-                                        </TransformGroup>
-                                    </Image.LayoutTransform>
                                 </Image>
                             </Border>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Points">
+                    <TabItem Header="Points" Style="{DynamicResource ResourceKey=styleTabItemRight}">
                         <Grid>
                             <!--<Grid.Background>
                                 <RadialGradientBrush>
@@ -91,7 +78,7 @@
                             </Grid.Background>-->
                             <helix:HelixViewport3D x:Name="pcd_view" Margin="2" Orthographic="True" 
                                                    Title="Point cloud view" BorderThickness="1" BorderBrush="Black" 
-                                                   Background="#FFFDFBFB" CalculateCursorPosition="True" ShowCameraTarget="False">
+                                                   Background="#FFFFFFF4" CalculateCursorPosition="True" ShowCameraTarget="False">
 
                                 <!-- Remember to add light to the scene -->
                                 <helix:SunLight/>
@@ -106,7 +93,51 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#FF00F9FF" ShowsPreview="True" Height="1"/>
+                
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF00F9FF" ShowsPreview="True" Height="5"/>
+                
+                <DockPanel Grid.Row="2">
+                    <TextBox Text="Result" TextAlignment="Center" DockPanel.Dock="Top"></TextBox>
+                    <ListView  x:Name="resulltListView" ItemsSource="{Binding Path=Vision_Result}">
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Index" Width="70">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Index}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Model ID" Width="70">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding ModelID}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Maching Score" Width="120">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Matching_Score}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Position(X Y Z [mm])" Width="280">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextAlignment="Center" Text="{Binding strPosition}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="1"
@@ -114,10 +145,60 @@
               VerticalAlignment="Stretch"
               Background="#FF00F9FF" 
               ShowsPreview="True"
-              Width="1"/>
+              Width="5"/>
         <Grid Grid.Column="2">
             <Grid Background="AliceBlue"></Grid>
-            <Grid>
+            <TabControl Style="{DynamicResource ResourceKey=styleTabControl}">
+                <TabItem Header="Connection" Style="{StaticResource ResourceKey=styleTabItemLeft}">
+                    <Frame Source="/View/Settings View/ConnectionPage.xaml"></Frame>
+                </TabItem>
+                <TabItem Header="Camera">
+                    <TabItem.Style>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ResourceKey=styleTabItemDefault}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImported}" Value="false">
+                                    <Setter Property="UIElement.Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsImported}" Value="true">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                    <Frame Source="/View/Settings View/CameraPage.xaml"></Frame>
+                </TabItem>
+                <TabItem Header="Vision">
+                    <TabItem.Style>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ResourceKey=styleTabItemDefault}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImported}" Value="false">
+                                    <Setter Property="UIElement.Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsImported}" Value="true">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                    <Frame Source="/View/Settings View/VisionParamPage.xaml"></Frame>
+                </TabItem>
+                <TabItem Header="PickPose">
+                    <TabItem.Style>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ResourceKey=styleTabItemRight}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImported}" Value="false">
+                                    <Setter Property="UIElement.Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsImported}" Value="true">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                    <Frame Source="/View/Settings View/PickPosePage.xaml"></Frame>
+                </TabItem>
+            </TabControl>
+            <!--<Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -153,9 +234,7 @@
                     </Grid.ColumnDefinitions>
                     <Frame x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Grid.ColumnSpan="2"/>
                 </Grid>
-            </Grid>
-            <!--=<StackPanel Orientation="Vertical">
-            </StackPanel>-->
+            </Grid>-->
         </Grid>
         <StackPanel Grid.Column="3" Orientation="Vertical">
             <Button x:Name="ImportBtn" Height="50" Background="#FF00AEEF" Command="{Binding ImportClick}" Margin="1" ToolTip="Import">
