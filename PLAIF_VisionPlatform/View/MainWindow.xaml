@@ -7,7 +7,7 @@
         xmlns:UserControls="clr-namespace:PLAIF_VisionPlatform.View"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
+        Title="PLAIF AI Vision Platform" Width="1150" Height="768" Background="#FF272525">
 
     <Window.Resources>
         <ResourceDictionary Source="/Styles.xaml"></ResourceDictionary>
@@ -23,7 +23,7 @@
             </RadialGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="60"/>
@@ -135,7 +135,57 @@
               Width="5"/>
         <Grid Grid.Column="2">
             <Grid Background="AliceBlue"></Grid>
-            <Grid>
+            <TabControl Style="{DynamicResource ResourceKey=styleTabControl}">
+                <TabItem Header="Connection" Style="{StaticResource ResourceKey=styleTabItemLeft}">
+                    <Frame Source="/View/Settings View/ConnectionPage.xaml"></Frame>
+                </TabItem>
+                <TabItem Header="Camera">
+                    <TabItem.Style>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ResourceKey=styleTabItemDefault}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImported}" Value="false">
+                                    <Setter Property="UIElement.Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsImported}" Value="true">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                    <Frame Source="/View/Settings View/CameraPage.xaml"></Frame>
+                </TabItem>
+                <TabItem Header="Vision">
+                    <TabItem.Style>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ResourceKey=styleTabItemDefault}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImported}" Value="false">
+                                    <Setter Property="UIElement.Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsImported}" Value="true">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                    <Frame Source="/View/Settings View/VisionParamPage.xaml"></Frame>
+                </TabItem>
+                <TabItem Header="PickPose">
+                    <TabItem.Style>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ResourceKey=styleTabItemRight}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImported}" Value="false">
+                                    <Setter Property="UIElement.Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsImported}" Value="true">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                    <Frame Source="/View/Settings View/PickPosePage.xaml"></Frame>
+                </TabItem>
+            </TabControl>
+            <!--<Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -171,9 +221,7 @@
                     </Grid.ColumnDefinitions>
                     <Frame x:Name="navframe" NavigationUIVisibility="Hidden" Background="#e9ecef" Grid.ColumnSpan="2"/>
                 </Grid>
-            </Grid>
-            <!--=<StackPanel Orientation="Vertical">
-            </StackPanel>-->
+            </Grid>-->
         </Grid>
         <StackPanel Grid.Column="3" Orientation="Vertical">
             <Button x:Name="ImportBtn" Height="50" Background="#FF00AEEF" Command="{Binding ImportClick}" Margin="1" ToolTip="Import">

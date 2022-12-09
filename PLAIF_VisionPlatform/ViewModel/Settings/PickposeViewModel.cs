@@ -36,7 +36,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             ModClick = new RelayCommand(ModCommand);
             _pickPoses = new ObservableCollection<Pickpose>();
             
-            this.UpdateToJson();
+            //this.UpdateToJson();
         }
 
         public void ImportPlyCommand()

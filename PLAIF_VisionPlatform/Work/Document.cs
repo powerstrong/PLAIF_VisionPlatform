@@ -64,6 +64,7 @@ namespace PLAIF_VisionPlatform.Work
 
             IsConnected = false;
             IsExistSSHCod = true;
+            IsImported = false;
 
             GetUserInfo();
         }
@@ -92,6 +93,7 @@ namespace PLAIF_VisionPlatform.Work
 
         public bool IsExistSSHCod { get; set; }
         public bool IsConnected { get; set; }
+        public bool IsImported { get; set; }
 
         public string ZividSettingFile { get; set; }
 

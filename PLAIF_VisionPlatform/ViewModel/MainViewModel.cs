@@ -71,6 +71,18 @@ namespace PLAIF_VisionPlatform.ViewModel
             }
         }
 
+        private bool isImported;
+
+        public bool IsImported
+        {
+            get { return isImported; }
+            set { 
+                isImported = value;          
+                Document.Instance.IsImported = value;
+                NotifyPropertyChanged(nameof(IsImported));
+            }
+        }
+
         private readonly ObservableCollection<Vision_Result> _vision_Result;
         public ObservableCollection<Vision_Result> Vision_Result 
         { 
@@ -91,6 +103,8 @@ namespace PLAIF_VisionPlatform.ViewModel
 
             _vision_Result = new ObservableCollection<Vision_Result>();
 
+            IsImported = false;
+
             Document.Instance.updater.Add(this);
         }
 
@@ -109,12 +123,14 @@ namespace PLAIF_VisionPlatform.ViewModel
 
                 Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
                 Document.Instance.updater.NotifyFromJson();
+
+                IsImported = true;
             }
             catch
             {
+                IsImported = false;
                 MessageBox.Show("정상적으로 Import되지 않았습니다.");
             }
-
         }
 
         public bool CanExcute_ImportButton(object parameter)

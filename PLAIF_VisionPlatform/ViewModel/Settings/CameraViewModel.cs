@@ -26,7 +26,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             Document.Instance.updater.Add(this);
             ZividSettingClick = new RelayCommand(OnZividSettingClick);
 
-            this.UpdateFromJson();
+            //this.UpdateFromJson();
         }
 
         ~CameraViewModel()
