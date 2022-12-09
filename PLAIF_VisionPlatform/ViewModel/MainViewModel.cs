@@ -22,6 +22,7 @@ using System.Windows.Threading;
 using PLAIF_VisionPlatform.Utilities;
 using PLAIF_VisionPlatform.Work;
 using PLAIF_VisionPlatform.Interface;
+using PLAIF_VisionPlatform.ViewModel.HelixView;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
@@ -409,7 +410,6 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         public void CreatePointCloud(string message)
         {
-
             byte[] bByte = Convert.FromBase64String(message);
 
             //PointCloud2
@@ -420,6 +420,8 @@ namespace PLAIF_VisionPlatform.ViewModel
             int size = bByte.Length;
             size = size / point_step;
 
+            List<Vector3> vector3s = new List<Vector3>();
+            
             //Calculator
             Vector3[] pcl = new Vector3[size];
 
@@ -433,12 +435,14 @@ namespace PLAIF_VisionPlatform.ViewModel
                 float y = BitConverter.ToSingle(bByte, y_posi);
                 float z = BitConverter.ToSingle(bByte, z_posi);
 
-                pcl[n] = new Vector3(x, y, z); //new Vector3(y, z, x);
+                // filter NaN values
+                if (float.IsNaN(x) || float.IsNaN(y) || float.IsNaN(z))
+                    continue;
 
-                //Log
-               // Console.WriteLine("pclCoordinates:x=" + pcl[n].X + ",y=" + pcl[n].Y + ",z=" + pcl[n].Z);
-
+                vector3s.Add(new Vector3(x, y, z));
             }
+
+            //이걸로 그림 한번 그려보자 어떤 느낌인지
 
             // window Form과 연결할 경우가 아니면, 문제없다.
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
@@ -505,6 +509,13 @@ namespace PLAIF_VisionPlatform.ViewModel
             //    }
             //}
             #endregion
+        }
+
+        private ViewportGeometryModel vgm;
+        public ViewportGeometryModel Vgm
+        {
+            get { return vgm; }
+            set { vgm = value; }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

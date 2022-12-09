@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLAIF_VisionPlatform"
         xmlns:UserControls="clr-namespace:PLAIF_VisionPlatform.View"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:helix="http://helix-toolkit.org/wpf" xmlns:hv="clr-namespace:PLAIF_VisionPlatform.ViewModel.HelixView"
         mc:Ignorable="d"
         Title="PLAIF AI Vision Platform" Width="1024" Height="768" Background="#FF272525">
 
@@ -82,14 +82,27 @@
                     </TabItem>
                     <TabItem Header="Points">
                         <Grid>
-                            <Grid.Background>
+                            <!--<Grid.Background>
                                 <RadialGradientBrush>
                                     <GradientStop Color="#FF032534" Offset="0"/>
                                     <GradientStop Color="#FF051C26" Offset="0.5"/>
                                     <GradientStop Color="#FF041F36" Offset="1"/>
                                 </RadialGradientBrush>
-                            </Grid.Background>
-                            <UserControls:GraphicView Grid.Row="0"/>
+                            </Grid.Background>-->
+                            <helix:HelixViewport3D x:Name="pcd_view" Margin="2" Orthographic="True" 
+                                                   Title="Point cloud view" BorderThickness="1" BorderBrush="Black" 
+                                                   Background="#FFFDFBFB" CalculateCursorPosition="True" ShowCameraTarget="False">
+
+                                <!-- Remember to add light to the scene -->
+                                <helix:SunLight/>
+
+                                <!-- The content of this visual is defined in RawViewModel.cs -->
+                                <ModelVisual3D Content="{Binding GeometryModel}"/>
+
+                                <!-- You can also add elements here in the xaml -->
+                                <helix:GridLinesVisual3D Width="12" Length="12" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>
+                                <hv:LabeledCoordSysVis3D />
+                            </helix:HelixViewport3D>
                         </Grid>
                     </TabItem>
                 </TabControl>

@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 
 namespace PLAIF_VisionPlatform.ViewModel.HelixView
 {
-    class HelixViewInterface
+    public class HelixViewInterface
     {
         HelixViewport3D _hvp;
 

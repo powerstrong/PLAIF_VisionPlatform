@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace PLAIF_VisionPlatform.ViewModel.HelixView
 {
-    internal class ViewportGeometryModel
+    public class ViewportGeometryModel
     {
         public enum CirclePlane
         {
@@ -20,7 +20,7 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
         }
 
         protected PointsVisual3D m_pointsVisual; //3D point cloud for magnetometer points
-        protected Point3DCollection m_points;
+        protected Point3DCollection m_points;   
 
         public PointsVisual3D calpointsVisual
         {
