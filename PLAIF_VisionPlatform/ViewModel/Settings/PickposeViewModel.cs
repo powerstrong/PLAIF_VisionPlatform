@@ -2,20 +2,15 @@
 using Microsoft.Win32;
 using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Model;
-using PLAIF_VisionPlatform.View.Settings_View;
+using PLAIF_VisionPlatform.ViewModel.HelixView;
 using PLAIF_VisionPlatform.Work;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using YamlDotNet.Core;
+using System.Windows.Media.Media3D;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
@@ -25,6 +20,13 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         public ICommand? AddClick { get; set; }
         public ICommand? DelClick { get; set; }
         public ICommand? ModClick { get; set; }
+
+        private ViewportGeometryModel vgm;
+        public ViewportGeometryModel Vgm
+        {
+            get { return vgm; }
+            set { vgm = value; }
+        }
 
         public PickposeViewModel()
         {
@@ -45,7 +47,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             ofd.Filter = "Polygon Files(*.ply)|*.PLY|All files (*.*)|*.*";
             if (ofd.ShowDialog() == true)
             {
-                MessageBox.Show("공사중입니다..");
+                FileStream fs = new FileStream(ofd.FileName, mode:FileMode.Open);
+                const int max_chunk_size = 100000; // 정확히 무슨 뜻인지 모르겠다.
+                Ply.Net.PlyParser.Dataset ds = Ply.Net.PlyParser.Parse(fs, max_chunk_size);
             }
         }
 
@@ -61,6 +65,10 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         private void DelCommand()
         {
+            vgm.Points.Add(new Point3D(1, 0, 0));
+            vgm.Points.Add(new Point3D(1, 1, 0));
+            vgm.Points.Add(new Point3D(0, 1, 0));
+            vgm.Points.Add(new Point3D(1, 1, 0));
         }
 
         private void ModCommand()
@@ -85,6 +93,27 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                 PickPoses.Add(pp);
             }
         }
+
+        private void vp_raw_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //rawmodel.Rawview_MouseDown(sender, e);
+        }
+
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
+
+            return false;
+        }
+
+        private Model3D geometryModel;
+
+        public Model3D GeometryModel { get => geometryModel; set => SetProperty(ref geometryModel, value); }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
