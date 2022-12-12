@@ -13,7 +13,7 @@ namespace PLAIF_VisionPlatform.Model
 
         public static class RosTopics
         {
-            public const string zvd_point_xyz   = "/zivid_camera/normals/xyz";
+            public const string zvd_point_xyz   = "/zivid_camera/points/xyz";
             public const string zvd_color_image = "/zivid_camera/color/image_color";
             public const string zvd_depth_image = "/zivid_camera/depth/image";
             public const string vision_result   = "/camera01_result0a_action/result";

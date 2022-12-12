@@ -24,6 +24,8 @@ using PLAIF_VisionPlatform.Work;
 using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.ViewModel.HelixView;
 using System.Collections.ObjectModel;
+using System.Windows.Media.Media3D;
+using HelixToolkit.Wpf;
 
 namespace PLAIF_VisionPlatform.ViewModel
 {
@@ -451,8 +453,6 @@ namespace PLAIF_VisionPlatform.ViewModel
             //Calculator
             Vector3[] pcl = new Vector3[size];
 
-            //StreamWriter sr = new StreamWriter("TestPointCloud.pcd");
-
             for (int n = 0; n < size; n++)
             {
                 int x_posi = n * point_step + 0;
@@ -468,21 +468,76 @@ namespace PLAIF_VisionPlatform.ViewModel
                     continue;
 
                 vector3s.Add(new Vector3(x, y, z));
-
-                //string str = String.Format("{0:s} {1:s} {2:s}", x.ToString(), y.ToString(), z.ToString());
-                //sr.WriteLine(str);
             }
 
-            //sr.Close();
-
-            //이걸로 그림 한번 그려보자 어떤 느낌인지
+            float min_x = vector3s.Min(x => x.X);
+            float min_y = vector3s.Min(x => x.Y);
+            float min_z = vector3s.Min(x => x.Z);
+            float max_x = vector3s.Max(x => x.X);
+            float max_y = vector3s.Max(x => x.Y);
+            float max_z = vector3s.Max(x => x.Z);
 
             // window Form과 연결할 경우가 아니면, 문제없다.
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
             {
                 try
                 {
-                    PointCloud = pcl;
+                    ////이걸로 그림 한번 그려보자 어떤 느낌인지
+                    //int i = 0;
+
+                    //var points1 = new Point3DCollection();
+                    //var points2 = new Point3DCollection();
+                    //var points3 = new Point3DCollection();
+                    //var points4 = new Point3DCollection();
+                    //for (; i < vector3s.Count*0.1; i++)
+                    //{
+                    //    var pt = vector3s[i];
+                    //    points1.Add(new Point3D(pt.X, pt.Y, pt.Z));
+                    //}
+                    //var v3d = new PointsVisual3D { Color = Color.FromRgb(20,0,0), Size = 2 };
+                    //v3d.Points = points1;
+                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
+
+                    //for (; i < vector3s.Count*0.2; i++)
+                    //{
+                    //    var pt = vector3s[i];
+                    //    points2.Add(new Point3D(pt.X, pt.Y, pt.Z));
+                    //}
+                    //v3d = new PointsVisual3D { Color = Color.FromRgb(100, 0, 0), Size = 2 };
+                    //v3d.Points = points2;
+                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
+
+                    //for (; i < vector3s.Count*0.3; i++)
+                    //{
+                    //    var pt = vector3s[i];
+                    //    points3.Add(new Point3D(pt.X, pt.Y, pt.Z));
+                    //}
+                    //v3d = new PointsVisual3D { Color = Color.FromRgb(200, 0, 0), Size = 2 };
+                    //v3d.Points = points3;
+                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
+
+                    //for (; i < vector3s.Count; i++)
+                    //{
+                    //    var pt = vector3s[i];
+                    //    points4.Add(new Point3D(pt.X, pt.Y, pt.Z));
+                    //}
+                    //v3d = new PointsVisual3D { Color = Color.FromRgb(255, 0, 0), Size = 2 };
+                    //v3d.Points = points4;
+                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
+
+
+
+
+                    var points = new Point3DCollection();
+                    foreach (var pt in vector3s)
+                    {
+                        points.Add(new Point3D(pt.X, pt.Y, pt.Z));
+                    }
+
+                    const int POINTSIZE = 1; //display size for magnetometer points
+                    var v3d = new PointsVisual3D { Color = Colors.Red, Size = POINTSIZE };
+                    v3d.Points = points;
+                    vgm.AddVisual3Ds(new List<Visual3D> { v3d });
                 }
                 catch
                 {
@@ -550,6 +605,20 @@ namespace PLAIF_VisionPlatform.ViewModel
             get { return vgm; }
             set { vgm = value; }
         }
+
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
+
+            return false;
+        }
+        private Model3D geometryModel;
+        public Model3D GeometryModel { get => geometryModel; set => SetProperty(ref geometryModel, value); }
 
         public void ParsingVisionResult(JToken message)
         {

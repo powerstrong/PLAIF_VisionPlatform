@@ -1,4 +1,6 @@
 ﻿using PLAIF_VisionPlatform.ViewModel;
+using PLAIF_VisionPlatform.ViewModel.HelixView;
+using PLAIF_VisionPlatform.ViewModel.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -79,8 +81,11 @@ namespace PLAIF_VisionPlatform
             Image_Depth_Control.MouseMove += Image_MouseMove;
             #endregion
 
-            DataContext = new MainViewModel();
-            //navframe.Navigate(new Uri(@"/View/Settings View/ConnectionPage.xaml", UriKind.Relative));
+            var vm = new MainViewModel();
+            this.DataContext = vm;
+            var vgm = new ViewportGeometryModel(new HelixViewInterface(this.pcd_view));
+            this.pcd_view.DataContext = vgm;
+            vm.Vgm = vgm;
         }
 
         private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
