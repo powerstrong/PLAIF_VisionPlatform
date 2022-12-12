@@ -5,3 +5,4 @@
 /Rosbridge/obj
 /PLAIF_VisionPlatform/scripts
 /.vscode
+/Rosbridge/bin/Release/net7.0-windows
