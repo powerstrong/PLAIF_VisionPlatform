@@ -39,20 +39,23 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
             try
             {
-                CalibrationMatrix = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"]!.ToString();
+                if(Document.Instance.jsonUtil.jsonVisionSetting != null &&
+                    Document.Instance.jsonUtil.jsonVisionSetting.HasValues == true)
+                {
+                    JToken JtokenMatrix = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["calibration"]!["matrix"]!;
 
-                //임시 테스트 코드
-                List<CalMatrixRow> calMat = new List<CalMatrixRow>();
-                calMat.Add(new CalMatrixRow(00, 01, 02, 03));
-                calMat.Add(new CalMatrixRow(10, 11, 12, 13));
-                calMat.Add(new CalMatrixRow(20, 21, 22, 23));
-                calMat.Add(new CalMatrixRow(30, 31, 32, 33));
+                    List<CalMatrixRow> calMat = new List<CalMatrixRow>();
+                    foreach (JToken token in JtokenMatrix)
+                    {
+                        calMat.Add(new CalMatrixRow(Convert.ToSingle(token[0]), Convert.ToSingle(token[1]), Convert.ToSingle(token[2]), Convert.ToSingle(token[3])));
+                    }
 
-                CalMatrix = calMat;
+                    CalMatrix = calMat;
 
-                string strTopicColor = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["topics"]!["color"]!.ToString();
-                string[] strTopicList = strTopicColor.Split('/');
-                CameraName = strTopicList[1];
+                    string strTopicColor = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["Cam1"]!["topics"]!["color"]!.ToString();
+                    string[] strTopicList = strTopicColor.Split('/');
+                    CameraName = strTopicList[1];
+                }
             }
             catch
             {

@@ -655,41 +655,6 @@ namespace PLAIF_VisionPlatform.ViewModel
                 orientation.Add(vec4);            
             }
 
-
-            ////통신이 되지 않아서 임시 코드
-            ////Model ID
-            //List<int> ModelID = new List<int>();
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    ModelID.Add(((int)0));
-            //}
-
-            ////Matching Score
-            //List<double> Matching_Score = new List<double>();
-            //for (int i = 0; i < ModelID.Count(); i++)
-            //{
-            //    Matching_Score.Add(100);
-            //}
-
-            ////Position
-            //List<Vector3> position = new List<Vector3>();
-            //List<Vector4> orientation = new List<Vector4>();
-            //for (int i = 0; i < ModelID.Count(); i++)
-            //{
-            //    Vector3 vec3 = new Vector3();
-            //    vec3.X = 0.00003f;
-            //    vec3.Y = 0.00003f;
-            //    vec3.Z = 0.00003f;
-            //    position.Add(vec3);
-
-            //    Vector4 vec4 = new Vector4();
-            //    vec4.X = 0.00003f;
-            //    vec4.Y = 0.00003f;
-            //    vec4.Z = 0.00003f;
-            //    vec4.W = 0.00003f;
-            //    orientation.Add(vec4);
-            //}
-
             Document.Instance.visionResult.Clear();
             for (int i = 0; i < ModelID.Count(); i++)
             {

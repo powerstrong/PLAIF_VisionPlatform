@@ -95,13 +95,17 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
             try
             {
-                ActionName = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["action"]["action_name"].ToString();
-                W = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][0].ToString();
-                H = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][1].ToString();
-                Xs = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][0].ToString();
-                Xe = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][1].ToString();
-                Ys = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][2].ToString();
-                Ye = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][3].ToString();
+                if (Document.Instance.jsonUtil.jsonVisionSetting != null &&
+                    Document.Instance.jsonUtil.jsonVisionSetting.HasValues == true)
+                {
+                    ActionName = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["action"]!["action_name"]!.ToString();
+                    W = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["resize"]![0]!.ToString();
+                    H = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["resize"]![1]!.ToString();
+                    Xs = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![0]!.ToString();
+                    Xe = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![1]!.ToString();
+                    Ys = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![2]!.ToString();
+                    Ye = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![3]!.ToString();
+                }
             }
             catch
             {
@@ -111,13 +115,24 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         public void UpdateToJson()
         {
-            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["action"]["action_name"] = ActionName;
-            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][0] = W;
-            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["resize"][1] = H;
-            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][0] = Xs;
-            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][1] = Xe;
-            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][2] = Ys;
-            Document.Instance.jsonUtil.jsonVisionSetting["Vision"]["vision_node1"]["preprocessing"]["roi"][3] = Ye;
+            try
+            {
+                if (Document.Instance.jsonUtil.jsonVisionSetting != null &&
+                    Document.Instance.jsonUtil.jsonVisionSetting.HasValues == true)
+                {
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["action"]!["action_name"] = ActionName;
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["resize"]![0] = W;
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["resize"]![1] = H;
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![0] = Xs;
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![1] = Xe;
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![2] = Ys;
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![3] = Ye;
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
