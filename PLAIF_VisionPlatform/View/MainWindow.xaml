@@ -87,7 +87,7 @@
                                 <ModelVisual3D Content="{Binding GeometryModel}"/>
 
                                 <!-- You can also add elements here in the xaml -->
-                                <helix:GridLinesVisual3D Width="12" Length="12" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>
+                                <helix:GridLinesVisual3D Width="4" Length="4" MinorDistance="0.1" MajorDistance="1" Thickness="0.01"/>
                                 <hv:LabeledCoordSysVis3D />
                             </helix:HelixViewport3D>
                         </Grid>

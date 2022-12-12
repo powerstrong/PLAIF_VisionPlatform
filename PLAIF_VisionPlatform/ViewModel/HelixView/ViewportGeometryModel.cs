@@ -46,7 +46,7 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
         private HelixViewInterface _hvi;
 
         public Model3D GeometryModel { get; set; } //this is bound to the viewport
-        protected const int POINTSIZE = 6; //display size for magnetometer points
+        protected const int POINTSIZE = 3; //display size for magnetometer points
 
         private Model3DGroup modelGroup;
 
@@ -63,7 +63,17 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             hvi.AddValue(m_pointsVisual);
         }
 
-        
+        public void AddVisual3Ds(List<Visual3D> visual3Ds)
+        {
+            foreach (var v3d in visual3Ds)
+                _hvi.AddValue(v3d);
+        }
+
+        public void ReplaceVisual3Ds(List<Visual3D> visual3Ds)
+        {
+            _hvi.ClearValue();
+            AddVisual3Ds(visual3Ds);
+        }
 
         public void DrawRefCircles(HelixViewport3D viewport, double radius = 1, bool bEnable = false)
         {
