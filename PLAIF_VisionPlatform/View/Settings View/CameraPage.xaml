@@ -35,7 +35,7 @@
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
                      Text="{Binding CalibrationMatrix}"    />-->
-                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding CalMatrix}" CanUserSortColumns="False" ColumnHeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding CalMatrix}" CanUserSortColumns="False" ColumnHeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                     <DataGrid.Columns>
                         <DataGridTextColumn MinWidth="105" Width="Auto" Header="0" Binding="{Binding M0}" CellStyle="{DynamicResource CenterGridStyle}"></DataGridTextColumn>
                         <DataGridTextColumn MinWidth="105" Width="Auto" Header="1" Binding="{Binding M1}" CellStyle="{DynamicResource CenterGridStyle}"></DataGridTextColumn>

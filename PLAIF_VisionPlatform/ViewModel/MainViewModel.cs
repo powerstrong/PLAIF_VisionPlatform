@@ -451,6 +451,8 @@ namespace PLAIF_VisionPlatform.ViewModel
             //Calculator
             Vector3[] pcl = new Vector3[size];
 
+            //StreamWriter sr = new StreamWriter("TestPointCloud.pcd");
+
             for (int n = 0; n < size; n++)
             {
                 int x_posi = n * point_step + 0;
@@ -466,7 +468,12 @@ namespace PLAIF_VisionPlatform.ViewModel
                     continue;
 
                 vector3s.Add(new Vector3(x, y, z));
+
+                //string str = String.Format("{0:s} {1:s} {2:s}", x.ToString(), y.ToString(), z.ToString());
+                //sr.WriteLine(str);
             }
+
+            //sr.Close();
 
             //이걸로 그림 한번 그려보자 어떤 느낌인지
 
