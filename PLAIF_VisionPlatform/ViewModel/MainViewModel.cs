@@ -470,74 +470,68 @@ namespace PLAIF_VisionPlatform.ViewModel
                 vector3s.Add(new Vector3(x, y, z));
             }
 
-            float min_x = vector3s.Min(x => x.X);
-            float min_y = vector3s.Min(x => x.Y);
-            float min_z = vector3s.Min(x => x.Z);
-            float max_x = vector3s.Max(x => x.X);
-            float max_y = vector3s.Max(x => x.Y);
-            float max_z = vector3s.Max(x => x.Z);
+            // jslee : 성능을 위한 임시코드 ㅠ 음수인 vector3s 값을 필터링한다
+            //vector3s = vector3s.Where(x => x.X > 0 && x.Y > 0).ToList();
 
             // window Form과 연결할 경우가 아니면, 문제없다.
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
             {
                 try
                 {
-                    ////이걸로 그림 한번 그려보자 어떤 느낌인지
-                    //int i = 0;
+                    vgm.ClearVisual3Ds();
 
-                    //var points1 = new Point3DCollection();
-                    //var points2 = new Point3DCollection();
-                    //var points3 = new Point3DCollection();
-                    //var points4 = new Point3DCollection();
-                    //for (; i < vector3s.Count*0.1; i++)
-                    //{
-                    //    var pt = vector3s[i];
-                    //    points1.Add(new Point3D(pt.X, pt.Y, pt.Z));
-                    //}
-                    //var v3d = new PointsVisual3D { Color = Color.FromRgb(20,0,0), Size = 2 };
-                    //v3d.Points = points1;
-                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
+                    // 21 colors from red to violet gradient
+                    var colors = new List<Color> {
+                        Color.FromRgb(255, 0, 0),
+                        Color.FromRgb(255, 0, 51),
+                        Color.FromRgb(255, 0, 102),
+                        Color.FromRgb(255, 0, 153),
+                        Color.FromRgb(255, 0, 204),
+                        Color.FromRgb(255, 0, 255),
+                        Color.FromRgb(204, 0, 255),
+                        Color.FromRgb(153, 0, 255),
+                        Color.FromRgb(102, 0, 255),
+                        Color.FromRgb(51, 0, 255),
+                        Color.FromRgb(0, 0, 255),
+                        Color.FromRgb(0, 51, 255),
+                        Color.FromRgb(0, 102, 255),
+                        Color.FromRgb(0, 153, 255),
+                        Color.FromRgb(0, 204, 255),
+                        Color.FromRgb(0, 255, 255),
+                        Color.FromRgb(0, 255, 204),
+                        Color.FromRgb(0, 255, 153),
+                        Color.FromRgb(0, 255, 102),
+                        Color.FromRgb(0, 255, 51),
+                        Color.FromRgb(0, 255, 0),
+                    };
 
-                    //for (; i < vector3s.Count*0.2; i++)
-                    //{
-                    //    var pt = vector3s[i];
-                    //    points2.Add(new Point3D(pt.X, pt.Y, pt.Z));
-                    //}
-                    //v3d = new PointsVisual3D { Color = Color.FromRgb(100, 0, 0), Size = 2 };
-                    //v3d.Points = points2;
-                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
-
-                    //for (; i < vector3s.Count*0.3; i++)
-                    //{
-                    //    var pt = vector3s[i];
-                    //    points3.Add(new Point3D(pt.X, pt.Y, pt.Z));
-                    //}
-                    //v3d = new PointsVisual3D { Color = Color.FromRgb(200, 0, 0), Size = 2 };
-                    //v3d.Points = points3;
-                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
-
-                    //for (; i < vector3s.Count; i++)
-                    //{
-                    //    var pt = vector3s[i];
-                    //    points4.Add(new Point3D(pt.X, pt.Y, pt.Z));
-                    //}
-                    //v3d = new PointsVisual3D { Color = Color.FromRgb(255, 0, 0), Size = 2 };
-                    //v3d.Points = points4;
-                    //vgm.AddVisual3Ds(new List<Visual3D> { v3d });
-
-
-
-
-                    var points = new Point3DCollection();
-                    foreach (var pt in vector3s)
-                    {
-                        points.Add(new Point3D(pt.X, pt.Y, pt.Z));
-                    }
+                    // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
+                    float min_z = vector3s.Min(x => x.Z);
+                    float max_z = vector3s.Max(x => x.Z);
 
                     const int POINTSIZE = 1; //display size for magnetometer points
-                    var v3d = new PointsVisual3D { Color = Colors.Red, Size = POINTSIZE };
-                    v3d.Points = points;
-                    vgm.AddVisual3Ds(new List<Visual3D> { v3d });
+                    PointsVisual3D[] pv3ds = new PointsVisual3D[colors.Count];
+                    Point3DCollection[] p3dcs = new Point3DCollection[colors.Count];
+                    for (int i = 0; i < colors.Count; i++)
+                    {
+                        pv3ds[i] = new PointsVisual3D { Color = colors[i], Size = POINTSIZE };
+                        p3dcs[i] = new Point3DCollection(); // 이 시점에 pv3ds[i].Points에 넣으면 성능저하 발생하므로 나중에 한번에 넣는다.
+                    }
+
+                    for (int i = 0; i < vector3s.Count; i++)
+                    {
+                        // min_z와 max_z 사이의 21등분 중 어느 구간에 속하는지 계산
+                        int color_index = (int)((vector3s[i].Z - min_z) / (max_z - min_z) * 20);
+                        color_index = Math.Min(color_index, 20);
+                        color_index = Math.Max(color_index, 0);
+
+                        p3dcs[color_index].Add(new Point3D(vector3s[i].X, vector3s[i].Y, vector3s[i].Z));
+                    }
+
+                    foreach (var (pv3d, p3dc) in pv3ds.Zip(p3dcs, (pv3d, p3dc) => (pv3d, p3dc)))
+                        pv3d.Points = p3dc;
+
+                    vgm.AddVisual3Ds(pv3ds.ToList<Visual3D>());
                 }
                 catch
                 {

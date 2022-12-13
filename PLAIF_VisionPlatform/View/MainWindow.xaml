@@ -88,7 +88,7 @@
 
                                 <!-- You can also add elements here in the xaml -->
                                 <helix:GridLinesVisual3D Width="4" Length="4" MinorDistance="0.1" MajorDistance="1" Thickness="0.01"/>
-                                <hv:LabeledCoordSysVis3D />
+                                <hv:LabeledCoordSysVis3D ArrowLengths="0.2" />
                             </helix:HelixViewport3D>
                         </Grid>
                     </TabItem>

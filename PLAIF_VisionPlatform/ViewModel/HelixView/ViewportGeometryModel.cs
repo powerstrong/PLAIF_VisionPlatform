@@ -69,11 +69,17 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
                 _hvi.AddValue(v3d);
         }
 
-        public void ReplaceVisual3Ds(List<Visual3D> visual3Ds)
+        public void ClearVisual3Ds()
         {
             _hvi.ClearValue();
+        }
+
+        public void ReplaceVisual3Ds(List<Visual3D> visual3Ds)
+        {
+            ClearVisual3Ds();
             AddVisual3Ds(visual3Ds);
         }
+        
 
         public void DrawRefCircles(HelixViewport3D viewport, double radius = 1, bool bEnable = false)
         {
