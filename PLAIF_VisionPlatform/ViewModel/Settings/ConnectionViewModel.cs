@@ -46,25 +46,26 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             sshViewService.CreateWindow();
         }
 
-        public async Task ConnectCommand()
+        public Task ConnectCommand()
         {
             string ip_address = Document.Instance.userinfo.ip_address;
             if (PowershellUtil.ValidateIPv4(ip_address) == false)
             {
                 MessageBox.Show("입력한 IP 주소가 형식에 맞지 않습니다");
-                return;
+                return Task.CompletedTask;
             }
 
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected ? "Disconnecting..." : "Connecting..";
             Task<bool> task = Task.Run(() =>
             {
-                string uri = String.Format("ws://{0}:9090", ip_address);
+                string uri = string.Format("ws://{0}:9090", ip_address);
                 RosbridgeMgr.Instance.Connect(uri);
 
                 return true;
             });
             task.Wait();
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected ? "Disconnect from ROS" : "Connect to ROS";
+            return Task.CompletedTask;
         }
 
         public bool CanExcute_ConnectionButton()

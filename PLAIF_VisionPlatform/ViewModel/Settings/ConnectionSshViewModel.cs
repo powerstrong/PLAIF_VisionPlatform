@@ -26,9 +26,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             Document.Instance.updater.Add(this);
             OKWindowCommand = new RelayCommand<Window>(OKWindow);
             var userinfo = Document.Instance.userinfo;
-            IpAddress = userinfo.ip_address;
-            Username = userinfo.username;
-            Password = userinfo.password;
+            _ipAddress = userinfo.ip_address;
+            _username = userinfo.username;
+            _password = userinfo.password;
         }
 
         private void OKWindow(Window window)

@@ -133,9 +133,9 @@ namespace PLAIF_VisionPlatform.Utilities
             try
             {
                 var w = new StringWriter();
-                ConvertFromJsonToYaml(jsonVisionSetting.ToString(), ref w);
+                ConvertFromJsonToYaml(jsonVisionSetting!.ToString(), ref w);
 
-                using (StreamWriter sr = new StreamWriter(Path))
+                using (StreamWriter sr = new(Path))
                 {
                     sr.WriteLine(w);
                     sr.Close();
@@ -157,9 +157,9 @@ namespace PLAIF_VisionPlatform.Utilities
             bool Rtn = false;
             try
             {
-                using (StreamWriter sr = new StreamWriter(Path))
+                using (StreamWriter sr = new(Path))
                 {
-                    sr.WriteLine(jsonVisionSetting.ToString());
+                    sr.WriteLine(jsonVisionSetting!.ToString());
                     sr.Close();
                 }
                 Rtn = true;
@@ -179,15 +179,15 @@ namespace PLAIF_VisionPlatform.Utilities
             var yamlObject = deserializer.Deserialize(file);
 
             // now convert the object to JSON. Simple!
-            JsonSerializer js = new JsonSerializer();
+            JsonSerializer js = new();
 
-            using (StringWriter w = new StringWriter())
+            using (StringWriter w = new())
             {
                 js.Serialize(w, yamlObject);
 
-                using (StringReader r = new StringReader(w.ToString()))
+                using (StringReader r = new(w.ToString()))
                 {
-                    using (JsonTextReader readder = new JsonTextReader(r))
+                    using (JsonTextReader readder = new(r))
                     {
                         JObject json = (JObject)JToken.ReadFrom(readder);
 
@@ -209,7 +209,7 @@ namespace PLAIF_VisionPlatform.Utilities
         private object ConvertJTokenToObject(JToken token)
         {
             if (token is JValue)
-                return ((JValue)token).Value;
+                return ((JValue)token).Value!;
             if (token is JArray)
                 return token.AsEnumerable().Select(ConvertJTokenToObject).ToList();
             if (token is JObject)

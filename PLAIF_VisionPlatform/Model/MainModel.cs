@@ -72,7 +72,7 @@ namespace PLAIF_VisionPlatform.Model
     {
         public Vision_Result()
         {
-
+            strPosition = "[0 0 0]";
         }
 
         public Vision_Result(int _Index, int _ModelID, double _Matching_Score, Vector3 _position, Vector4 _orientation)

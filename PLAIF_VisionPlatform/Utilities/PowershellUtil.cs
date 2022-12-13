@@ -19,7 +19,7 @@ namespace PLAIF_VisionPlatform.Utilities
             psi.RedirectStandardError = true;
             System.Diagnostics.Process? process = System.Diagnostics.Process.Start(psi);
             process?.WaitForExit();
-            string output = process.StandardOutput.ReadToEnd();
+            string output = process!.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
             if (error != "")
             {
@@ -38,7 +38,7 @@ namespace PLAIF_VisionPlatform.Utilities
             psi.RedirectStandardError = true;
             System.Diagnostics.Process? process = System.Diagnostics.Process.Start(psi);
             process?.WaitForExit();
-            string output = process.StandardOutput.ReadToEnd();
+            string output = process!.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
             if (error != "")
             {

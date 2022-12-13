@@ -248,18 +248,15 @@ namespace Rosbridge.Client
                         if (null != _receivingTask)
                         {
                             await _receivingTask;
-                            _receivingTask = null;
                         }
 
                         if (null != _socket)
                         {
                             _socket.Dispose();
-                            _socket = null;
                         }
 
                         if (null != _serializer)
                         {
-                            _serializer = null;
                         }
                     }
                 }

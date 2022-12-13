@@ -21,8 +21,8 @@ namespace PLAIF_VisionPlatform.ViewModel
 {
     public sealed class RosbridgeMgr
     {
-        private MessageDispatcher _md; 
-        private MainViewModel _mainViewModel;
+        private MessageDispatcher? _md; 
+        private MainViewModel? _mainViewModel;
         private RosbridgeModel _rosbrdgModel;
 
         private bool _isConnected;
@@ -91,7 +91,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             //ToggleConnected();
         }
 
-        public async void Capture()
+        public void Capture()
         {
             ServiceCallMsg("/zivid_camera/capture", "[]");
         }
@@ -121,19 +121,19 @@ namespace PLAIF_VisionPlatform.ViewModel
                     Debug.Print("[chatter] : " + msg); // 메시지 크기가 큰 경우 주의할 것
                     break;
                 case RosbridgeModel.RosTopics.zvd_point_xyz:
-                    _mainViewModel.CreatePointCloud(e.Message["msg"]!["data"]!.ToString());
+                    _mainViewModel!.CreatePointCloud(e.Message["msg"]!["data"]!.ToString());
                     break;
                 case RosbridgeModel.RosTopics.zvd_color_image:
-                    _mainViewModel.Create2DBitMapImage(e.Message["msg"]!["data"]!.ToString());
+                    _mainViewModel!.Create2DBitMapImage(e.Message["msg"]!["data"]!.ToString());
                     break;
                 case RosbridgeModel.RosTopics.zvd_depth_image:
-                    _mainViewModel.Create3DBitMapImage(e.Message["msg"]!["data"]!.ToString());
+                    _mainViewModel!.Create3DBitMapImage(e.Message["msg"]!["data"]!.ToString());
                     break;
                 case RosbridgeModel.RosTopics.vision_result:
-                    _mainViewModel.ParsingVisionResult(e.Message["msg"]!["result"]!);
+                    _mainViewModel!.ParsingVisionResult(e.Message["msg"]!["result"]!);
                     break;
                 case RosbridgeModel.RosTopics.vision_result_img:
-                    _mainViewModel.Create2DResultImage(e.Message["msg"]!["data"]!.ToString());
+                    _mainViewModel!.Create2DResultImage(e.Message["msg"]!["data"]!.ToString());
                     break;
             }
 

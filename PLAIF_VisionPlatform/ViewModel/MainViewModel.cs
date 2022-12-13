@@ -515,10 +515,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                     }
 
                     foreach (var (pv3d, p3dc) in pv3ds.Zip(p3dcs, (pv3d, p3dc) => (pv3d, p3dc)))
-                    {
-                        p3dc.Freeze();
                         pv3d.Points = p3dc;
-                    }
 
                     vgm.AddVisual3Ds(pv3ds.ToList<Visual3D>());
                 }

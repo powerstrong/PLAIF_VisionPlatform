@@ -21,7 +21,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Command
             _canExecute = canExecute;
         }
 
-        public DelegateCommand(Action<object?> execute) : this(execute, null)
+        public DelegateCommand(Action<object?> execute) : this(execute, null!)
         {
 
         }

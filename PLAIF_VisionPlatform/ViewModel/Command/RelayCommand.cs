@@ -30,12 +30,12 @@ namespace PLAIF_VisionPlatform
 
         public bool CanExecute(object? parameter)
         {
-            return _canexecute == null ? true : _canexecute((T)parameter);
+            return _canexecute == null ? true : _canexecute((T)parameter!);
         }
 
         public void Execute(object? parameter)
         {
-            _excute((T)parameter);
+            _excute((T)parameter!);
         }
     }
 }

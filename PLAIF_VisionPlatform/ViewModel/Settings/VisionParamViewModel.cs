@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,9 +15,11 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
     internal class VisionParamViewModel : INotifyPropertyChanged, Observer
     {
-		public VisionParamViewModel()
+		public VisionParamViewModel() 
 		{
             Document.Instance.updater.Add(this);
+
+            w = h = xs = xe = ys = ye = "";
             //this.UpdateFromJson();
         }
 

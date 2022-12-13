@@ -13,9 +13,6 @@
     <Compile Update="View\HelixView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Settings View\CalibrationPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="View\Settings View\CameraPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -51,9 +48,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\MainWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Settings View\CalibrationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Settings View\CameraPage.xaml">
