@@ -538,59 +538,6 @@ namespace PLAIF_VisionPlatform.ViewModel
 
                 }
             }));
-
-            #region json파일로 읽어서 보여주기 - 나중에 디버깅할때 필요할까?
-            //using (StreamReader file = File.OpenText("PointCloudImage_json.json")) //"2DImage_json.json" //PointCloudImage_json //DepthImage_json
-            //{
-            //    using (JsonTextReader readder = new JsonTextReader(file))
-            //    {
-            //        JObject json = (JObject)JToken.ReadFrom(readder);
-
-            //        if (json != null)
-            //        {
-            //            string strData = json["data"].ToString();
-            //            //byte[] bByte = Encoding.UTF8.GetBytes(strData);
-
-            //            byte[] bByte = Convert.FromBase64String(strData);
-
-            //            //PointCloud2
-            //            int width = 1944;
-            //            int height = 1200;
-            //            int row_step = 31104;
-            //            int point_step = 16;
-            //            int size = bByte.Length;
-            //            size = size / point_step;
-
-            //            //Calculator
-            //            Vector3[] pcl = new Vector3[size];
-
-            //            for (int n = 0; n < size; n++)
-            //            {
-            //                int x_posi = n * point_step + 0;
-            //                int y_posi = n * point_step + 4;
-            //                int z_posi = n * point_step + 8;
-
-            //                float x = BitConverter.ToSingle(bByte, x_posi);
-            //                float y = BitConverter.ToSingle(bByte, y_posi);
-            //                float z = BitConverter.ToSingle(bByte, z_posi);
-
-            //                pcl[n] = new Vector3(x, y, z); //new Vector3(y, z, x);
-
-            //                //var str = pcl[n].ToString();
-            //                //if (!str.Contains("NaN"))
-            //                //{
-            //                //    var str2 = string.Format("{0:s} {1:s} {2:s}", pcl[n].X.ToString(), pcl[n].Y.ToString(), pcl[n].Z.ToString());
-            //                //}
-
-            //                //Log
-            //                Console.WriteLine("pclCoordinates:x=" + pcl[n].X + ",y=" + pcl[n].Y + ",z=" + pcl[n].Z);
-            //            }
-
-            //            PointCloud = pcl;
-            //        }
-            //    }
-            //}
-            #endregion
         }
 
         private ViewportGeometryModel vgm;
