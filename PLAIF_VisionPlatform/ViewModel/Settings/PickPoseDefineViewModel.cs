@@ -17,8 +17,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
     internal class PickPoseDefineViewModel : INotifyPropertyChanged
     {
-        public RelayCommand<Window> OKClick { get; private set; }
-        public RelayCommand<Window> CancelClick { get; private set; }
+        public RelayCommand<Window>? OKClick { get; private set; }
+        public RelayCommand<Window>? CancelClick { get; private set; }
 
 
         public PickPoseDefineViewModel()

@@ -21,10 +21,10 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         public ICommand? DelClick { get; set; }
         public ICommand? ModClick { get; set; }
 
-        private ViewportGeometryModel vgm;
+        private ViewportGeometryModel? vgm;
         public ViewportGeometryModel Vgm
         {
-            get { return vgm; }
+            get { return vgm!; }
             set { vgm = value; }
         }
 
@@ -41,6 +41,18 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             //this.UpdateToJson();
         }
 
+        private Pickpose selectedPose = new();
+
+        public Pickpose SelectedPose
+        {
+            get { return selectedPose; }
+            set { 
+                selectedPose = value;
+                NotifyPropertyChanged(nameof(selectedPose));
+            }
+        }
+
+
         public void ImportPlyCommand()
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -55,8 +67,16 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         PickPoseDefineViewService _pickPoseDefineViewService = new PickPoseDefineViewService();
 
-        private readonly ObservableCollection<Pickpose> _pickPoses;
-        public ObservableCollection<Pickpose> PickPoses { get => _pickPoses; }
+        private ObservableCollection<Pickpose> _pickPoses;
+        public ObservableCollection<Pickpose> PickPoses
+        {
+            get => _pickPoses;
+            set
+            {
+                _pickPoses = value;
+                NotifyPropertyChanged(nameof(_pickPoses));
+            }
+        }
 
         private void AddCommand()
         {
@@ -65,15 +85,14 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         private void DelCommand()
         {
-            vgm.Points.Add(new Point3D(1, 0, 0));
-            vgm.Points.Add(new Point3D(1, 1, 0));
-            vgm.Points.Add(new Point3D(0, 1, 0));
-            vgm.Points.Add(new Point3D(1, 1, 0));
+            Document.Instance.pickPoses.Remove(SelectedPose);
+            Document.Instance.updater.NotifyToJson();
         }
 
         private void ModCommand()
         {
-            _pickPoseDefineViewService.CreateWindow();
+            if (_pickPoses.Contains(SelectedPose))
+                _pickPoseDefineViewService.CreateWindow(SelectedPose);
         }
 
         public void UpdateFromJson()
@@ -99,7 +118,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             //rawmodel.Rawview_MouseDown(sender, e);
         }
 
-        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = "")
         {
             if (!Equals(field, newValue))
             {
@@ -111,9 +130,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             return false;
         }
 
-        private Model3D geometryModel;
+        private Model3D? geometryModel;
 
-        public Model3D GeometryModel { get => geometryModel; set => SetProperty(ref geometryModel, value); }
+        public Model3D GeometryModel { get => geometryModel!; set => SetProperty(ref geometryModel, value); }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

@@ -51,7 +51,7 @@
             <Grid Grid.Row="2">
                 <StackPanel>
                     <TextBlock Text="Pick poses list" Margin="10 5 0 0"/>
-                    <ListView Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}">
+                    <ListView Margin="10 5 0 5" Height="150" FontSize="14" ItemsSource="{Binding PickPoses}" SelectedItem="{Binding SelectedPose}">
                         <ListView.Resources>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

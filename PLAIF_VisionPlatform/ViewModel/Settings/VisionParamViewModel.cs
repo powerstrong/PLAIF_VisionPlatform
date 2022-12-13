@@ -19,11 +19,10 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 		{
             Document.Instance.updater.Add(this);
 
-            w = h = xs = xe = ys = ye = "";
             //this.UpdateFromJson();
         }
 
-        private string? actionName;
+        private string actionName = "";
 
 		public string ActionName
         {
@@ -34,7 +33,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-		private string w;
+        private string w = "";
 
 		public string W
 		{
@@ -44,9 +43,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-		private string h;
+		private string h = "";
 
-		public string H
+        public string H
 		{
 			get { return h; }
 			set { h = value; 
@@ -54,9 +53,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-		private string xs;
+		private string xs = "";
 
-		public string Xs
+        public string Xs
 		{
 			get { return xs; }
 			set { xs = value; 
@@ -64,9 +63,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-		private string xe;
+		private string xe = "";
 
-		public string Xe
+        public string Xe
 		{
 			get { return xe; }
 			set { xe = value; 
@@ -74,9 +73,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-		private string ys;
+		private string ys = "";
 
-		public string Ys
+        public string Ys
 		{
 			get { return ys; }
 			set { ys = value; 
@@ -84,9 +83,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-		private string ye;
+		private string ye = "";
 
-		public string Ye
+        public string Ye
 		{
 			get { return ye; }
 			set { ye = value; 
