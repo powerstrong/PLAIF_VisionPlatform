@@ -40,11 +40,11 @@ namespace PLAIF_VisionPlatform.ViewModel
         private MainModel _mainModel;
         private RosbridgeMgr _rosmgr;
 
-        private BitmapImage img2D;
+        private BitmapImage? img2D;
 
         public BitmapImage Img2D
         {
-            get { return img2D; }
+            get { return img2D!; }
             set
             {
                 img2D = value;
@@ -52,25 +52,14 @@ namespace PLAIF_VisionPlatform.ViewModel
             }
         }
 
-        private BitmapImage imgDepth;
+        private BitmapImage? imgDepth;
 
         public BitmapImage ImgDepth
         {
-            get { return imgDepth; }
+            get { return imgDepth!; }
             set { 
                 imgDepth = value;
                 NotifyPropertyChanged(nameof(imgDepth));
-            }
-        }
-
-        private Vector3[] pointCloud;
-
-        public Vector3[] PointCloud
-        {
-            get { return pointCloud; }
-            set { 
-                pointCloud = value;
-                NotifyPropertyChanged(nameof(pointCloud));
             }
         }
 
@@ -110,6 +99,31 @@ namespace PLAIF_VisionPlatform.ViewModel
 
             Document.Instance.updater.Add(this);
         }
+        
+        // color from red to blue
+        private Color[] colors21 = new Color[21] { 
+            Color.FromRgb(0xFF, 0x00, 0x00), 
+            Color.FromRgb(0xFF, 0x33, 0x00), 
+            Color.FromRgb(0xFF, 0x66, 0x00), 
+            Color.FromRgb(0xFF, 0x99, 0x00),
+            Color.FromRgb(0xFF, 0xCC, 0x00),
+            Color.FromRgb(0xFF, 0xFF, 0x00), 
+            Color.FromRgb(0xCC, 0xFF, 0x00), 
+            Color.FromRgb(0x99, 0xFF, 0x00), 
+            Color.FromRgb(0x66, 0xFF, 0x00), 
+            Color.FromRgb(0x33, 0xFF, 0x00), 
+            Color.FromRgb(0x00, 0xFF, 0x00), 
+            Color.FromRgb(0x00, 0xFF, 0x33), 
+            Color.FromRgb(0x00, 0xFF, 0x66), 
+            Color.FromRgb(0x00, 0xFF, 0x99), 
+            Color.FromRgb(0x00, 0xFF, 0xCC), 
+            Color.FromRgb(0x00, 0xFF, 0xFF), 
+            Color.FromRgb(0x00, 0xCC, 0xFF), 
+            Color.FromRgb(0x00, 0x99, 0xFF), 
+            Color.FromRgb(0x00, 0x66, 0xFF), 
+            Color.FromRgb(0x00, 0x33, 0xFF),
+            Color.FromRgb(0x00, 0x00, 0xFF),
+        };
 
         public void ImportCommand(object msg)
         {
@@ -441,14 +455,11 @@ namespace PLAIF_VisionPlatform.ViewModel
             byte[] bByte = Convert.FromBase64String(message);
 
             //PointCloud2
-            int width = 1944;
-            int height = 1200;
-            int row_step = 31104;
             int point_step = 16;
             int size = bByte.Length;
-            size = size / point_step;
+            size /= point_step;
 
-            List<Vector3> vector3s = new List<Vector3>();
+            List<Vector3> vector3s = new();
             
             //Calculator
             Vector3[] pcl = new Vector3[size];
@@ -480,41 +491,16 @@ namespace PLAIF_VisionPlatform.ViewModel
                 {
                     vgm.ClearVisual3Ds();
 
-                    // 21 colors from red to violet gradient
-                    var colors = new List<Color> {
-                        Color.FromRgb(255, 0, 0),
-                        Color.FromRgb(255, 0, 51),
-                        Color.FromRgb(255, 0, 102),
-                        Color.FromRgb(255, 0, 153),
-                        Color.FromRgb(255, 0, 204),
-                        Color.FromRgb(255, 0, 255),
-                        Color.FromRgb(204, 0, 255),
-                        Color.FromRgb(153, 0, 255),
-                        Color.FromRgb(102, 0, 255),
-                        Color.FromRgb(51, 0, 255),
-                        Color.FromRgb(0, 0, 255),
-                        Color.FromRgb(0, 51, 255),
-                        Color.FromRgb(0, 102, 255),
-                        Color.FromRgb(0, 153, 255),
-                        Color.FromRgb(0, 204, 255),
-                        Color.FromRgb(0, 255, 255),
-                        Color.FromRgb(0, 255, 204),
-                        Color.FromRgb(0, 255, 153),
-                        Color.FromRgb(0, 255, 102),
-                        Color.FromRgb(0, 255, 51),
-                        Color.FromRgb(0, 255, 0),
-                    };
-
                     // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
                     float min_z = vector3s.Min(x => x.Z);
                     float max_z = vector3s.Max(x => x.Z);
 
                     const int POINTSIZE = 1; //display size for magnetometer points
-                    PointsVisual3D[] pv3ds = new PointsVisual3D[colors.Count];
-                    Point3DCollection[] p3dcs = new Point3DCollection[colors.Count];
-                    for (int i = 0; i < colors.Count; i++)
+                    PointsVisual3D[] pv3ds = new PointsVisual3D[colors21.Length];
+                    Point3DCollection[] p3dcs = new Point3DCollection[colors21.Length];
+                    for (int i = 0; i < colors21.Length; i++)
                     {
-                        pv3ds[i] = new PointsVisual3D { Color = colors[i], Size = POINTSIZE };
+                        pv3ds[i] = new PointsVisual3D { Color = colors21[i], Size = POINTSIZE };
                         p3dcs[i] = new Point3DCollection(); // 이 시점에 pv3ds[i].Points에 넣으면 성능저하 발생하므로 나중에 한번에 넣는다.
                     }
 
@@ -529,7 +515,10 @@ namespace PLAIF_VisionPlatform.ViewModel
                     }
 
                     foreach (var (pv3d, p3dc) in pv3ds.Zip(p3dcs, (pv3d, p3dc) => (pv3d, p3dc)))
+                    {
+                        p3dc.Freeze();
                         pv3d.Points = p3dc;
+                    }
 
                     vgm.AddVisual3Ds(pv3ds.ToList<Visual3D>());
                 }
@@ -547,7 +536,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             set { vgm = value; }
         }
 
-        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null!)
         {
             if (!Equals(field, newValue))
             {
@@ -558,8 +547,8 @@ namespace PLAIF_VisionPlatform.ViewModel
 
             return false;
         }
-        private Model3D geometryModel;
-        public Model3D GeometryModel { get => geometryModel; set => SetProperty(ref geometryModel, value); }
+        private Model3D? geometryModel;
+        public Model3D GeometryModel { get => geometryModel!; set => SetProperty(ref geometryModel, value); }
 
         public void ParsingVisionResult(JToken message)
         {
