@@ -1,15 +1,20 @@
-﻿using Microsoft.Toolkit.Mvvm.Input;
+﻿using HelixToolkit.Wpf;
+using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Win32;
 using PLAIF_VisionPlatform.Interface;
 using PLAIF_VisionPlatform.Model;
 using PLAIF_VisionPlatform.ViewModel.HelixView;
 using PLAIF_VisionPlatform.Work;
+using Ply.Net;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace PLAIF_VisionPlatform.ViewModel.Settings
@@ -57,12 +62,39 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Polygon Files(*.ply)|*.PLY|All files (*.*)|*.*";
-            if (ofd.ShowDialog() == true)
+            if (ofd.ShowDialog() == false) return;
+
+            FileStream fs = new FileStream(ofd.FileName, mode: FileMode.Open);
+            const int max_chunk_size = 1920*10800; // 정확히 무슨 뜻인지 모르겠다.
+            PlyParser.Dataset ds = PlyParser.Parse(fs, max_chunk_size);
+            
+            var list = ds.Data.ToList();
+            var vertex_list = list.Find(x => x.Element.Type == PlyParser.ElementType.Vertex);
+            var face_list = list.Find(x => x.Element.Type == PlyParser.ElementType.Face);
+
+            PlyParser.PropertyData xs = vertex_list!["x"]!;
+            PlyParser.PropertyData ys = vertex_list!["y"]!;
+            PlyParser.PropertyData zs = vertex_list!["z"]!;
+            PlyParser.PropertyData cr = vertex_list!["red"]!;
+            PlyParser.PropertyData cg = vertex_list!["green"]!;
+            PlyParser.PropertyData cb = vertex_list!["blue"]!;
+            PlyParser.PropertyData ca = vertex_list!["alpha"]!;
+
+            const int POINTSIZE = 2; //display size for magnetometer points
+            PointsVisual3D pv3d = new PointsVisual3D() { Color = Colors.Red, Size = POINTSIZE };
+            Point3DCollection p3dc = new Point3DCollection();
+
+            for (int i = 0; i < xs.Data.Length; i++)
             {
-                FileStream fs = new FileStream(ofd.FileName, mode:FileMode.Open);
-                const int max_chunk_size = 100000; // 정확히 무슨 뜻인지 모르겠다.
-                Ply.Net.PlyParser.Dataset ds = Ply.Net.PlyParser.Parse(fs, max_chunk_size);
+                var x = xs.Data.GetValue(i);
+                var y = ys.Data.GetValue(i);
+                var z = zs.Data.GetValue(i);
+                p3dc.Add(new Point3D((float)x! * 100, (float)y! * 100, (float)z! * 100));
             }
+
+            pv3d.Points = p3dc;
+            vgm!.ReplaceVisual3Ds(new List<Visual3D> { pv3d });
+            fs.Close();
         }
 
         PickPoseDefineViewService _pickPoseDefineViewService = new PickPoseDefineViewService();
