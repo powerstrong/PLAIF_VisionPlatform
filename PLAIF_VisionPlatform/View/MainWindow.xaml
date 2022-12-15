@@ -7,7 +7,8 @@
         xmlns:UserControls="clr-namespace:PLAIF_VisionPlatform.View"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:helix="http://helix-toolkit.org/wpf" xmlns:hv="clr-namespace:PLAIF_VisionPlatform.ViewModel.HelixView"
         mc:Ignorable="d"
-        Title="PLAIF AI Vision Platform" Width="1150" Height="768" Background="#FF272525">
+        xmlns:mahctrl="http://metro.mahapps.com/winfx/xaml/controls"
+        Title="PLAIF AI Vision Platform" Width="1920" Height="1080" Background="#FF272525">
 
     <Window.Resources>
         <ResourceDictionary Source="/Styles.xaml"></ResourceDictionary>
@@ -69,14 +70,28 @@
                     </TabItem>
                     <TabItem Header="Points" Style="{DynamicResource ResourceKey=styleTabItemRight}">
                         <Grid>
-                            <!--<Grid.Background>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="#FF032534" Offset="0"/>
-                                    <GradientStop Color="#FF051C26" Offset="0.5"/>
-                                    <GradientStop Color="#FF041F36" Offset="1"/>
-                                </RadialGradientBrush>
-                            </Grid.Background>-->
-                            <helix:HelixViewport3D x:Name="pcd_view" Margin="2" Orthographic="True" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
+                                <TextBlock Margin="5" Text="Point size"/>
+                                <TextBox Text="{Binding PointSize}" Width="50" Margin="5 5 15 5" />
+                                <TextBlock Margin="5" Text="Show points of"/>
+                                <TextBox Text="{Binding ShowPecent}" Width="50" Margin="5 5 2 5" />
+                                <TextBlock Margin="0 5 10 5" Text="%"/>
+                                <TextBlock Margin="5" Text="min. z"/>
+                                <TextBlock Margin="0 5 5 0" Text="{Binding MinZLevel}"/>
+                                <mahctrl:RangeSlider Width="150" Height="25" Margin="5" LowerValue="0" UpperValue="100" Minimum="0" Maximum="100"
+                                                     Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"></mahctrl:RangeSlider>
+                                <TextBlock Margin="0 5" Text="max. z"/>
+                                <TextBlock Margin="0 5 10 5" Text="{Binding MaxZLevel}"/>
+                                <Button Content=" Redraw View " Margin="5 2" Command="{Binding RedrawViewClick}"></Button>
+                            </StackPanel>
+
+
+                            <helix:HelixViewport3D Grid.Row="1" x:Name="pcd_view" Margin="2" Orthographic="True" 
                                                    Title="Point cloud view" BorderThickness="1" BorderBrush="Black" 
                                                    Background="#FFFFFFF4" CalculateCursorPosition="True" ShowCameraTarget="False">
 
@@ -87,7 +102,7 @@
                                 <ModelVisual3D Content="{Binding GeometryModel}"/>
 
                                 <!-- You can also add elements here in the xaml -->
-                                <helix:GridLinesVisual3D Width="4" Length="4" MinorDistance="0.1" MajorDistance="1" Thickness="0.01"/>
+                                <!--<helix:GridLinesVisual3D Width="4" Length="4" MinorDistance="0.1" MajorDistance="1" Thickness="0.01"/>-->
                                 <hv:LabeledCoordSysVis3D ArrowLengths="0.2" />
                             </helix:HelixViewport3D>
                         </Grid>

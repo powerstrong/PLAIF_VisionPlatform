@@ -20,6 +20,13 @@ namespace PLAIF_VisionPlatform.Work
         public string password="";
     }
 
+    public class PcdViewParam
+    {
+        public double pt_size = 1.0;
+        public double pt_show_percentage = 100.0;
+        public Color pt_color = Color.Black;
+    }
+
     public class Updater : IObservable
     {
         private List<Observer> observers = new List<Observer>();
@@ -60,6 +67,8 @@ namespace PLAIF_VisionPlatform.Work
             xy_2d_color_img = new();
             xyz_3d_depth_img = new();
             xyz_pcd_list = new();
+            mainPcdViewParam = new();
+            pickposePcdViewParam = new();
 
             GetUserInfo();
         }
@@ -89,6 +98,9 @@ namespace PLAIF_VisionPlatform.Work
         public List<(int x, int y, System.Windows.Media.Color color)> xy_2d_color_img { get; set; } // Color color = Color.FromRgb(255, 0, 0);
         public List<(int x, int y, float z)> xyz_3d_depth_img { get; set; }
         public List<(float x, float y, float z)> xyz_pcd_list { get; set; }
+
+        public PcdViewParam mainPcdViewParam { get; set; }
+        public PcdViewParam pickposePcdViewParam { get; set; }
 
         public bool IsExistSSHCod { get; set; }
         public bool IsConnected { get; set; }

@@ -96,7 +96,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             ServiceCallMsg("/zivid_camera/capture", "[]");
         }
 
-        public async void Start_Action()
+        public void Start_Action()
         {
             string topic = "/camera01_result0a_action/goal";
             string msg_type = "plaif_vision_msgs/VisionActionGoal";

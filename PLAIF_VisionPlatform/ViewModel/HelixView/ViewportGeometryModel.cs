@@ -74,6 +74,15 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             _hvi.ClearValue();
         }
 
+        public void InitializeVisual3Ds()
+        {
+            var v3ds = new List<Visual3D>();
+
+            LabeledCoordSysVis3D coord = new();
+            coord.ArrowLengths = 0.1;
+        }
+
+
         public void ReplaceVisual3Ds(List<Visual3D> visual3Ds)
         {
             ClearVisual3Ds();

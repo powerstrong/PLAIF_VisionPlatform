@@ -492,18 +492,19 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             try
             {
+                var view_param = Document.Instance.mainPcdViewParam;
+
                 vgm.ClearVisual3Ds();
 
                 // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
                 float min_z = Document.Instance.xyz_pcd_list.Min(x => x.z);
                 float max_z = Document.Instance.xyz_pcd_list.Max(x => x.z);
 
-                const int POINTSIZE = 1; //display size for magnetometer points
                 PointsVisual3D[] pv3ds = new PointsVisual3D[colors21.Length];
                 Point3DCollection[] p3dcs = new Point3DCollection[colors21.Length];
                 for (int i = 0; i < colors21.Length; i++)
                 {
-                    pv3ds[i] = new PointsVisual3D { Color = colors21[i], Size = POINTSIZE };
+                    pv3ds[i] = new PointsVisual3D { Color = colors21[i], Size = view_param.pt_size };
                     p3dcs[i] = new Point3DCollection(); // 이 시점에 pv3ds[i].Points에 넣으면 성능저하 발생하므로 나중에 한번에 넣는다.
                 }
 
