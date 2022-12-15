@@ -3,6 +3,7 @@ using PLAIF_VisionPlatform.Model;
 using PLAIF_VisionPlatform.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -66,6 +67,10 @@ namespace PLAIF_VisionPlatform.Work
             IsExistSSHCod = true;
             IsImported = false;
 
+            xy_2d_color_img = new();
+            xyz_3d_depth_img = new();
+            xyz_pcd_list = new();
+
             GetUserInfo();
         }
 
@@ -90,6 +95,10 @@ namespace PLAIF_VisionPlatform.Work
         public Userinfo userinfo { get; set; }
         public JsonUtil jsonUtil { get; set; }
         public Updater updater { get; set; }
+
+        public List<(int x, int y, System.Windows.Media.Color color)> xy_2d_color_img { get; set; } // Color color = Color.FromRgb(255, 0, 0);
+        public List<(int x, int y, float z)> xyz_3d_depth_img { get; set; }
+        public List<(float x, float y, float z)> xyz_pcd_list { get; set; }
 
         public bool IsExistSSHCod { get; set; }
         public bool IsConnected { get; set; }
