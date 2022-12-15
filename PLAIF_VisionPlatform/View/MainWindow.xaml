@@ -62,7 +62,21 @@
                                     <GradientStop Color="#FF041F36" Offset="1"/>
                                 </RadialGradientBrush>
                             </Grid.Background>
-                            <Border Name="border3D" Grid.Row="1" ClipToBounds="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
+                                <TextBlock Margin="5" Text="Point size"/>
+                                <TextBox Text="{Binding PointSize}" Width="40" Margin="5 5 15 5" />
+                                <TextBlock Margin="5" Text="Show points of"/>
+                                <TextBox Text="{Binding ShowPercent}" Width="40" Margin="5 5 2 5" />
+                                <TextBlock Margin="0 5 10 5" Text="%"/>
+                                <Button Content=" Redraw View " Margin="5 2" Command="{Binding Redraw3dViewClick}"></Button>
+                            </StackPanel>
+                            
+                            <Border Grid.Row="1"  Name="border3D" ClipToBounds="True">
                                 <Image x:Name="Image_Depth_Control" Source="{Binding ImgDepth}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="635" Width="568" Margin="0,1,0,0"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" RenderTransformOrigin="0.5,0.5" ClipToBounds="True">
                                 </Image>
                             </Border>
@@ -87,7 +101,7 @@
                                                      Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"></mahctrl:RangeSlider>
                                 <TextBlock Margin="5" Text="max. z"/>
                                 <TextBlock Margin="0 5 10 5" Text="{Binding MaxZLevel}"/>
-                                <Button Content=" Redraw View " Margin="5 2" Command="{Binding RedrawViewClick}"></Button>
+                                <Button Content=" Redraw View " Margin="5 2" Command="{Binding RedrawPcdViewClick}"></Button>
                             </StackPanel>
 
 

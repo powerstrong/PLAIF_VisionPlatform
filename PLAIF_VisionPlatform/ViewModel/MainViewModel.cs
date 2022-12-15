@@ -36,7 +36,7 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         public ICommand StartClick { get; set; }
         public ICommand CaptureClick { get; set; }
-        public ICommand RedrawViewClick { get; set; }
+        public ICommand RedrawPcdViewClick { get; set; }
 
         private MainModel _mainModel;
         private RosbridgeMgr _rosmgr;
@@ -133,7 +133,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             ExportClick = new RelayCommand<object>(ExportCommand, CanExcute_ExportButton);
             CaptureClick = new RelayCommand<object>(CaptureCommand, CanExcute_CaptureButton);
             StartClick = new RelayCommand<object>(StartCommand, CanExcute_StartButton);
-            RedrawViewClick = new RelayCommand(RedrawViewCommand);
+            RedrawPcdViewClick = new RelayCommand(RedrawViewCommand);
 
             _vision_Result = new ObservableCollection<Vision_Result>();
 
@@ -315,7 +315,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             Document.Instance.mainPcdViewParam.pt_size = Double.Parse(PointSize);
             Document.Instance.mainPcdViewParam.pt_show_percentage = Double.Parse(ShowPercent);
 
-            Document.Instance.updater.Notify(Observer.Cmd.RedrawMainView);
+            Document.Instance.updater.Notify(Observer.Cmd.RedrawPcdView);
         }
         public bool CanExcute_StartButton(object parameter)
         {
@@ -720,8 +720,11 @@ namespace PLAIF_VisionPlatform.ViewModel
                 case Observer.Cmd.UpdateView:
                     UpdateView();
                     break;
-                case Observer.Cmd.RedrawMainView:
+                case Observer.Cmd.RedrawPcdView:
                     UpdatePcdView();
+                    break;
+                case Observer.Cmd.Redraw3dView:
+                    // 종우님 여기입니다!!
                     break;
             }
         }

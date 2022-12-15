@@ -14,7 +14,8 @@ namespace PLAIF_VisionPlatform.Interface
             UpdateToJson,
             UpdateView,
             RedrawPickPoseView,
-            RedrawMainView,
+            RedrawPcdView,
+            Redraw3dView,
         }
 
         void Update(Cmd cmd);
