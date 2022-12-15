@@ -37,7 +37,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                 Double.Parse(_ry),
                 Double.Parse(_rz));
             Document.Instance.pickPoses.Add(pose);
-            Document.Instance.updater.NotifyToJson();
+            Document.Instance.updater.Notify(Observer.Cmd.PickPoseUpdated);
 
             if (window != null)
             {

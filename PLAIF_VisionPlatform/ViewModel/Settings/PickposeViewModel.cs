@@ -118,7 +118,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         private void DelCommand()
         {
             Document.Instance.pickPoses.Remove(SelectedPose);
-            Document.Instance.updater.NotifyToJson();
+            Document.Instance.updater.Notify(Observer.Cmd.PickPoseUpdated);
         }
 
         private void ModCommand()
@@ -127,16 +127,17 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                 _pickPoseDefineViewService.CreateWindow(SelectedPose);
         }
 
-        public void UpdateFromJson()
+        public void Update(Observer.Cmd cmd)
         {
-            //PickPoses.Clear();
-            //foreach (var pp in Document.Instance.pickPoses)
-            //{
-            //    PickPoses.Add(pp);
-            //}
+            switch (cmd)
+            {
+                case Observer.Cmd.PickPoseUpdated:
+                    PickPoseUpdated();
+                    break;
+            }
         }
 
-        public void UpdateToJson()
+        public void PickPoseUpdated()
         {
             PickPoses.Clear();
             foreach (var pp in Document.Instance.pickPoses)

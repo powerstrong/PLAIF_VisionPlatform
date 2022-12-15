@@ -139,7 +139,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 task1.Wait();
 
                 Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
-                Document.Instance.updater.NotifyFromJson();
+                Document.Instance.updater.Notify(Observer.Cmd.UpdateFromJson);
 
                 IsImported = true;
             }
@@ -159,7 +159,7 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             try
             {
-                Document.Instance.updater.NotifyToJson();
+                Document.Instance.updater.Notify(Observer.Cmd.UpdateToJson);
                 Document.Instance.jsonUtil.Save("config_file.yaml", JsonUtil.FileType.Type_Yaml);
 
                 Task task1 = Task.Run(() =>
@@ -484,49 +484,48 @@ namespace PLAIF_VisionPlatform.ViewModel
                 Document.Instance.xyz_pcd_list.Add(new (x, y, z));
             }
 
-            // jslee : 성능을 위한 임시코드 ㅠ 음수인 vector3s 값을 필터링한다
-            //vector3s = vector3s.Where(x => x.X > 0 && x.Y > 0).ToList();
-
             // window Form과 연결할 경우가 아니면, 문제없다.
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() => { UpdatePcdView(); }));
+        }
+
+        public void UpdatePcdView()
+        {
+            try
             {
-                try
+                vgm.ClearVisual3Ds();
+
+                // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
+                float min_z = Document.Instance.xyz_pcd_list.Min(x => x.z);
+                float max_z = Document.Instance.xyz_pcd_list.Max(x => x.z);
+
+                const int POINTSIZE = 1; //display size for magnetometer points
+                PointsVisual3D[] pv3ds = new PointsVisual3D[colors21.Length];
+                Point3DCollection[] p3dcs = new Point3DCollection[colors21.Length];
+                for (int i = 0; i < colors21.Length; i++)
                 {
-                    vgm.ClearVisual3Ds();
-
-                    // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
-                    float min_z = Document.Instance.xyz_pcd_list.Min(x => x.z);
-                    float max_z = Document.Instance.xyz_pcd_list.Max(x => x.z);
-
-                    const int POINTSIZE = 1; //display size for magnetometer points
-                    PointsVisual3D[] pv3ds = new PointsVisual3D[colors21.Length];
-                    Point3DCollection[] p3dcs = new Point3DCollection[colors21.Length];
-                    for (int i = 0; i < colors21.Length; i++)
-                    {
-                        pv3ds[i] = new PointsVisual3D { Color = colors21[i], Size = POINTSIZE };
-                        p3dcs[i] = new Point3DCollection(); // 이 시점에 pv3ds[i].Points에 넣으면 성능저하 발생하므로 나중에 한번에 넣는다.
-                    }
-
-                    for (int i = 0; i < Document.Instance.xyz_pcd_list.Count; i++)
-                    {
-                        // min_z와 max_z 사이의 21등분 중 어느 구간에 속하는지 계산
-                        int color_index = (int)((Document.Instance.xyz_pcd_list[i].z - min_z) / (max_z - min_z) * 20);
-                        color_index = Math.Min(color_index, 20);
-                        color_index = Math.Max(color_index, 0);
-
-                        p3dcs[color_index].Add(new Point3D(Document.Instance.xyz_pcd_list[i].x, Document.Instance.xyz_pcd_list[i].y, Document.Instance.xyz_pcd_list[i].z));
-                    }
-
-                    foreach (var (pv3d, p3dc) in pv3ds.Zip(p3dcs, (pv3d, p3dc) => (pv3d, p3dc)))
-                        pv3d.Points = p3dc;
-
-                    vgm.AddVisual3Ds(pv3ds.ToList<Visual3D>());
+                    pv3ds[i] = new PointsVisual3D { Color = colors21[i], Size = POINTSIZE };
+                    p3dcs[i] = new Point3DCollection(); // 이 시점에 pv3ds[i].Points에 넣으면 성능저하 발생하므로 나중에 한번에 넣는다.
                 }
-                catch
+
+                for (int i = 0; i < Document.Instance.xyz_pcd_list.Count; i++)
                 {
+                    // min_z와 max_z 사이의 21등분 중 어느 구간에 속하는지 계산
+                    int color_index = (int)((Document.Instance.xyz_pcd_list[i].z - min_z) / (max_z - min_z) * 20);
+                    color_index = Math.Min(color_index, 20);
+                    color_index = Math.Max(color_index, 0);
 
+                    p3dcs[color_index].Add(new Point3D(Document.Instance.xyz_pcd_list[i].x, Document.Instance.xyz_pcd_list[i].y, Document.Instance.xyz_pcd_list[i].z));
                 }
-            }));
+
+                foreach (var (pv3d, p3dc) in pv3ds.Zip(p3dcs, (pv3d, p3dc) => (pv3d, p3dc)))
+                    pv3d.Points = p3dc;
+
+                vgm.AddVisual3Ds(pv3ds.ToList<Visual3D>());
+            }
+            catch
+            {
+
+            }
         }
 
         private ViewportGeometryModel vgm;
@@ -597,7 +596,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 try
                 {
-                    Document.Instance.updater.NotifyFromJson();
+                    Document.Instance.updater.Notify(Observer.Cmd.UpdateFromJson);
                 }
                 catch
                 {
@@ -612,6 +611,16 @@ namespace PLAIF_VisionPlatform.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public void Update(Observer.Cmd cmd)
+        {
+            switch (cmd)
+            {
+                case Observer.Cmd.UpdateFromJson:
+                    UpdateFromJson();
+                    break;
+            }
+        }
+
         public void UpdateFromJson()
         {
             Vision_Result.Clear();
@@ -619,11 +628,6 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 Vision_Result.Add(result);
             }
-        }
-
-        public void UpdateToJson()
-        {
-
         }
     }
 }

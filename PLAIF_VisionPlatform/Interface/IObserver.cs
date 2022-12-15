@@ -8,7 +8,14 @@ namespace PLAIF_VisionPlatform.Interface
 {
     public interface Observer
     {
-        void UpdateFromJson();
-        void UpdateToJson();
+        enum Cmd
+        {
+            UpdateFromJson,
+            UpdateToJson,
+            PickPoseUpdated,
+            UpdateView,
+        }
+
+        void Update(Cmd cmd);
     }
 }
