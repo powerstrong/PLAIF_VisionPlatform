@@ -104,6 +104,19 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                 NotifyPropertyChanged(nameof(ye));
             }
         }
+        
+        public void Update(Observer.Cmd cmd)
+        {
+            switch (cmd)
+            {
+                case Observer.Cmd.UpdateFromJson:
+                    this.UpdateFromJson();
+                    break;
+                case Observer.Cmd.UpdateToJson:
+                    UpdateToJson();
+                    break;
+            }
+        }
 
         public void UpdateFromJson()
         {
