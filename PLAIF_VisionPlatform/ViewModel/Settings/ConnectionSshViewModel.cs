@@ -59,6 +59,13 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             // powershell script 실행해서 연결 수립
             PowershellUtil.RunPowershellFile(@"./scripts/ssh-connector.ps1", _ipAddress, _username, _password);
 
+            SSHUtil sSHUtil= new SSHUtil();
+
+            //sSHUtil.ConnectSSH();
+
+            //sSHUtil.UploadFile();
+            //sSHUtil.DownloadFile();
+
             if (window != null)
             {
                 window.Close();
