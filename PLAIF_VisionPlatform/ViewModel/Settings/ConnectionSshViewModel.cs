@@ -53,15 +53,17 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             string path_appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision";
             Directory.CreateDirectory(path_appdata);
             string path_userinfo = path_appdata + "\\userinfo.ini";
-            string data = String.Format("{0}, {1}", _ipAddress, _username);
+            string data = String.Format("{0}, {1}, {2}", _ipAddress, _username, _password);
             File.WriteAllText(path_userinfo, data);
 
             // powershell script 실행해서 연결 수립
-            PowershellUtil.RunPowershellFile(@"./scripts/ssh-connector.ps1", _ipAddress, _username, _password);
+            //PowershellUtil.RunPowershellFile(@"./scripts/ssh-connector.ps1", _ipAddress, _username, _password);
+            Document.Instance.CanConnectedSSH = SSHUtil.ConnectSSH(_ipAddress, _username, _password);
 
-            SSHUtil sSHUtil= new SSHUtil();
-
-            //sSHUtil.ConnectSSH();
+            if (Document.Instance.CanConnectedSSH == false)
+            {
+                MessageBox.Show("IP, Username, Password를 확인해주세요.");
+            }
 
             //sSHUtil.UploadFile();
             //sSHUtil.DownloadFile();

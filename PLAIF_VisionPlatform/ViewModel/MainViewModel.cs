@@ -132,13 +132,21 @@ namespace PLAIF_VisionPlatform.ViewModel
                 Task task1 = Task.Run(() =>
                 {
                     //Import File to Linux
-                    string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
-                    PowershellUtil.RunPowershell(cmdGetYaml);
+                    //string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                    //PowershellUtil.RunPowershell(cmdGetYaml);
+
+                    Document.Instance.IsImported = SSHUtil.DownloadFile(Document.Instance.userinfo.ip_address,
+                                                                        Document.Instance.userinfo.username,
+                                                                        Document.Instance.userinfo.password,
+                                                                        @"config_file.yaml",
+                                                                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision");
+
                 });
 
                 task1.Wait();
 
-                Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
+                string Filtpath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml";
+                Document.Instance.jsonUtil.Load(Filtpath, JsonUtil.FileType.Type_Yaml);
                 Document.Instance.updater.NotifyFromJson();
 
                 IsImported = true;
@@ -160,13 +168,21 @@ namespace PLAIF_VisionPlatform.ViewModel
             try
             {
                 Document.Instance.updater.NotifyToJson();
-                Document.Instance.jsonUtil.Save("config_file.yaml", JsonUtil.FileType.Type_Yaml);
+                string Filtpath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml";
+                Document.Instance.jsonUtil.Save(Filtpath, JsonUtil.FileType.Type_Yaml);
 
                 Task task1 = Task.Run(() =>
                 {
                     //Export File to Linux
-                    string cmdGetYaml = String.Format("scp config_file.yaml {0}@{1}:~/catkin_ws/config/config_file", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
-                    PowershellUtil.RunPowershell(cmdGetYaml);
+                    //string cmdGetYaml = String.Format("scp config_file.yaml {0}@{1}:~/catkin_ws/config/config_file", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                    //PowershellUtil.RunPowershell(cmdGetYaml);
+
+                    Document.Instance.IsImported = SSHUtil.UploadFile(Document.Instance.userinfo.ip_address,
+                                                                        Document.Instance.userinfo.username,
+                                                                        Document.Instance.userinfo.password,
+                                                                        @"config_file.yaml",
+                                                                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml");
+
                 });
 
                 task1.Wait();
@@ -185,8 +201,15 @@ namespace PLAIF_VisionPlatform.ViewModel
                     if(strZividSettingFilePath != null && strZividSettingFilePath != "")
                     {
                         //Export File to Linux
-                        string cmdGetYaml = String.Format("scp {0} {1}@{2}:~/catkin_ws/config/config_file", strZividSettingFilePath, Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
-                        PowershellUtil.RunPowershell(cmdGetYaml);
+                        //string cmdGetYaml = String.Format("scp {0} {1}@{2}:~/catkin_ws/config/config_file", strZividSettingFilePath, Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                        //PowershellUtil.RunPowershell(cmdGetYaml);
+
+                        Document.Instance.IsImported = SSHUtil.UploadFile(Document.Instance.userinfo.ip_address,
+                                                                        Document.Instance.userinfo.username,
+                                                                        Document.Instance.userinfo.password,
+                                                                        @"config_file.yaml",
+                                                                        strZividSettingFilePath);
+
                     }
                 });
 
@@ -622,6 +645,8 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 Vision_Result.Add(result);
             }
+
+
         }
 
         public void UpdateToJson()
