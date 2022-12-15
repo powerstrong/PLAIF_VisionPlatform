@@ -118,7 +118,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         private void DelCommand()
         {
             Document.Instance.pickPoses.Remove(SelectedPose);
-            Document.Instance.updater.Notify(Observer.Cmd.PickPoseUpdated);
+            Document.Instance.updater.Notify(Observer.Cmd.RedrawPickPoseView);
         }
 
         private void ModCommand()
@@ -131,7 +131,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         {
             switch (cmd)
             {
-                case Observer.Cmd.PickPoseUpdated:
+                case Observer.Cmd.RedrawPickPoseView:
                     PickPoseUpdated();
                     break;
             }

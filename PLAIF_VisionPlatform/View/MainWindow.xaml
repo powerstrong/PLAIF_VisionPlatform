@@ -77,15 +77,15 @@
 
                             <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
                                 <TextBlock Margin="5" Text="Point size"/>
-                                <TextBox Text="{Binding PointSize}" Width="50" Margin="5 5 15 5" />
+                                <TextBox Text="{Binding PointSize}" Width="40" Margin="5 5 15 5" />
                                 <TextBlock Margin="5" Text="Show points of"/>
-                                <TextBox Text="{Binding ShowPecent}" Width="50" Margin="5 5 2 5" />
+                                <TextBox Text="{Binding ShowPercent}" Width="40" Margin="5 5 2 5" />
                                 <TextBlock Margin="0 5 10 5" Text="%"/>
                                 <TextBlock Margin="5" Text="min. z"/>
-                                <TextBlock Margin="0 5 5 0" Text="{Binding MinZLevel}"/>
+                                <TextBlock Margin="0 5 5 5" Text="{Binding MinZLevel}"/>
                                 <mahctrl:RangeSlider Width="150" Height="25" Margin="5" LowerValue="0" UpperValue="100" Minimum="0" Maximum="100"
                                                      Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"></mahctrl:RangeSlider>
-                                <TextBlock Margin="0 5" Text="max. z"/>
+                                <TextBlock Margin="5" Text="max. z"/>
                                 <TextBlock Margin="0 5 10 5" Text="{Binding MaxZLevel}"/>
                                 <Button Content=" Redraw View " Margin="5 2" Command="{Binding RedrawViewClick}"></Button>
                             </StackPanel>

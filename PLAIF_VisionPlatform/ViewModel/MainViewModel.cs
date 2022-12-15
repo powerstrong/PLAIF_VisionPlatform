@@ -36,6 +36,7 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         public ICommand StartClick { get; set; }
         public ICommand CaptureClick { get; set; }
+        public ICommand RedrawViewClick { get; set; }
 
         private MainModel _mainModel;
         private RosbridgeMgr _rosmgr;
@@ -81,6 +82,46 @@ namespace PLAIF_VisionPlatform.ViewModel
             get { return _vision_Result; }
         }
 
+        private string pointSize = "1";
+
+        public string PointSize
+        {
+            get { return pointSize; }
+            set { pointSize = value; 
+                NotifyPropertyChanged(nameof(pointSize));
+            }
+        }
+
+        private string showPercent = "10";
+
+        public string ShowPercent
+        {
+            get { return showPercent; }
+            set { showPercent = value; 
+                NotifyPropertyChanged(nameof(showPercent));
+            }
+        }
+
+
+        private string minZLevel = "0";
+
+        public string MinZLevel
+        {
+            get { return minZLevel; }
+            set { minZLevel = value; 
+                NotifyPropertyChanged(nameof(minZLevel));
+            }
+        }
+
+        private string maxZLevel = "100";
+
+        public string MaxZLevel
+        {
+            get { return maxZLevel; }
+            set { maxZLevel = value; 
+                NotifyPropertyChanged(nameof(maxZLevel));
+            }
+        }
 
         public MainViewModel() 
         {
@@ -92,6 +133,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             ExportClick = new RelayCommand<object>(ExportCommand, CanExcute_ExportButton);
             CaptureClick = new RelayCommand<object>(CaptureCommand, CanExcute_CaptureButton);
             StartClick = new RelayCommand<object>(StartCommand, CanExcute_StartButton);
+            RedrawViewClick = new RelayCommand(RedrawViewCommand);
 
             _vision_Result = new ObservableCollection<Vision_Result>();
 
@@ -266,6 +308,14 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 MessageBox.Show("Start가 정상적으로 진행되지 않았습니다.");
             }
+        }
+
+        private void RedrawViewCommand()
+        {
+            Document.Instance.mainPcdViewParam.pt_size = Double.Parse(PointSize);
+            Document.Instance.mainPcdViewParam.pt_show_percentage = Double.Parse(ShowPercent);
+
+            Document.Instance.updater.Notify(Observer.Cmd.RedrawMainView);
         }
         public bool CanExcute_StartButton(object parameter)
         {
@@ -533,6 +583,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 var view_param = Document.Instance.mainPcdViewParam;
 
+                if (vgm is null) return;
                 vgm.ClearVisual3Ds();
 
                 // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
@@ -547,8 +598,13 @@ namespace PLAIF_VisionPlatform.ViewModel
                     p3dcs[i] = new Point3DCollection(); // 이 시점에 pv3ds[i].Points에 넣으면 성능저하 발생하므로 나중에 한번에 넣는다.
                 }
 
+                int show_factor = (int)(100 / view_param.pt_show_percentage);
+
                 for (int i = 0; i < Document.Instance.xyz_pcd_list.Count; i++)
                 {
+                    if(i % show_factor != 0)
+                        continue;
+
                     // min_z와 max_z 사이의 21등분 중 어느 구간에 속하는지 계산
                     int color_index = (int)((Document.Instance.xyz_pcd_list[i].z - min_z) / (max_z - min_z) * 20);
                     color_index = Math.Min(color_index, 20);
@@ -568,8 +624,8 @@ namespace PLAIF_VisionPlatform.ViewModel
             }
         }
 
-        private ViewportGeometryModel vgm;
-        public ViewportGeometryModel Vgm
+        private ViewportGeometryModel? vgm;
+        public ViewportGeometryModel? Vgm
         {
             get { return vgm; }
             set { vgm = value; }
@@ -663,6 +719,9 @@ namespace PLAIF_VisionPlatform.ViewModel
                     break;
                 case Observer.Cmd.UpdateView:
                     UpdateView();
+                    break;
+                case Observer.Cmd.RedrawMainView:
+                    UpdatePcdView();
                     break;
             }
         }
