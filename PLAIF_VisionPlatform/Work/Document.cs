@@ -96,7 +96,7 @@ namespace PLAIF_VisionPlatform.Work
         public JsonUtil jsonUtil { get; set; }
         public Updater updater { get; set; }
 
-        public List<(int x, int y, Color color)> xy_2d_color_img { get; set; } // Color color = Color.FromRgb(255, 0, 0);
+        public List<(int x, int y, System.Windows.Media.Color color)> xy_2d_color_img { get; set; } // Color color = Color.FromRgb(255, 0, 0);
         public List<(int x, int y, float z)> xyz_3d_depth_img { get; set; }
         public List<(float x, float y, float z)> xyz_pcd_list { get; set; }
 
