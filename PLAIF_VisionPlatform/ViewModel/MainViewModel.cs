@@ -316,6 +316,11 @@ namespace PLAIF_VisionPlatform.ViewModel
 
             //2D Image
             Mat rgb = new Mat(1200, 1944, MatType.CV_8UC3, bByte);
+
+            // 종우님 여기서 이런 느낌으로 배열 채워주시면 됩니다!
+            Document.Instance.xy_2d_color_img.Clear();
+            Document.Instance.xy_2d_color_img.Add(new(0, 0, Color.FromRgb(1, 2, 3)));
+
             //Mat rgb = new Mat();
             //Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
 
@@ -450,6 +455,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             #endregion
         }
 
+        // 이 함수를 비동기로 변경
         public void CreatePointCloud(string message)
         {
             byte[] bByte = Convert.FromBase64String(message);
@@ -459,10 +465,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             int size = bByte.Length;
             size /= point_step;
 
-            List<Vector3> vector3s = new();
-            
-            //Calculator
-            Vector3[] pcl = new Vector3[size];
+            Document.Instance.xyz_pcd_list.Clear();
 
             for (int n = 0; n < size; n++)
             {
@@ -478,7 +481,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 if (float.IsNaN(x) || float.IsNaN(y) || float.IsNaN(z))
                     continue;
 
-                vector3s.Add(new Vector3(x, y, z));
+                Document.Instance.xyz_pcd_list.Add(new (x, y, z));
             }
 
             // jslee : 성능을 위한 임시코드 ㅠ 음수인 vector3s 값을 필터링한다
@@ -492,8 +495,8 @@ namespace PLAIF_VisionPlatform.ViewModel
                     vgm.ClearVisual3Ds();
 
                     // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
-                    float min_z = vector3s.Min(x => x.Z);
-                    float max_z = vector3s.Max(x => x.Z);
+                    float min_z = Document.Instance.xyz_pcd_list.Min(x => x.z);
+                    float max_z = Document.Instance.xyz_pcd_list.Max(x => x.z);
 
                     const int POINTSIZE = 1; //display size for magnetometer points
                     PointsVisual3D[] pv3ds = new PointsVisual3D[colors21.Length];
@@ -504,14 +507,14 @@ namespace PLAIF_VisionPlatform.ViewModel
                         p3dcs[i] = new Point3DCollection(); // 이 시점에 pv3ds[i].Points에 넣으면 성능저하 발생하므로 나중에 한번에 넣는다.
                     }
 
-                    for (int i = 0; i < vector3s.Count; i++)
+                    for (int i = 0; i < Document.Instance.xyz_pcd_list.Count; i++)
                     {
                         // min_z와 max_z 사이의 21등분 중 어느 구간에 속하는지 계산
-                        int color_index = (int)((vector3s[i].Z - min_z) / (max_z - min_z) * 20);
+                        int color_index = (int)((Document.Instance.xyz_pcd_list[i].z - min_z) / (max_z - min_z) * 20);
                         color_index = Math.Min(color_index, 20);
                         color_index = Math.Max(color_index, 0);
 
-                        p3dcs[color_index].Add(new Point3D(vector3s[i].X, vector3s[i].Y, vector3s[i].Z));
+                        p3dcs[color_index].Add(new Point3D(Document.Instance.xyz_pcd_list[i].x, Document.Instance.xyz_pcd_list[i].y, Document.Instance.xyz_pcd_list[i].z));
                     }
 
                     foreach (var (pv3d, p3dc) in pv3ds.Zip(p3dcs, (pv3d, p3dc) => (pv3d, p3dc)))
