@@ -70,6 +70,17 @@
                     <TextBlock Text="ye" Margin="20 0 10 0" Width="14"/>
                     <TextBox Width="100" Text="{Binding Ye}"/>
                 </StackPanel>
+                <TextBlock Text="Minimum Matching Points (0-100)[%]" Margin="0 10 0 5">
+                    <TextBlock.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold">Minimum Matching Points (0-100)[%]</TextBlock>
+                                <TextBlock FontSize="12">직접 값을 입력합니다.</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+                <TextBox Margin="0" TextAlignment="Left" Text="{Binding MinMatcingPoints}"/>
             </StackPanel>
         </Grid>
     </Grid>

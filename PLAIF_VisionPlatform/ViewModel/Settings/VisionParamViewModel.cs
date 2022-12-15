@@ -22,6 +22,18 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             //this.UpdateFromJson();
         }
 
+        private string minMatcingPoints;
+
+        public string MinMatcingPoints
+        {
+            get { return minMatcingPoints; }
+            set { 
+                minMatcingPoints = value;
+                NotifyPropertyChanged(nameof(minMatcingPoints));
+            }
+        }
+
+
         private string actionName = "";
 
 		public string ActionName
@@ -120,6 +132,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                     Xe = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![1]!.ToString();
                     Ys = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![2]!.ToString();
                     Ye = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![3]!.ToString();
+
+                    MinMatcingPoints = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["min_matching_points"]!.ToString();
                 }
             }
             catch
@@ -142,6 +156,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
                     Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![1] = Xe;
                     Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![2] = Ys;
                     Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["roi"]![3] = Ye;
+                    Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["min_matching_points"] = MinMatcingPoints;
                 }
             }
             catch

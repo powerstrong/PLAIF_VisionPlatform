@@ -123,7 +123,7 @@
                                 <GridViewColumn Header="Maching Score" Width="120">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock TextAlignment="Center" Text="{Binding Matching_Score}"/>
+                                            <TextBlock TextAlignment="Center" Text="{Binding strMatching_Score}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
