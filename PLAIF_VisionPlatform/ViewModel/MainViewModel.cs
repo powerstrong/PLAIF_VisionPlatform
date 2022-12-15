@@ -132,13 +132,21 @@ namespace PLAIF_VisionPlatform.ViewModel
                 Task task1 = Task.Run(() =>
                 {
                     //Import File to Linux
-                    string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
-                    PowershellUtil.RunPowershell(cmdGetYaml);
+                    //string cmdGetYaml = String.Format("scp {0}@{1}:~/catkin_ws/config/config_file/config_file.yaml .", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                    //PowershellUtil.RunPowershell(cmdGetYaml);
+
+                    Document.Instance.IsImported = SSHUtil.DownloadFile(Document.Instance.userinfo.ip_address,
+                                                                        Document.Instance.userinfo.username,
+                                                                        Document.Instance.userinfo.password,
+                                                                        @"config_file.yaml",
+                                                                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision");
+
                 });
 
                 task1.Wait();
 
-                Document.Instance.jsonUtil.Load("config_file.yaml", JsonUtil.FileType.Type_Yaml);
+                string Filtpath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml";
+                Document.Instance.jsonUtil.Load(Filtpath, JsonUtil.FileType.Type_Yaml);
                 Document.Instance.updater.Notify(Observer.Cmd.UpdateFromJson);
 
                 IsImported = true;
@@ -160,13 +168,21 @@ namespace PLAIF_VisionPlatform.ViewModel
             try
             {
                 Document.Instance.updater.Notify(Observer.Cmd.UpdateToJson);
-                Document.Instance.jsonUtil.Save("config_file.yaml", JsonUtil.FileType.Type_Yaml);
+                string Filtpath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml";
+                Document.Instance.jsonUtil.Save(Filtpath, JsonUtil.FileType.Type_Yaml);
 
                 Task task1 = Task.Run(() =>
                 {
                     //Export File to Linux
-                    string cmdGetYaml = String.Format("scp config_file.yaml {0}@{1}:~/catkin_ws/config/config_file", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
-                    PowershellUtil.RunPowershell(cmdGetYaml);
+                    //string cmdGetYaml = String.Format("scp config_file.yaml {0}@{1}:~/catkin_ws/config/config_file", Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                    //PowershellUtil.RunPowershell(cmdGetYaml);
+
+                    Document.Instance.IsImported = SSHUtil.UploadFile(Document.Instance.userinfo.ip_address,
+                                                                        Document.Instance.userinfo.username,
+                                                                        Document.Instance.userinfo.password,
+                                                                        @"config_file.yaml",
+                                                                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml");
+
                 });
 
                 task1.Wait();
@@ -185,8 +201,15 @@ namespace PLAIF_VisionPlatform.ViewModel
                     if(strZividSettingFilePath != null && strZividSettingFilePath != "")
                     {
                         //Export File to Linux
-                        string cmdGetYaml = String.Format("scp {0} {1}@{2}:~/catkin_ws/config/config_file", strZividSettingFilePath, Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
-                        PowershellUtil.RunPowershell(cmdGetYaml);
+                        //string cmdGetYaml = String.Format("scp {0} {1}@{2}:~/catkin_ws/config/config_file", strZividSettingFilePath, Document.Instance.userinfo.username, Document.Instance.userinfo.ip_address);
+                        //PowershellUtil.RunPowershell(cmdGetYaml);
+
+                        Document.Instance.IsImported = SSHUtil.UploadFile(Document.Instance.userinfo.ip_address,
+                                                                        Document.Instance.userinfo.username,
+                                                                        Document.Instance.userinfo.password,
+                                                                        @"config_file.yaml",
+                                                                        strZividSettingFilePath);
+
                     }
                 });
 
@@ -259,6 +282,16 @@ namespace PLAIF_VisionPlatform.ViewModel
             Mat rgb = new Mat();
             Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
 
+            Document.Instance.xy_2d_color_img.Clear();
+            for (int i = 0; i < rgb.Rows; i++)
+            {
+                for (int j = 0; j < rgb.Cols; j++)
+                {
+                    var pt = rgb.At<Vec3b>(i, j);
+                    Document.Instance.xy_2d_color_img.Add( new (i, j, Color.FromRgb(pt.Item0, pt.Item1, pt.Item2)));
+                }
+            }
+            
             // window Form과 연결할 경우가 아니면, 문제없다.
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() =>
             {
@@ -317,10 +350,6 @@ namespace PLAIF_VisionPlatform.ViewModel
             //2D Image
             Mat rgb = new Mat(1200, 1944, MatType.CV_8UC3, bByte);
 
-            // 종우님 여기서 이런 느낌으로 배열 채워주시면 됩니다!
-            Document.Instance.xy_2d_color_img.Clear();
-            Document.Instance.xy_2d_color_img.Add(new(0, 0, Color.FromRgb(1, 2, 3)));
-
             //Mat rgb = new Mat();
             //Cv2.CvtColor(rgba, rgb, ColorConversionCodes.RGBA2BGR);
 
@@ -348,6 +377,16 @@ namespace PLAIF_VisionPlatform.ViewModel
 
             //Depth Image
             Mat depth = new Mat(1200, 1944, MatType.CV_32FC1, bByte);
+
+            Document.Instance.xyz_3d_depth_img.Clear();
+            for (int i = 0; i < depth.Rows; i++)
+            {
+                for (int j = 0; j < depth.Cols; j++)
+                {
+                    var pt = depth.At<float>(i, j);
+                    Document.Instance.xyz_3d_depth_img.Add(new(i, j, pt));
+                }
+            }
 
             #region Method 1
             double min;
@@ -622,6 +661,9 @@ namespace PLAIF_VisionPlatform.ViewModel
                 case Observer.Cmd.UpdateFromJson:
                     UpdateFromJson();
                     break;
+                case Observer.Cmd.UpdateView:
+                    UpdateView();
+                    break;
             }
         }
 
@@ -632,6 +674,10 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 Vision_Result.Add(result);
             }
+        }
+        public void UpdateView()
+        {
+            IsImported = Document.Instance.IsImported;
         }
     }
 }

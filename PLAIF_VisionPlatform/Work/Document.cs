@@ -61,7 +61,7 @@ namespace PLAIF_VisionPlatform.Work
             visionResult = new List<Vision_Result>();
 
             IsConnected = false;
-            IsExistSSHCod = true;
+            CanConnectedSSH = false;
             IsImported = false;
 
             xy_2d_color_img = new();
@@ -99,14 +99,12 @@ namespace PLAIF_VisionPlatform.Work
         public List<(int x, int y, float z)> xyz_3d_depth_img { get; set; }
         public List<(float x, float y, float z)> xyz_pcd_list { get; set; }
 
-        public PcdViewParam mainPcdViewParam { get; set; }
-        public PcdViewParam pickposePcdViewParam { get; set; }
-
-        public bool IsExistSSHCod { get; set; }
+        public bool CanConnectedSSH { get; set; }
         public bool IsConnected { get; set; }
         public bool IsImported { get; set; }
 
         public string ZividSettingFile { get; set; }
-
+        public PcdViewParam mainPcdViewParam { get; set; }
+        public PcdViewParam pickposePcdViewParam { get; set; }
     }
 }

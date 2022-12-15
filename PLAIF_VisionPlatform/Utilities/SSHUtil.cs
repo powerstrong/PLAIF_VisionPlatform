@@ -10,23 +10,24 @@ using System.IO;
 
 namespace PLAIF_VisionPlatform.Utilities
 {
-    class SSHUtil
+    static public class SSHUtil
     {
-        public bool ConnectSSH()
+        static public bool ConnectSSH(string IP, string username, string password)
         {
             try
             {
-                SshClient client = new SshClient("192.168.1.75", "yhpark", "vmffkdlv777");
-                client.ConnectionInfo.Timeout = TimeSpan.FromMinutes(5);
+                using (var client = new SshClient(IP, username, password))
+                {
+                    client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(3);
+                    client.Connect();
 
-                client.Connect();
+                    if (client.IsConnected == false) { return false; }
 
-                if (client.IsConnected == false) { return false; }
-
-                SshCommand cmd = client.CreateCommand("ls -al");
-                cmd.Execute();
-                Console.WriteLine(cmd.Result);
-                client.Disconnect();
+                    //SshCommand cmd = client.CreateCommand("ls -al");
+                    //cmd.Execute();
+                    //Console.WriteLine(cmd.Result);
+                    client.Disconnect();
+                }
 
                 return true;
             }
@@ -36,26 +37,29 @@ namespace PLAIF_VisionPlatform.Utilities
             }
 
         }
-        public void DownloadFile()
+
+        static public bool DownloadFile(string host, string user, string pwd, string host_file, string pc_dir)
         {
-            string host = "192.168.1.75";
+            //string host = "192.168.1.75";
             //int port = 9090;
-            string user = "yhpark";
-            string pwd = "vmffkdlv777";
-            string host_dir = @"/home/yhpark/catkin_ws/config/config_file";
-            string host_file = @"config_file.yaml";
-            string client_file = @"e:\tt.txt";
-            string pc_dir = @"C:\Users\jwpar";
+            //string user = "yhpark";
+            //string pwd = "vmffkdlv777";
+            //string host_dir = @"/home/yhpark/catkin_ws/config/config_file";
+            //string host_file = @"config_file.yaml";
+            //string client_file = @"e:\tt.txt";
+            //string pc_dir = @"C:\Users\jwpar";
 
             try
             {
+                string host_dir = @"/home/" + user + @"/catkin_ws/config/config_file"; 
+
                 using (var client = new SftpClient(host, user, pwd))
                 {
                     client.KeepAliveInterval = TimeSpan.FromSeconds(60);
                     client.ConnectionInfo.Timeout = TimeSpan.FromMinutes(10);
                     client.OperationTimeout = TimeSpan.FromMinutes(180);
                     client.Connect();
-                    if (client.IsConnected == false) { return; }
+                    if (client.IsConnected == false) { return false; }
 
                     ////-현재 디렉코리
                     //foreach (SftpFile f in client.ListDirectory(host_dir))
@@ -72,33 +76,37 @@ namespace PLAIF_VisionPlatform.Utilities
                         }
                     }
                     client.Disconnect();
+
+                    return true;
                 }
             }
             catch (Exception e)
             {
-
+                return false;
             }  
         }
-        public void UploadFile()
+        static public bool UploadFile(string host, string user, string pwd, string host_file, string client_file)
         {
-            string host = "192.168.1.75";
+            //string host = "192.168.1.75";
             //int port = 9090;
-            string user = "yhpark";
-            string pwd = "vmffkdlv777";
-            string host_dir = @"/home/yhpark/catkin_ws/config/config_file";
-            string host_file = @"config_file.yaml";
-            string client_file = @"C:\Users\jwpar\config_file.yaml";
-            string pc_dir = @"C:\Users\jwpar";
+            //string user = "yhpark";
+            //string pwd = "vmffkdlv777";
+            //string host_dir = @"/home/yhpark/catkin_ws/config/config_file";
+            //string host_file = @"config_file.yaml";
+            //string client_file = @"C:\Users\jwpar\config_file.yaml";
+            //string pc_dir = @"C:\Users\jwpar";
 
             try
             {
+                string host_dir = @"/home/" + user + @"/catkin_ws/config/config_file";
+
                 using (var client = new SftpClient(host, user, pwd))
                 {
                     client.KeepAliveInterval = TimeSpan.FromSeconds(60);
                     client.ConnectionInfo.Timeout = TimeSpan.FromMinutes(10);
                     client.OperationTimeout = TimeSpan.FromMinutes(180);
                     client.Connect();
-                    if (client.IsConnected == false) { return; }
+                    if (client.IsConnected == false) { return false; }
                     client.ChangeDirectory(host_dir);
                     //var listDir = client.ListDirectory(host_dir);
                     //foreach(var fi in listDir) {
@@ -110,11 +118,13 @@ namespace PLAIF_VisionPlatform.Utilities
                         client.UploadFile(fs, Path.GetFileName(client_file));
                     }
                     client.Disconnect();
+
+                    return true;
                 }
             }
             catch (Exception e)
             {
-
+                return false;
             }
         }
 
