@@ -557,10 +557,13 @@ namespace PLAIF_VisionPlatform.ViewModel
             }
 
             //Matching Score
-            List<double> Matching_Score = new List<double>();
+            List<string> Matching_Score_Result = new List<string>();
+            List<string> Matching_Score_Cond = new List<string>();
+            string strMatching_Score_Cond = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["min_matching_points"]!.ToString();
             for (int i = 0; i < ModelID.Count(); i++)
             {
-                Matching_Score.Add(100);
+                Matching_Score_Result.Add(100.ToString());
+                Matching_Score_Cond.Add(strMatching_Score_Cond);
             }
 
             //Position
@@ -585,7 +588,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             Document.Instance.visionResult.Clear();
             for (int i = 0; i < ModelID.Count(); i++)
             {
-                Vision_Result vs = new Vision_Result(i, ModelID[i], Matching_Score[i], position[i], orientation[i]);
+                Vision_Result vs = new Vision_Result(i, ModelID[i], Matching_Score_Cond[i], Matching_Score_Result[i], position[i], orientation[i]);
                 Document.Instance.visionResult.Add(vs);
             }
 
