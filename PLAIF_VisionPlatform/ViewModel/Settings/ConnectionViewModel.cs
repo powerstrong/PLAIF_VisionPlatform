@@ -17,14 +17,13 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 {
     class ConnectionViewModel : INotifyPropertyChanged, Observer
     {
-        public RelayCommand SshCreateClick { get; set; }
-        public IAsyncRelayCommand? SshDeleteClick { get; set; }
+        public ICommand? LoginClick { get; set; }
         public ICommand? ConnectClick { get; set; }
 
         public ConnectionViewModel()
         {
             Document.Instance.updater.Add(this);
-            SshCreateClick = new RelayCommand(SshCreateCommand);
+            LoginClick = new RelayCommand<object>(LoginCommand, CanExcute_LoginButton);
             //SshDeleteClick = new AsyncRelayCommand(SshDeleteCommand);
             ConnectClick = new RelayCommand<object>(ConnectCommand, CanExcute_ConnectionButton);
         }
@@ -42,9 +41,13 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         ConnectionSshViewService sshViewService = new ConnectionSshViewService();
 
-        private void SshCreateCommand()
+        private void LoginCommand(object parameter)
         {
             sshViewService.CreateWindow();
+        }
+        public bool CanExcute_LoginButton(object parameter)
+        {
+            return Document.Instance.IsConnected ? false : true;
         }
 
         public void ConnectCommand(object parameter)
@@ -68,13 +71,25 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             ConnectButtonText = RosbridgeMgr.Instance.IsConnected ? "Disconnect from ROS" : "Connect to ROS";
             //return Task.CompletedTask;
 
-            //Import config_file.yaml
-            Document.Instance.IsImported = SSHUtil.DownloadFile(Document.Instance.userinfo.ip_address,
-                                Document.Instance.userinfo.username,
-                                Document.Instance.userinfo.password,
-                                @"config_file.yaml",
-                                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision");
+            if(RosbridgeMgr.Instance.IsConnected == true)
+            {
+                //Import config_file.yaml
+                Document.Instance.IsImported = SSHUtil.DownloadFile(Document.Instance.userinfo.ip_address,
+                                    Document.Instance.userinfo.username,
+                                    Document.Instance.userinfo.password,
+                                    @"config_file.yaml",
+                                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision");
 
+                string Filtpath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml";
+                Document.Instance.jsonUtil.Load(Filtpath, JsonUtil.FileType.Type_Yaml);
+                Document.Instance.updater.Notify(Observer.Cmd.UpdateFromJson);
+                Document.Instance.updater.Notify(Observer.Cmd.UpdateView);
+            }
+            else
+            {
+                Document.Instance.IsImported = false;
+                Document.Instance.updater.Notify(Observer.Cmd.UpdateView);
+            }
         }
 
         public bool CanExcute_ConnectionButton(object parameter)

@@ -18,7 +18,7 @@ namespace PLAIF_VisionPlatform.Utilities
             {
                 using (var client = new SshClient(IP, username, password))
                 {
-                    client.ConnectionInfo.Timeout = TimeSpan.FromMinutes(5);
+                    client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(3);
                     client.Connect();
 
                     if (client.IsConnected == false) { return false; }

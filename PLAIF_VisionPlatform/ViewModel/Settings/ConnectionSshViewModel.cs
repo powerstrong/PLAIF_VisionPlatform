@@ -64,13 +64,12 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             {
                 MessageBox.Show("IP, Username, Password를 확인해주세요.");
             }
-
-            //sSHUtil.UploadFile();
-            //sSHUtil.DownloadFile();
-
-            if (window != null)
+            else
             {
-                window.Close();
+                if (window != null)
+                {
+                    window.Close();
+                }
             }
         }
 

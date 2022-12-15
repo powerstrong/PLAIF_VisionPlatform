@@ -644,6 +644,9 @@ namespace PLAIF_VisionPlatform.ViewModel
                 case Observer.Cmd.UpdateFromJson:
                     UpdateFromJson();
                     break;
+                case Observer.Cmd.UpdateView:
+                    UpdateView();
+                    break;
             }
         }
 
@@ -654,8 +657,10 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 Vision_Result.Add(result);
             }
-
-
+        }
+        public void UpdateView()
+        {
+            IsImported = Document.Instance.IsImported;
         }
     }
 }
