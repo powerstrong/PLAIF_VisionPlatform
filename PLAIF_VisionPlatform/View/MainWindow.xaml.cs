@@ -53,6 +53,13 @@ namespace PLAIF_VisionPlatform
         {
             InitializeComponent();
 
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
+
             #region 2D Image Zoom In/Out에 대한 정의
             TransformGroup transformGroup_2D = new TransformGroup();
             ScaleTransform scaleTransform_2D = new ScaleTransform();
@@ -68,17 +75,17 @@ namespace PLAIF_VisionPlatform
             #endregion
 
             #region Depth Image Zoom In/Out에 대한 정의
-            TransformGroup transformGroup_3D = new TransformGroup();
-            ScaleTransform scaleTransform_3D = new ScaleTransform();
-            transformGroup_3D.Children.Add(scaleTransform_3D);
-            TranslateTransform translateTransform_3D = new TranslateTransform();
-            transformGroup_3D.Children.Add(translateTransform_3D);
-            Image_Depth_Control.RenderTransform = transformGroup_3D;
+            //TransformGroup transformGroup_3D = new TransformGroup();
+            //ScaleTransform scaleTransform_3D = new ScaleTransform();
+            //transformGroup_3D.Children.Add(scaleTransform_3D);
+            //TranslateTransform translateTransform_3D = new TranslateTransform();
+            //transformGroup_3D.Children.Add(translateTransform_3D);
+            //Image_Depth_Control.RenderTransform = transformGroup_3D;
 
-            Image_Depth_Control.MouseWheel += Image_MouseWheel;
-            Image_Depth_Control.MouseLeftButtonDown += Image_MouseDown;
-            Image_Depth_Control.MouseLeftButtonUp += Image_MouseUp;
-            Image_Depth_Control.MouseMove += Image_MouseMove;
+            //Image_Depth_Control.MouseWheel += Image_MouseWheel;
+            //Image_Depth_Control.MouseLeftButtonDown += Image_MouseDown;
+            //Image_Depth_Control.MouseLeftButtonUp += Image_MouseUp;
+            //Image_Depth_Control.MouseMove += Image_MouseMove;
             #endregion
 
             var vm = new MainViewModel();
@@ -86,6 +93,12 @@ namespace PLAIF_VisionPlatform
             var vgm = new ViewportGeometryModel(new HelixViewInterface(this.pcd_view));
             this.pcd_view.DataContext = vgm;
             vm.Vgm = vgm;
+
+            #region 3D Viewer
+            var vgm_3d = new ViewportGeometryModel(new HelixViewInterface(this.view_3d));
+            this.view_3d.DataContext = vgm_3d;
+            vm.Vgm_3d = vgm_3d;
+            #endregion
         }
 
         private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -130,9 +143,9 @@ namespace PLAIF_VisionPlatform
                     case "Image_2D_Control":
                         border = border2D;
                         break;
-                    case "Image_Depth_Control":
-                        border = border3D;
-                        break;
+                    //case "Image_Depth_Control":
+                    //    border = border3D;
+                    //    break;
                 }
 
                 img.CaptureMouse();
@@ -183,11 +196,11 @@ namespace PLAIF_VisionPlatform
                         origin = origin_2D;
                         border = border2D;
                         break;
-                    case "Image_Depth_Control":
-                        start = start_3D;
-                        origin = origin_3D;
-                        border = border3D;
-                        break;
+                    //case "Image_Depth_Control":
+                    //    start = start_3D;
+                    //    origin = origin_3D;
+                    //    border = border3D;
+                    //    break;
                 }
 
                 var translateTransform = (TranslateTransform)((TransformGroup)img.RenderTransform).Children.First(c => c is TranslateTransform);
