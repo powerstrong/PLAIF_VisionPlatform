@@ -498,11 +498,13 @@ namespace PLAIF_VisionPlatform.ViewModel
             {
                 try
                 {
-                    BitmapImage img = new BitmapImage();
-                    img.BeginInit();
-                    img.StreamSource = depthAdj.ToMemoryStream();
-                    img.EndInit();
-                    ImgDepth = img;
+                    //BitmapImage img = new BitmapImage();
+                    //img.BeginInit();
+                    //img.StreamSource = depthAdj.ToMemoryStream();
+                    //img.EndInit();
+                    //ImgDepth = img;
+
+                    Update3dView();
                 }
                 catch
                 {
@@ -609,6 +611,53 @@ namespace PLAIF_VisionPlatform.ViewModel
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() => { UpdatePcdView(); }));
         }
 
+        public void Update3dView()
+        {
+            try
+            {
+                var view_param = Document.Instance.mainPcdViewParam;
+
+                if (vgm_3d is null) return;
+                vgm_3d.ClearVisual3Ds();
+
+                List<PointsVisual3D> pv3ds = new List<PointsVisual3D>();
+                List<Point3DCollection> p3dcs = new List<Point3DCollection>();
+
+                Dictionary<Color, PointsVisual3D> dicpv3ds = new Dictionary<Color, PointsVisual3D>();
+
+                PointsVisual3D pv3ds_temp = new PointsVisual3D();
+                Point3DCollection p3dcs_temp = new Point3DCollection();
+
+                int show_factor = (int)(100 / 5); //view_param.pt_show_percentage
+
+                for (int i = 0; i < Document.Instance.xyz_3d_depth_img.Count; i++)
+                {
+                    if (i % show_factor != 0)
+                        continue;
+
+                    if (dicpv3ds.TryGetValue(Document.Instance.xy_2d_color_img[i].color, out pv3ds_temp))
+                    {
+                        pv3ds_temp.Points.Add(new Point3D(Document.Instance.xyz_3d_depth_img[i].x, Document.Instance.xyz_3d_depth_img[i].y, Document.Instance.xyz_3d_depth_img[i].z * 1000));
+                    }
+                    else
+                    {
+                        pv3ds_temp = new PointsVisual3D { Color = Document.Instance.xy_2d_color_img[i].color, Size = view_param.pt_size };
+                        p3dcs_temp = new Point3DCollection();
+                        p3dcs_temp.Add(new Point3D(Document.Instance.xyz_3d_depth_img[i].x, Document.Instance.xyz_3d_depth_img[i].y, Document.Instance.xyz_3d_depth_img[i].z * 1000));
+                        pv3ds_temp.Points = p3dcs_temp;
+
+                        dicpv3ds.Add(pv3ds_temp.Color, pv3ds_temp);
+                    }
+                }
+
+                vgm_3d.AddVisual3Ds( dicpv3ds.Values.ToList<Visual3D>() );
+            }
+            catch
+            {
+
+            }
+        }
+
         public void UpdatePcdView()
         {
             try
@@ -661,6 +710,13 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             get { return vgm; }
             set { vgm = value; }
+        }
+
+        private ViewportGeometryModel? vgm_3d;
+        public ViewportGeometryModel? Vgm_3d
+        {
+            get { return vgm_3d; }
+            set { vgm_3d = value; }
         }
 
         protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null!)
