@@ -94,13 +94,14 @@
                                 <TextBox Text="{Binding PointSize}" Width="40" Margin="5 5 15 5" />
                                 <TextBlock Margin="5" Text="Show points of"/>
                                 <TextBox Text="{Binding ShowPercent}" Width="40" Margin="5 5 2 5" />
-                                <TextBlock Margin="0 5 10 5" Text="%"/>
-                                <TextBlock Margin="5" Text="min. z"/>
-                                <TextBlock Margin="0 5 5 5" Text="{Binding MinZLevel}"/>
-                                <mahctrl:RangeSlider Width="150" Height="25" Margin="5" LowerValue="0" UpperValue="100" Minimum="0" Maximum="100"
+                                <TextBlock Margin="0 5 15 5" Text="%"/>
+                                <TextBlock Margin="5" Text="min. z : "/>
+                                <TextBlock Margin="0 5 5 5" Text="{Binding PcdSliderLowerValue}" Width="41"/>
+                                <mahctrl:RangeSlider Width="150" Height="25" Margin="5" 
+                                                     LowerValue="{Binding PcdSliderLowerValue}" UpperValue="{Binding PcdSliderUpperValue}" Minimum="{Binding PcdSliderMinimum}" Maximum="{Binding PcdSliderMaximum}"
                                                      Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"></mahctrl:RangeSlider>
-                                <TextBlock Margin="5" Text="max. z"/>
-                                <TextBlock Margin="0 5 10 5" Text="{Binding MaxZLevel}"/>
+                                <TextBlock Margin="5" Text="max. z : "/>
+                                <TextBlock Margin="0 5 15 5" Text="{Binding PcdSliderUpperValue}" Width="41"/>
                                 <Button Content=" Redraw View " Margin="5 2" Command="{Binding RedrawPcdViewClick}"></Button>
                             </StackPanel>
 

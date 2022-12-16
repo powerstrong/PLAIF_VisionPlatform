@@ -23,7 +23,7 @@ namespace PLAIF_VisionPlatform.Work
     public class PcdViewParam
     {
         public double pt_size = 1.0;
-        public double pt_show_percentage = 100.0;
+        public double pt_show_percentage = 10;
         public Color pt_color = Color.Black;
     }
 
