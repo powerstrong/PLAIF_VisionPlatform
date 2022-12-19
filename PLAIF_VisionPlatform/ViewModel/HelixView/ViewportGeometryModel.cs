@@ -76,10 +76,20 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
 
         public void InitializeVisual3Ds()
         {
+            ClearVisual3Ds();
             var v3ds = new List<Visual3D>();
 
-            LabeledCoordSysVis3D coord = new();
-            coord.ArrowLengths = 0.1;
+            //var pt = new Point3D(2, 2, 2);
+            //var vec = new Vector3D(1, 1, 1);
+            //CoordSysVis3DLocal coord = new(pt, vec);
+            //coord.ArrowLengths = 0.1;
+            //coord.Transform.Transform(new Point3D(1000, 10, 0));
+            //v3ds.Add(coord);
+
+            SunLight light = new();
+            v3ds.Add(light);
+
+            AddVisual3Ds(v3ds);
         }
 
 

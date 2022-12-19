@@ -167,8 +167,6 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
         protected override void OnGeometryChanged()
         {
             base.OnGeometryChanged();
-            //this.Children.Clear();
-            //double h = this.AxisLabelSize;
 
             var xlabel = new BillboardTextVisual3D();
             xlabel.Text = XAxisLabel.ToString();
