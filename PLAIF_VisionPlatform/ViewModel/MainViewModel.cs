@@ -749,7 +749,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             //Matching Score
             List<string> Matching_Score_Result = new List<string>();
             List<string> Matching_Score_Cond = new List<string>();
-            string strMatching_Score_Cond = Document.Instance.jsonUtil.jsonVisionSetting["Vision"]!["vision_node1"]!["preprocessing"]!["min_matching_points"]!.ToString();
+            string strMatching_Score_Cond = Document.Instance.jsonUtil.jsonVisionSetting!["Vision"]!["vision_node1"]!["preprocessing"]!["min_matching_points"]!.ToString();
             for (int i = 0; i < ModelID.Count(); i++)
             {
                 Matching_Score_Result.Add(100.ToString());

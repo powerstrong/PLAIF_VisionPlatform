@@ -168,26 +168,26 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
         {
             base.OnGeometryChanged();
 
-            //var xlabel = new BillboardTextVisual3D();
-            //xlabel.Text = XAxisLabel.ToString();
-            //xlabel.Foreground = new SolidColorBrush(XAxisColor);
-            //xlabel.FontSize = LabelFontSize;
-            //xlabel.Position = new Point3D(ArrowLengths * 1.2, 0, 0);
-            //Children.Add(xlabel);
+            var xlabel = new BillboardTextVisual3D();
+            xlabel.Text = XAxisLabel.ToString();
+            xlabel.Foreground = new SolidColorBrush(XAxisColor);
+            xlabel.FontSize = LabelFontSize;
+            xlabel.Position = new Point3D(ArrowLengths * 1.2, 0, 0);
+            Children.Add(xlabel);
 
-            //var ylabel = new BillboardTextVisual3D();
-            //ylabel.Text = YAxisLabel.ToString();
-            //ylabel.Foreground = new SolidColorBrush(YAxisColor);
-            //ylabel.FontSize = LabelFontSize;
-            //ylabel.Position = new Point3D(0, ArrowLengths * 1.2, 0);
-            //Children.Add(ylabel);
+            var ylabel = new BillboardTextVisual3D();
+            ylabel.Text = YAxisLabel.ToString();
+            ylabel.Foreground = new SolidColorBrush(YAxisColor);
+            ylabel.FontSize = LabelFontSize;
+            ylabel.Position = new Point3D(0, ArrowLengths * 1.2, 0);
+            Children.Add(ylabel);
 
-            //var zlabel = new BillboardTextVisual3D();
-            //zlabel.Text = ZAxisLabel.ToString();
-            //zlabel.Foreground = new SolidColorBrush(ZAxisColor);
-            //zlabel.FontSize = LabelFontSize;
-            //zlabel.Position = new Point3D(0, 0, ArrowLengths * 1.2);
-            //Children.Add(zlabel);
+            var zlabel = new BillboardTextVisual3D();
+            zlabel.Text = ZAxisLabel.ToString();
+            zlabel.Foreground = new SolidColorBrush(ZAxisColor);
+            zlabel.FontSize = LabelFontSize;
+            zlabel.Position = new Point3D(0, 0, ArrowLengths * 1.2);
+            Children.Add(zlabel);
         }
 
         #endregion

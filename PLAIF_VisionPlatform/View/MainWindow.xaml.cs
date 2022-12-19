@@ -94,6 +94,8 @@ namespace PLAIF_VisionPlatform
             this.pcd_view.DataContext = vgm;
             vm.Vgm = vgm;
 
+            //pcd_view.IsHitTestVisible = false;
+
             #region 3D Viewer
             var vgm_3d = new ViewportGeometryModel(new HelixViewInterface(this.view_3d));
             this.view_3d.DataContext = vgm_3d;
