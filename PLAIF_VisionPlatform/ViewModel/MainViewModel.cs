@@ -87,8 +87,7 @@ namespace PLAIF_VisionPlatform.ViewModel
         public string PointSize
         {
             get { return pointSize; }
-            set { pointSize = value; 
-                NotifyPropertyChanged(nameof(pointSize));
+            set { pointSize = value; NotifyPropertyChanged(nameof(pointSize));
             }
         }
 
@@ -97,19 +96,16 @@ namespace PLAIF_VisionPlatform.ViewModel
         public string ShowPercent
         {
             get { return showPercent; }
-            set { showPercent = value; 
-                NotifyPropertyChanged(nameof(showPercent));
+            set { showPercent = value; NotifyPropertyChanged(nameof(showPercent));
             }
         }
-
 
         private string minZLevel = "0";
 
         public string MinZLevel
         {
             get { return minZLevel; }
-            set { minZLevel = value; 
-                NotifyPropertyChanged(nameof(minZLevel));
+            set { minZLevel = value; NotifyPropertyChanged(nameof(minZLevel));
             }
         }
 
@@ -118,9 +114,40 @@ namespace PLAIF_VisionPlatform.ViewModel
         public string MaxZLevel
         {
             get { return maxZLevel; }
-            set { maxZLevel = value; 
-                NotifyPropertyChanged(nameof(maxZLevel));
+            set { maxZLevel = value; NotifyPropertyChanged(nameof(maxZLevel));
             }
+        }
+
+        private double pcdSliderLowerValue = 0;
+
+        public double PcdSliderLowerValue
+        {
+            get { return pcdSliderLowerValue; }
+            set { pcdSliderLowerValue = value; NotifyPropertyChanged(nameof(pcdSliderLowerValue)); }
+        }
+
+        private double pcdSliderUpperValue = 100;
+
+        public double PcdSliderUpperValue
+        {
+            get { return pcdSliderUpperValue; }
+            set { pcdSliderUpperValue = value; NotifyPropertyChanged(nameof(pcdSliderUpperValue)); }
+        }
+
+        private double pcdSliderMinimum = 0;
+
+        public double PcdSliderMinimum
+        {
+            get { return pcdSliderMinimum; }
+            set { pcdSliderMinimum = value; NotifyPropertyChanged(nameof(pcdSliderMinimum)); }
+        }
+
+        private double pcdSliderMaximum = 100;
+
+        public double PcdSliderMaximum
+        {
+            get { return pcdSliderMaximum; }
+            set { pcdSliderMaximum = value; NotifyPropertyChanged(nameof(pcdSliderMaximum)); }
         }
 
         public MainViewModel() 
@@ -575,6 +602,11 @@ namespace PLAIF_VisionPlatform.ViewModel
                 Document.Instance.xyz_pcd_list.Add(new (x, y, z));
             }
 
+            PcdSliderMinimum = Document.Instance.xyz_pcd_list.Min(x => x.z);
+            PcdSliderMaximum = Document.Instance.xyz_pcd_list.Max(x => x.z);
+            PcdSliderLowerValue = pcdSliderMinimum;
+            PcdSliderUpperValue = pcdSliderMaximum;
+
             // window Form과 연결할 경우가 아니면, 문제없다.
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(() => { UpdatePcdView(); }));
         }
@@ -636,8 +668,8 @@ namespace PLAIF_VisionPlatform.ViewModel
                 vgm.ClearVisual3Ds();
 
                 // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
-                float min_z = Document.Instance.xyz_pcd_list.Min(x => x.z);
-                float max_z = Document.Instance.xyz_pcd_list.Max(x => x.z);
+                float min_z = (float)pcdSliderLowerValue;
+                float max_z = (float)pcdSliderUpperValue;
 
                 PointsVisual3D[] pv3ds = new PointsVisual3D[colors21.Length];
                 Point3DCollection[] p3dcs = new Point3DCollection[colors21.Length];
