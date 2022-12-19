@@ -49,6 +49,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -187,9 +195,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Setup_PLAIF_VisionPlatform"
+        "ProductName" = "8:PLAIF_VisionPlatform"
         "ProductCode" = "8:{2E4F0F04-0682-4B0B-AF8D-C3FFB8DEBA42}"
-        "PackageCode" = "8:{13271E12-6111-45FF-BF1B-4F22604E448B}"
+        "PackageCode" = "8:{CC1D0771-CFFD-4154-B9E9-8B873B904424}"
         "UpgradeCode" = "8:{C863BF7D-3929-495C-BA06-98AD20397BB1}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -200,7 +208,7 @@
         "Manufacturer" = "8:PLAIF"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Setup_PLAIF_VisionPlatform"
+        "Title" = "8:PLAIF_VisionPlatform"
         "Subject" = "8:"
         "ARPCONTACT" = "8:PLAIF"
         "Keywords" = "8:"
