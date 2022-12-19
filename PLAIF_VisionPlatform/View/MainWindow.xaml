@@ -93,6 +93,11 @@
                                 <!-- You can also add elements here in the xaml -->
                                 <!--<helix:GridLinesVisual3D Width="4" Length="4" MinorDistance="0.1" MajorDistance="1" Thickness="0.01"/>-->
                                 <hv:LabeledCoordSysVis3D ArrowLengths="0.2" />
+
+                                <!--종우님 여기 시점 맞춰서 쓰시면 됩니다
+                                <helix:HelixViewport3D.DefaultCamera>
+                                    <PerspectiveCamera Position="0,-1,0.1" LookDirection="0,1,-1" UpDirection="0,0,1" FieldOfView="61" NearPlaneDistance="0.001"/>
+                                </helix:HelixViewport3D.DefaultCamera>-->
                             </helix:HelixViewport3D>
                         </Grid>
                     </TabItem>
@@ -129,9 +134,9 @@
                                 <!-- The content of this visual is defined in RawViewModel.cs -->
                                 <ModelVisual3D Content="{Binding GeometryModel}"/>
 
-                                <!-- You can also add elements here in the xaml -->
-                                <!--<helix:GridLinesVisual3D Width="4" Length="4" MinorDistance="0.1" MajorDistance="1" Thickness="0.01"/>-->
-                                <hv:LabeledCoordSysVis3D ArrowLengths="0.2" />
+                                <helix:HelixViewport3D.DefaultCamera>
+                                    <PerspectiveCamera Position="0,-1,0.1" LookDirection="0,1,-1" UpDirection="0,0,1" FieldOfView="61" NearPlaneDistance="0.001"/>
+                                </helix:HelixViewport3D.DefaultCamera>
                             </helix:HelixViewport3D>
                         </Grid>
                     </TabItem>
