@@ -73,6 +73,25 @@ namespace PLAIF_VisionPlatform.Work
             GetUserInfo();
         }
 
+        public void CheckConnection()
+        {
+            try
+            {
+                if (userinfo.ip_address != "" && userinfo.username != "" && userinfo.password != "")
+                {
+                    Document.Instance.CanConnectedSSH = SSHUtil.ConnectSSH(userinfo.ip_address, userinfo.username, userinfo.password);
+                }
+                else
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         private void GetUserInfo()
         {
             // local/appdata에 ip, username 저장

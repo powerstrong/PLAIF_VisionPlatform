@@ -31,6 +31,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             _password = userinfo.password;
         }
 
+
+
         private void OKWindow(Window window)
         {
             if (PowershellUtil.ValidateIPv4(_ipAddress) == false)
@@ -58,7 +60,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
             // powershell script 실행해서 연결 수립
             //PowershellUtil.RunPowershellFile(@"./scripts/ssh-connector.ps1", _ipAddress, _username, _password);
-            Document.Instance.CanConnectedSSH = SSHUtil.ConnectSSH(_ipAddress, _username, _password);
+            Document.Instance.CheckConnection();
 
             if (Document.Instance.CanConnectedSSH == false)
             {
