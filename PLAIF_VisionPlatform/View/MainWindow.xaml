@@ -109,16 +109,15 @@
                                 <TextBlock Margin="5" Text="Show points of"/>
                                 <TextBox Text="{Binding ShowPercent}" Width="40" Margin="5 5 2 5" />
                                 <TextBlock Margin="0 5 15 5" Text="%"/>
-                                <TextBlock Margin="5" Text="min. z : "/>
-                                <TextBlock Margin="0 5 5 5" Text="{Binding PcdSliderLowerValue}" Width="41"/>
+                                <TextBlock Margin="5" Text="min. z : " Foreground="Blue"/>
+                                <TextBlock Margin="0 5 5 5" Text="{Binding PcdSliderLowerValue}" Width="41" Foreground="Blue"/>
                                 <mahctrl:RangeSlider Width="150" Height="25" Margin="5" 
                                                      LowerValue="{Binding PcdSliderLowerValue}" UpperValue="{Binding PcdSliderUpperValue}" Minimum="{Binding PcdSliderMinimum}" Maximum="{Binding PcdSliderMaximum}"
                                                      Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"></mahctrl:RangeSlider>
-                                <TextBlock Margin="5" Text="max. z : "/>
-                                <TextBlock Margin="0 5 15 5" Text="{Binding PcdSliderUpperValue}" Width="41"/>
+                                <TextBlock Margin="5" Text="max. z : " Foreground="Red"/>
+                                <TextBlock Margin="0 5 15 5" Text="{Binding PcdSliderUpperValue}" Width="41" Foreground="Red"/>
                                 <Button Content=" Redraw View " Margin="5 2" Command="{Binding RedrawPcdViewClick}"></Button>
                             </StackPanel>
-
 
                             <helix:HelixViewport3D Grid.Row="1" x:Name="pcd_view" Margin="2" Orthographic="True" 
                                                    Title="Point cloud view" BorderThickness="1" BorderBrush="Black" 

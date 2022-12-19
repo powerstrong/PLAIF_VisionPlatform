@@ -171,27 +171,27 @@ namespace PLAIF_VisionPlatform.ViewModel
         
         // color from red to blue
         private Color[] colors21 = new Color[21] { 
-            Color.FromRgb(0xFF, 0x00, 0x00), 
-            Color.FromRgb(0xFF, 0x33, 0x00), 
-            Color.FromRgb(0xFF, 0x66, 0x00), 
-            Color.FromRgb(0xFF, 0x99, 0x00),
-            Color.FromRgb(0xFF, 0xCC, 0x00),
-            Color.FromRgb(0xFF, 0xFF, 0x00), 
-            Color.FromRgb(0xCC, 0xFF, 0x00), 
-            Color.FromRgb(0x99, 0xFF, 0x00), 
-            Color.FromRgb(0x66, 0xFF, 0x00), 
-            Color.FromRgb(0x33, 0xFF, 0x00), 
-            Color.FromRgb(0x00, 0xFF, 0x00), 
-            Color.FromRgb(0x00, 0xFF, 0x33), 
-            Color.FromRgb(0x00, 0xFF, 0x66), 
-            Color.FromRgb(0x00, 0xFF, 0x99), 
-            Color.FromRgb(0x00, 0xFF, 0xCC), 
-            Color.FromRgb(0x00, 0xFF, 0xFF), 
-            Color.FromRgb(0x00, 0xCC, 0xFF), 
-            Color.FromRgb(0x00, 0x99, 0xFF), 
-            Color.FromRgb(0x00, 0x66, 0xFF), 
-            Color.FromRgb(0x00, 0x33, 0xFF),
             Color.FromRgb(0x00, 0x00, 0xFF),
+            Color.FromRgb(0x00, 0x33, 0xFF),
+            Color.FromRgb(0x00, 0x66, 0xFF), 
+            Color.FromRgb(0x00, 0x99, 0xFF), 
+            Color.FromRgb(0x00, 0xCC, 0xFF), 
+            Color.FromRgb(0x00, 0xFF, 0xFF), 
+            Color.FromRgb(0x00, 0xFF, 0xCC), 
+            Color.FromRgb(0x00, 0xFF, 0x99), 
+            Color.FromRgb(0x00, 0xFF, 0x66), 
+            Color.FromRgb(0x00, 0xFF, 0x33), 
+            Color.FromRgb(0x00, 0xFF, 0x00), 
+            Color.FromRgb(0x33, 0xFF, 0x00), 
+            Color.FromRgb(0x66, 0xFF, 0x00), 
+            Color.FromRgb(0x99, 0xFF, 0x00), 
+            Color.FromRgb(0xCC, 0xFF, 0x00), 
+            Color.FromRgb(0xFF, 0xFF, 0x00), 
+            Color.FromRgb(0xFF, 0xCC, 0x00),
+            Color.FromRgb(0xFF, 0x99, 0x00),
+            Color.FromRgb(0xFF, 0x66, 0x00), 
+            Color.FromRgb(0xFF, 0x33, 0x00), 
+            Color.FromRgb(0xFF, 0x00, 0x00), 
         };
 
         public void ImportCommand(object msg)
@@ -214,8 +214,8 @@ namespace PLAIF_VisionPlatform.ViewModel
 
                 task1.Wait();
 
-                string Filtpath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml";
-                Document.Instance.jsonUtil.Load(Filtpath, JsonUtil.FileType.Type_Yaml);
+                string filepath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\PLAIF\\AI Vision\\config_file.yaml";
+                Document.Instance.jsonUtil.Load(filepath, JsonUtil.FileType.Type_Yaml);
                 Document.Instance.updater.Notify(Observer.Cmd.UpdateFromJson);
 
                 IsImported = true;
@@ -599,6 +599,10 @@ namespace PLAIF_VisionPlatform.ViewModel
                 if (float.IsNaN(x) || float.IsNaN(y) || float.IsNaN(z))
                     continue;
 
+                // zivid에서 가져온 이미지와 방향 맞춰주기
+                y *= -1;
+                z *= -1;
+
                 Document.Instance.xyz_pcd_list.Add(new (x, y, z));
             }
 
@@ -665,7 +669,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 var view_param = Document.Instance.mainPcdViewParam;
 
                 if (vgm is null) return;
-                vgm.ClearVisual3Ds();
+                vgm.InitializeVisual3Ds();
 
                 // 나중에 사용자 높이 입력받아서 컷하는 기능 추가 필요
                 float min_z = (float)pcdSliderLowerValue;
