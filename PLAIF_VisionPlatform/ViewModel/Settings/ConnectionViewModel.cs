@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             LoginClick = new RelayCommand<object>(LoginCommand, CanExcute_LoginButton);
             //SshDeleteClick = new AsyncRelayCommand(SshDeleteCommand);
             ConnectClick = new RelayCommand<object>(ConnectCommand, CanExcute_ConnectionButton);
+
+            Document.Instance.CheckConnection();
         }
         private string connectButtonText = "Connect to ROS";
 
