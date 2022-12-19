@@ -36,14 +36,14 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
         protected override void OnGeometryChanged()
         {
             this.Children.Clear();
-            double l = this.ArrowLengths;
-            double d = l * 0.1;
+            double len = this.ArrowLengths;
+            double dia = len * 0.1;
 
             var xaxis = new ArrowVisual3D();
             xaxis.BeginEdit();
             xaxis.Point1 = point;
-            xaxis.Point2 = new Point3D(point.X+l, point.Y, point.Z);
-            xaxis.Diameter = d;
+            xaxis.Point2 = new Point3D(point.X+len, point.Y, point.Z);
+            xaxis.Diameter = dia;
             xaxis.Fill = new SolidColorBrush(this.XAxisColor);
             xaxis.EndEdit();
             this.Children.Add(xaxis);
@@ -51,8 +51,8 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             var yaxis = new ArrowVisual3D();
             yaxis.BeginEdit();
             yaxis.Point1 = point;
-            yaxis.Point2 = new Point3D(point.X, point.Y+l, point.Z);
-            yaxis.Diameter = d;
+            yaxis.Point2 = new Point3D(point.X, point.Y+len, point.Z);
+            yaxis.Diameter = dia;
             yaxis.Fill = new SolidColorBrush(this.YAxisColor);
             yaxis.EndEdit();
             this.Children.Add(yaxis);
@@ -60,13 +60,13 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             var zaxis = new ArrowVisual3D();
             zaxis.BeginEdit();
             zaxis.Point1 = point; 
-            zaxis.Point2 = new Point3D(point.X, point.Y, point.Z+l);
-            zaxis.Diameter = d;
+            zaxis.Point2 = new Point3D(point.X, point.Y, point.Z+len);
+            zaxis.Diameter = dia;
             zaxis.Fill = new SolidColorBrush(this.ZAxisColor);
             zaxis.EndEdit();
             this.Children.Add(zaxis);
 
-            this.Children.Add(new CubeVisual3D { Center = point, SideLength = d, Fill = Brushes.Black });
+            this.Children.Add(new CubeVisual3D { Center = point, SideLength = dia, Fill = Brushes.Black });
 
             var xlabel = new BillboardTextVisual3D();
             xlabel.Text = XAxisLabel.ToString();

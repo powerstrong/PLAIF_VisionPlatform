@@ -27,7 +27,12 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             _hvp.Children.Clear();
         }
 
-        public bool ContainsVlue(Visual3D value)
+        public void SetCamera(ProjectionCamera camera)
+        {
+            _hvp.Camera = camera;
+        }
+
+        public bool ContainsValue(Visual3D value)
         {
             return _hvp.Children.Contains(value);
         }
