@@ -41,6 +41,22 @@ namespace PLAIF_VisionPlatform.ViewModel
         private MainModel _mainModel;
         private RosbridgeMgr _rosmgr;
 
+        private bool flagGet2DImage;
+
+        public bool FlagGet2DImage
+        {
+            get { return flagGet2DImage; }
+            set { flagGet2DImage = value; }
+        }
+
+        private bool flagGet3DImage;
+        
+        public bool FlagGet3DImage
+        {
+            get { return flagGet3DImage; }
+            set { flagGet3DImage = value; }
+        }
+
         private BitmapImage? img2D;
 
         public BitmapImage Img2D
@@ -165,6 +181,8 @@ namespace PLAIF_VisionPlatform.ViewModel
             _vision_Result = new ObservableCollection<Vision_Result>();
 
             IsImported = false;
+            flagGet2DImage = false;
+            flagGet3DImage = false;
 
             Document.Instance.updater.Add(this);
         }
@@ -379,6 +397,12 @@ namespace PLAIF_VisionPlatform.ViewModel
                     img.StreamSource = rgb.ToMemoryStream();
                     img.EndInit();
                     Img2D = img;
+
+                    if (flagGet2DImage == true && flagGet3DImage == true)
+                    {
+                        //2D가 늦게 들어왔을 경우
+                        Update3dView();
+                    }
                 }
                 catch
                 {
@@ -504,7 +528,10 @@ namespace PLAIF_VisionPlatform.ViewModel
                     //img.EndInit();
                     //ImgDepth = img;
 
-                    Update3dView();
+                    if (flagGet2DImage == true && flagGet3DImage == true)
+                    {
+                        Update3dView();
+                    }       
                 }
                 catch
                 {
@@ -619,6 +646,9 @@ namespace PLAIF_VisionPlatform.ViewModel
         {
             try
             {
+                FlagGet2DImage = false;
+                FlagGet3DImage = false;
+
                 var view_param = Document.Instance.mainPcdViewParam;
 
                 if (vgm_3d is null) return;
@@ -632,7 +662,10 @@ namespace PLAIF_VisionPlatform.ViewModel
                 PointsVisual3D pv3ds_temp = new PointsVisual3D();
                 Point3DCollection p3dcs_temp = new Point3DCollection();
 
-                int show_factor = (int)(100 / 5); //view_param.pt_show_percentage
+                int show_factor = (int)(100 / 2); //view_param.pt_show_percentage
+
+
+                //pv3ds_temp[0] = new PointsVisual3D { Color = Color.FromRgb(0xFF, 0x00, 0x00), Size = view_param.pt_size };
 
                 for (int i = 0; i < Document.Instance.xyz_3d_depth_img.Count; i++)
                 {
@@ -652,9 +685,16 @@ namespace PLAIF_VisionPlatform.ViewModel
 
                         dicpv3ds.Add(pv3ds_temp.Color, pv3ds_temp);
                     }
+
+
+                    //p3dcs_temp.Add(new Point3D(Document.Instance.xyz_3d_depth_img[i].x, Document.Instance.xyz_3d_depth_img[i].y, Document.Instance.xyz_3d_depth_img[i].z * 1000));
+
                 }
 
+                //pv3ds_temp[0].Points = p3dcs_temp;
+
                 vgm_3d.AddVisual3Ds( dicpv3ds.Values.ToList<Visual3D>() );
+                //vgm_3d.AddVisual3Ds(pv3ds_temp.ToList<Visual3D>());
             }
             catch
             {

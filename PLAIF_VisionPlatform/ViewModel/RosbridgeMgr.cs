@@ -124,9 +124,11 @@ namespace PLAIF_VisionPlatform.ViewModel
                     _mainViewModel!.CreatePointCloud(e.Message["msg"]!["data"]!.ToString());
                     break;
                 case RosbridgeModel.RosTopics.zvd_color_image:
+                    _mainViewModel!.FlagGet2DImage = true;
                     _mainViewModel!.Create2DBitMapImage(e.Message["msg"]!["data"]!.ToString());
                     break;
                 case RosbridgeModel.RosTopics.zvd_depth_image:
+                    _mainViewModel!.FlagGet3DImage = true;
                     _mainViewModel!.Create3DBitMapImage(e.Message["msg"]!["data"]!.ToString());
                     break;
                 case RosbridgeModel.RosTopics.vision_result:
