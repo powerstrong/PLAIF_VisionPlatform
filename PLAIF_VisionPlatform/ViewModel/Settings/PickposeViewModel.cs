@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -164,8 +165,8 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             foreach (var pickpose in _pickPoses)
             {
                 Point3D pt = new(pickpose.X, pickpose.Y, pickpose.Z);
-                Vector3D vec = new(pickpose.RX, pickpose.RY, pickpose.RX);
-                CoordSysVis3DLocal coord = new(pt, vec);
+                Vector4 vec4 = new((float)pickpose.QX, (float)pickpose.QY, (float)pickpose.QZ, (float)pickpose.QW);
+                CoordSysVis3DLocal coord = new(pt, vec4);
                 v3dList.Add(coord);
             }
             v3dList.Add(new SunLight());

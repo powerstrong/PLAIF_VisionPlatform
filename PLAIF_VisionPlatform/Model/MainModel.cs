@@ -24,27 +24,30 @@ namespace PLAIF_VisionPlatform.Model
         public double X { get; set; }
         public double Y { get; set; }
         public double Z { get; set; }
-        public double RX { get; set; }
-        public double RY { get; set; }
-        public double RZ { get; set; }
+        public double QX { get; set; }
+        public double QY { get; set; }
+        public double QZ { get; set; }
+        public double QW { get; set; }
         public Pickpose()
         {
             X = 0.0;
             Y = 0.0;
             Z = 0.0;
-            RX = 0.0;
-            RY = 0.0;
-            RZ = 0.0;
+            QX = 0.0;
+            QY = 0.0;
+            QZ = 0.0;
+            QW = 0.0;
         }
 
-        public Pickpose(double x, double y, double z, double rx, double ry, double rz)
+        public Pickpose(double x, double y, double z, double qx, double qy, double qz, double qw)
         {
             X = x;
             Y = y;
             Z = z;
-            RX = rx;
-            RY = ry;
-            RZ = rz;
+            QX = qx;
+            QY = qy;
+            QZ = qz;
+            QW = qw;
         }
     }
 

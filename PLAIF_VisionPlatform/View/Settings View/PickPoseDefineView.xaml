@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:PLAIF_VisionPlatform.View.Settings_View"
         mc:Ignorable="d"
         x:Name="PPDView"
-        Title="Define Pick pose" Height="320" Width="300">
+        Title="Define Pick pose" Height="360" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -32,13 +33,15 @@
         <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Y, Mode=TwoWay}" Margin="0 5"/>
         <Label Grid.Row="3" Grid.Column="1"  Content="Z" Margin="0 5"/>
         <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Z, Mode=TwoWay}" Margin="0 5"/>
-        <Label Grid.Row="4" Grid.Column="1"  Content="RX" Margin="0 5"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Rx, Mode=TwoWay}" Margin="0 5"/>
-        <Label Grid.Row="5" Grid.Column="1"  Content="RY" Margin="0 5"/>
-        <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Ry, Mode=TwoWay}" Margin="0 5"/>
-        <Label Grid.Row="6" Grid.Column="1"  Content="RZ" Margin="0 5"/>
-        <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Rz, Mode=TwoWay}" Margin="0 5"/>
-        <StackPanel Grid.Row="7" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5">
+        <Label Grid.Row="4" Grid.Column="1"  Content="QX" Margin="0 5"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Qx, Mode=TwoWay}" Margin="0 5"/>
+        <Label Grid.Row="5" Grid.Column="1"  Content="QY" Margin="0 5"/>
+        <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Qy, Mode=TwoWay}" Margin="0 5"/>
+        <Label Grid.Row="6" Grid.Column="1"  Content="QZ" Margin="0 5"/>
+        <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding Qz, Mode=TwoWay}" Margin="0 5"/>
+        <Label Grid.Row="7" Grid.Column="1"  Content="QW" Margin="0 5"/>
+        <TextBox Grid.Row="7" Grid.Column="2" Text="{Binding Qw, Mode=TwoWay}" Margin="0 5"/>
+        <StackPanel Grid.Row="8" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5">
             <Button Content="OK" Width="60" Margin="10 0" Command="{Binding OKClick}"
                             CommandParameter="{Binding ElementName=PPDView}"/>
             <Button Content="Cancel" Width="60" Command="{Binding CancelClick}"
