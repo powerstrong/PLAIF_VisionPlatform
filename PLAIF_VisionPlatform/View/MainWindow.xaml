@@ -82,7 +82,7 @@
                             </Border>-->
                             <helix:HelixViewport3D Grid.Row="1" x:Name="view_3d" Margin="2" Orthographic="True" 
                                                    Title="3D view" BorderThickness="1" BorderBrush="Black" 
-                                                   Background="#FFFFFFF4" CalculateCursorPosition="True" ShowCameraTarget="False">
+                                                   Background="#FFFFFFF4" CalculateCursorPosition="True" ShowCameraTarget="False" > <!--ShowCameraInfo="True"-->
 
                                 <!-- Remember to add light to the scene -->
                                 <helix:SunLight/>
@@ -94,10 +94,9 @@
                                 <!--<helix:GridLinesVisual3D Width="4" Length="4" MinorDistance="0.1" MajorDistance="1" Thickness="0.01"/>-->
                                 <hv:LabeledCoordSysVis3D ArrowLengths="0.2" />
 
-                                <!--종우님 여기 시점 맞춰서 쓰시면 됩니다
                                 <helix:HelixViewport3D.DefaultCamera>
-                                    <PerspectiveCamera Position="0,-1,0.1" LookDirection="0,1,-1" UpDirection="0,0,1" FieldOfView="61" NearPlaneDistance="0.001"/>
-                                </helix:HelixViewport3D.DefaultCamera>-->
+                                    <PerspectiveCamera Position="2390,1250,-700" LookDirection="-2100,-360,1700"  UpDirection="-0.87,-0.15,0.469" FieldOfView="60" NearPlaneDistance="1"/>
+                                </helix:HelixViewport3D.DefaultCamera>
                             </helix:HelixViewport3D>
                         </Grid>
                     </TabItem>
