@@ -42,10 +42,9 @@ namespace PLAIF_VisionPlatform.Interface
             vm.X = pose.X.ToString();
             vm.Y = pose.Y.ToString();
             vm.Z = pose.Z.ToString();
-            vm.Qx = pose.QX.ToString();
-            vm.Qy = pose.QY.ToString();
-            vm.Qz = pose.QZ.ToString();
-            vm.Qw = pose.QW.ToString();
+            vm.Rx = pose.RX.ToString();
+            vm.Ry = pose.RY.ToString();
+            vm.Rz = pose.RZ.ToString();
             
             var view = new PickPoseDefineView();
             view.DataContext = vm;

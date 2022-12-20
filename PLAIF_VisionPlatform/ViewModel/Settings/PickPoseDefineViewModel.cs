@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,10 +45,9 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             pose.X = Double.Parse(_x);
             pose.Y = Double.Parse(_y);
             pose.Z = Double.Parse(_z);
-            pose.QX = Double.Parse(_qx);
-            pose.QY = Double.Parse(_qy);
-            pose.QZ = Double.Parse(_qz);
-            pose.QW = Double.Parse(_qw);
+            pose.RX = Double.Parse(_rx);
+            pose.RY = Double.Parse(_ry);
+            pose.RZ = Double.Parse(_rz);
 
             if (Document.Instance.pickPoses.Contains(pose))
                 Document.Instance.pickPoses[Document.Instance.pickPoses.IndexOf(pose)] = pose;
@@ -72,32 +70,29 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
-        public PickPoseDefineViewModel(string x, string y, string z, string qx, string qy, string qz, string qw)
+        public PickPoseDefineViewModel(string x, string y, string z, string rx, string ry, string rz)
         {
             _x = x;
             _y = y;
             _z = z;
-            _qx = qx;
-            _qy = qy;
-            _qz = qz;
-            _qw = qw;
+            _rx = rx;
+            _ry = ry;
+            _rz = rz;
         }
 
         private string _x = "0.0";
         private string _y = "0.0";
         private string _z = "0.0";
-        private string _qx = "0.0";
-        private string _qy = "0.0";
-        private string _qz = "0.0";
-        private string _qw = "0.0";
+        private string _rx = "0.0";
+        private string _ry = "0.0";
+        private string _rz = "0.0";
 
         public string X { get { return _x; } set { _x = value; NotifyPropertyChanged(nameof(_x)); }}
         public string Y { get { return _y; } set { _y = value; NotifyPropertyChanged(nameof(_y)); }}
         public string Z { get { return _z; } set { _z = value; NotifyPropertyChanged(nameof(_z)); }}
-        public string Qx { get { return _qx; } set { _qx = value; NotifyPropertyChanged(nameof(_qx)); }}
-        public string Qy { get { return _qy; } set { _qy = value; NotifyPropertyChanged(nameof(_qy)); }}
-        public string Qz { get { return _qz; } set { _qz = value; NotifyPropertyChanged(nameof(_qz)); }}
-        public string Qw { get { return _qw; } set { _qw = value; NotifyPropertyChanged(nameof(_qw)); }}
+        public string Rx { get { return _rx; } set { _rx = value; NotifyPropertyChanged(nameof(_rx)); }}
+        public string Ry { get { return _ry; } set { _ry = value; NotifyPropertyChanged(nameof(_ry)); }}
+        public string Rz { get { return _rz; } set { _rz = value; NotifyPropertyChanged(nameof(_rz)); }}
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

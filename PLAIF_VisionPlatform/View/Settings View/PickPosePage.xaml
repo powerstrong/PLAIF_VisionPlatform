@@ -80,31 +80,24 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="qx" Width="53">
+                                <GridViewColumn Header="rx" Width="53">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock TextAlignment="Center" Text="{Binding QX}"/>
+                                            <TextBlock TextAlignment="Center" Text="{Binding RX}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="qy" Width="53">
+                                <GridViewColumn Header="ry" Width="53">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock TextAlignment="Center" Text="{Binding QY}"/>
+                                            <TextBlock TextAlignment="Center" Text="{Binding RY}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="qz" Width="53">
+                                <GridViewColumn Header="rz" Width="53">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock TextAlignment="Center" Text="{Binding QZ}"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="qw" Width="53">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock TextAlignment="Center" Text="{Binding QW}"/>
+                                            <TextBlock TextAlignment="Center" Text="{Binding RZ}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
