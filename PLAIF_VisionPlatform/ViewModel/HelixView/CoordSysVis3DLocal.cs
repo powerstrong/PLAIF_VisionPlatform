@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -40,10 +42,12 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             double len = this.ArrowLengths;
             double dia = len * 0.1;
 
+            var vec_xyz = GetVectorXYZAxis(vector.X, vector.Y, vector.Z);
+
             var xaxis = new ArrowVisual3D();
             xaxis.BeginEdit();
             xaxis.Point1 = point;
-            xaxis.Point2 = new Point3D(point.X+len, point.Y, point.Z);
+            xaxis.Point2 = new Point3D(point.X + vec_xyz[0].X*len, point.Y + vec_xyz[0].Y*len, point.Z + vec_xyz[0].Z*len);
             xaxis.Diameter = dia;
             xaxis.Fill = new SolidColorBrush(this.XAxisColor);
             xaxis.EndEdit();
@@ -52,7 +56,7 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             var yaxis = new ArrowVisual3D();
             yaxis.BeginEdit();
             yaxis.Point1 = point;
-            yaxis.Point2 = new Point3D(point.X, point.Y+len, point.Z);
+            yaxis.Point2 = new Point3D(point.X + vec_xyz[1].X * len, point.Y + vec_xyz[1].Y * len, point.Z + vec_xyz[1].Z * len);
             yaxis.Diameter = dia;
             yaxis.Fill = new SolidColorBrush(this.YAxisColor);
             yaxis.EndEdit();
@@ -61,7 +65,7 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             var zaxis = new ArrowVisual3D();
             zaxis.BeginEdit();
             zaxis.Point1 = point; 
-            zaxis.Point2 = new Point3D(point.X, point.Y, point.Z+len);
+            zaxis.Point2 = new Point3D(point.X + vec_xyz[2].X * len, point.Y + vec_xyz[2].Y * len, point.Z + vec_xyz[2].Z * len);
             zaxis.Diameter = dia;
             zaxis.Fill = new SolidColorBrush(this.ZAxisColor);
             zaxis.EndEdit();
@@ -90,5 +94,35 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             zlabel.Position = new Point3D(point.X, point.Y, point.Z + ArrowLengths * 1.2);
             Children.Add(zlabel);
         }
+
+        private List<Vector3> GetVectorXYZAxis(double rx, double ry, double rz)
+        {
+            var vec_x = new Vector3();
+            var vec_y = new Vector3();
+            var vec_z = new Vector3();
+            try
+            {
+                float yaw = (float)ry; //y
+                float pitch = (float)rx; //X
+                float roll = -(float)rz; //z
+                                //Quaternion 변환
+                System.Numerics.Quaternion quaternion = new System.Numerics.Quaternion();
+                quaternion = System.Numerics.Quaternion.CreateFromYawPitchRoll(Convert.ToSingle(yaw * (Math.PI / 180f)), Convert.ToSingle(pitch * (Math.PI / 180f)), Convert.ToSingle(roll * (Math.PI / 180f)));
+                //Roll Pitch yaw 각도 전환
+                System.Numerics.Matrix4x4 matrix = new System.Numerics.Matrix4x4();
+                matrix = System.Numerics.Matrix4x4.CreateFromYawPitchRoll(Convert.ToSingle(yaw * (Math.PI / 180f)), Convert.ToSingle(pitch * (Math.PI / 180f)), Convert.ToSingle(roll * (Math.PI / 180f)));
+                vec_x = System.Numerics.Vector3.Transform(new Vector3(1, 0, 0), matrix);
+                vec_y = System.Numerics.Vector3.Transform(new Vector3(0, 1, 0), matrix);
+                vec_z = System.Numerics.Vector3.Transform(new Vector3(0, 0, 1), matrix);
+            }
+            catch
+            {
+                MessageBox.Show("Set non-null values for the quaternion.");
+            }
+
+            return new List<Vector3> { vec_x, vec_y, vec_z };
+        }
+
+
     }
 }

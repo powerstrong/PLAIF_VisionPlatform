@@ -164,7 +164,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             foreach (var pickpose in _pickPoses)
             {
                 Point3D pt = new(pickpose.X, pickpose.Y, pickpose.Z);
-                Vector3D vec = new(pickpose.RX, pickpose.RY, pickpose.RX);
+                Vector3D vec = new(pickpose.RX, pickpose.RY, pickpose.RZ);
                 CoordSysVis3DLocal coord = new(pt, vec);
                 v3dList.Add(coord);
             }
