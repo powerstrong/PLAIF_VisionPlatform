@@ -38,6 +38,7 @@ namespace PLAIF_VisionPlatform.Interface
         public void CreateWindow(Pickpose pose)
         {
             var vm = new PickPoseDefineViewModel();
+            vm.Pose = pose;
             vm.X = pose.X.ToString();
             vm.Y = pose.Y.ToString();
             vm.Z = pose.Z.ToString();

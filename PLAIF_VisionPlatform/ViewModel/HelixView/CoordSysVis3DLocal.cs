@@ -12,9 +12,10 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
     internal class CoordSysVis3DLocal : LabeledCoordSysVis3D
     {
         public CoordSysVis3DLocal(Point3D _point, Vector3D _vector)
-        {
+        { 
             point = _point;
             vector = _vector;
+            OnGeometryChanged();
         }
 
         private Point3D point;
