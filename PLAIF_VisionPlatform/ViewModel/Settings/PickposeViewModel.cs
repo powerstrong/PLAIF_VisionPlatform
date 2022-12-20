@@ -57,6 +57,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             }
         }
 
+        private List<Point3D> _p3d_list = new();
 
         public void ImportPlyCommand()
         {
@@ -65,7 +66,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             if (ofd.ShowDialog() == false) return;
 
             FileStream fs = new FileStream(ofd.FileName, mode: FileMode.Open);
-            const int max_chunk_size = 1920*10800; // 정확히 무슨 뜻인지 모르겠다.
+            const int max_chunk_size = 1920*1080; // 정확히 무슨 뜻인지 모르겠다.
             PlyParser.Dataset ds = PlyParser.Parse(fs, max_chunk_size);
             
             var list = ds.Data.ToList();
@@ -75,26 +76,22 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             PlyParser.PropertyData xs = vertex_list!["x"]!;
             PlyParser.PropertyData ys = vertex_list!["y"]!;
             PlyParser.PropertyData zs = vertex_list!["z"]!;
-            PlyParser.PropertyData cr = vertex_list!["red"]!;
-            PlyParser.PropertyData cg = vertex_list!["green"]!;
-            PlyParser.PropertyData cb = vertex_list!["blue"]!;
-            PlyParser.PropertyData ca = vertex_list!["alpha"]!;
+            //PlyParser.PropertyData cr = vertex_list!["red"]!; // 예제보면 있을 때도 있는 것 같은데.. 내가 받은 파일엔 없음
+            //PlyParser.PropertyData cg = vertex_list!["green"]!;
+            //PlyParser.PropertyData cb = vertex_list!["blue"]!;
+            //PlyParser.PropertyData ca = vertex_list!["alpha"]!;
 
-            const int POINTSIZE = 2; //display size for magnetometer points
-            PointsVisual3D pv3d = new PointsVisual3D() { Color = Colors.Red, Size = POINTSIZE };
-            Point3DCollection p3dc = new Point3DCollection();
-
+            _p3d_list.Clear();
             for (int i = 0; i < xs.Data.Length; i++)
             {
                 var x = xs.Data.GetValue(i);
                 var y = ys.Data.GetValue(i);
                 var z = zs.Data.GetValue(i);
-                p3dc.Add(new Point3D((float)x! * 100, (float)y! * 100, (float)z! * 100));
+                _p3d_list.Add(new Point3D((float)x! * 100, (float)y! * 100, (float)z! * 100));
             }
-
-            pv3d.Points = p3dc;
-            vgm!.ReplaceVisual3Ds(new List<Visual3D> { pv3d });
             fs.Close();
+
+            RedrawView();
         }
 
         PickPoseDefineViewService _pickPoseDefineViewService = new PickPoseDefineViewService();
@@ -133,6 +130,7 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             {
                 case Observer.Cmd.RedrawPickPoseView:
                     PickPoseUpdated();
+                    RedrawView();
                     break;
             }
         }
@@ -144,6 +142,35 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             {
                 PickPoses.Add(pp);
             }
+        }
+
+        private void RedrawView()
+        {
+            if (vgm is null)
+                return;
+
+            vgm.ClearVisual3Ds();
+
+            Point3DCollection p3dc = new Point3DCollection();
+            foreach (var pt in _p3d_list)
+                p3dc.Add(pt);
+
+            const int POINTSIZE = 2; //display size for magnetometer points
+            PointsVisual3D pv3d = new PointsVisual3D() { Color = Colors.Red, Size = POINTSIZE };
+            pv3d.Points = p3dc;
+            vgm.AddVisual3Ds(new List<Visual3D> { pv3d });
+
+            List<Visual3D> v3dList = new List<Visual3D>();
+            foreach (var pickpose in _pickPoses)
+            {
+                Point3D pt = new(pickpose.X, pickpose.Y, pickpose.Z);
+                Vector3D vec = new(pickpose.RX, pickpose.RY, pickpose.RX);
+                CoordSysVis3DLocal coord = new(pt, vec);
+                v3dList.Add(coord);
+            }
+            v3dList.Add(new SunLight());
+
+            vgm?.AddVisual3Ds(v3dList);
         }
 
         private void vp_raw_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

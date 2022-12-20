@@ -20,6 +20,14 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
         public RelayCommand<Window>? OKClick { get; private set; }
         public RelayCommand<Window>? CancelClick { get; private set; }
 
+        private Pickpose? pose;
+
+        public Pickpose? Pose
+        {
+            get { return pose; }
+            set { pose = value; }
+        }
+
 
         public PickPoseDefineViewModel()
         {
@@ -29,14 +37,23 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
 
         private void OKCommand(Window window)
         {
-            var pose = new Pickpose(
-                Double.Parse(_x),
-                Double.Parse(_y),
-                Double.Parse(_z),
-                Double.Parse(_rx),
-                Double.Parse(_ry),
-                Double.Parse(_rz));
-            Document.Instance.pickPoses.Add(pose);
+            if (pose is null)
+            {
+                pose = new Pickpose();
+            }
+
+            pose.X = Double.Parse(_x);
+            pose.Y = Double.Parse(_y);
+            pose.Z = Double.Parse(_z);
+            pose.RX = Double.Parse(_rx);
+            pose.RY = Double.Parse(_ry);
+            pose.RZ = Double.Parse(_rz);
+
+            if (Document.Instance.pickPoses.Contains(pose))
+                Document.Instance.pickPoses[Document.Instance.pickPoses.IndexOf(pose)] = pose;
+            else
+                Document.Instance.pickPoses.Add(pose);
+
             Document.Instance.updater.Notify(Observer.Cmd.RedrawPickPoseView);
 
             if (window != null)
@@ -63,12 +80,12 @@ namespace PLAIF_VisionPlatform.ViewModel.Settings
             _rz = rz;
         }
 
-        private string _x = "1.0";
-        private string _y = "2.0";
-        private string _z = "3.0";
-        private string _rx = "4.0";
-        private string _ry = "5.0";
-        private string _rz = "6.0";
+        private string _x = "0.0";
+        private string _y = "0.0";
+        private string _z = "0.0";
+        private string _rx = "0.0";
+        private string _ry = "0.0";
+        private string _rz = "0.0";
 
         public string X { get { return _x; } set { _x = value; NotifyPropertyChanged(nameof(_x)); }}
         public string Y { get { return _y; } set { _y = value; NotifyPropertyChanged(nameof(_y)); }}
