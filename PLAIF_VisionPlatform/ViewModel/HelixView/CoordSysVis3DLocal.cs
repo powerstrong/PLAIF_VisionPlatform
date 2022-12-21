@@ -41,6 +41,7 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             this.Children.Clear();
             double len = this.ArrowLengths;
             double dia = len * 0.1;
+            double lentxt = len * 1.2;
 
             var vec_xyz = GetVectorXYZAxis(vector.X, vector.Y, vector.Z);
 
@@ -77,21 +78,21 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             xlabel.Text = XAxisLabel.ToString();
             xlabel.Foreground = new SolidColorBrush(XAxisColor);
             xlabel.FontSize = LabelFontSize;
-            xlabel.Position = new Point3D(point.X + ArrowLengths * 1.2, point.Y, point.Z);
+            xlabel.Position = new Point3D(point.X + vec_xyz[0].X * lentxt, point.Y + vec_xyz[0].Y * lentxt, point.Z + vec_xyz[0].Z * lentxt);
             Children.Add(xlabel);
 
             var ylabel = new BillboardTextVisual3D();
             ylabel.Text = YAxisLabel.ToString();
             ylabel.Foreground = new SolidColorBrush(YAxisColor);
             ylabel.FontSize = LabelFontSize;
-            ylabel.Position = new Point3D(point.X, point.Y + ArrowLengths * 1.2, point.Z);
+            ylabel.Position = new Point3D(point.X + vec_xyz[1].X * lentxt, point.Y + vec_xyz[1].Y * lentxt, point.Z + vec_xyz[1].Z * lentxt);
             Children.Add(ylabel);
 
             var zlabel = new BillboardTextVisual3D();
             zlabel.Text = ZAxisLabel.ToString();
             zlabel.Foreground = new SolidColorBrush(ZAxisColor);
             zlabel.FontSize = LabelFontSize;
-            zlabel.Position = new Point3D(point.X, point.Y, point.Z + ArrowLengths * 1.2);
+            zlabel.Position = new Point3D(point.X + vec_xyz[2].X * lentxt, point.Y + vec_xyz[2].Y * lentxt, point.Z + vec_xyz[2].Z * lentxt);
             Children.Add(zlabel);
         }
 
@@ -105,7 +106,8 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
                 float yaw = (float)ry; //y
                 float pitch = (float)rx; //X
                 float roll = -(float)rz; //z
-                                //Quaternion 변환
+                                
+                //Quaternion 변환
                 System.Numerics.Quaternion quaternion = new System.Numerics.Quaternion();
                 quaternion = System.Numerics.Quaternion.CreateFromYawPitchRoll(Convert.ToSingle(yaw * (Math.PI / 180f)), Convert.ToSingle(pitch * (Math.PI / 180f)), Convert.ToSingle(roll * (Math.PI / 180f)));
                 //Roll Pitch yaw 각도 전환
@@ -114,6 +116,9 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
                 vec_x = System.Numerics.Vector3.Transform(new Vector3(1, 0, 0), matrix);
                 vec_y = System.Numerics.Vector3.Transform(new Vector3(0, 1, 0), matrix);
                 vec_z = System.Numerics.Vector3.Transform(new Vector3(0, 0, 1), matrix);
+
+                // quaternion을 yaw pitch roll로 변환
+                (yaw, pitch, roll) = QuaternionToYawPitchRoll(quaternion);
             }
             catch
             {
@@ -123,6 +128,14 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             return new List<Vector3> { vec_x, vec_y, vec_z };
         }
 
+        static (float, float, float) QuaternionToYawPitchRoll(System.Numerics.Quaternion q)
+        {
+            // Extract the yaw, pitch, and roll from the quaternion
+            float yaw = (float)Math.Atan2(2 * q.Y * q.W - 2 * q.X * q.Z, 1 - 2 * q.Y * q.Y - 2 * q.Z * q.Z);
+            float pitch = (float)Math.Asin(2 * q.X * q.Y + 2 * q.Z * q.W);
+            float roll = (float)Math.Atan2(2 * q.X * q.W - 2 * q.Y * q.Z, 1 - 2 * q.X * q.X - 2 * q.Z * q.Z);
 
+            return (yaw, pitch, roll);
+        }
     }
 }
