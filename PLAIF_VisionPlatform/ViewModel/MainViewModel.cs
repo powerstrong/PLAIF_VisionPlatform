@@ -37,6 +37,7 @@ namespace PLAIF_VisionPlatform.ViewModel
         public ICommand StartClick { get; set; }
         public ICommand CaptureClick { get; set; }
         public ICommand RedrawPcdViewClick { get; set; }
+        public ICommand Redraw3dViewClick { get; set; }
 
         private MainModel _mainModel;
         private RosbridgeMgr _rosmgr;
@@ -177,6 +178,7 @@ namespace PLAIF_VisionPlatform.ViewModel
             CaptureClick = new RelayCommand<object>(CaptureCommand, CanExcute_CaptureButton);
             StartClick = new RelayCommand<object>(StartCommand, CanExcute_StartButton);
             RedrawPcdViewClick = new RelayCommand(RedrawViewCommand);
+            Redraw3dViewClick = new RelayCommand(Redraw3DViewCommand);
 
             _vision_Result = new ObservableCollection<Vision_Result>();
 
@@ -361,6 +363,14 @@ namespace PLAIF_VisionPlatform.ViewModel
             Document.Instance.mainPcdViewParam.pt_show_percentage = Double.Parse(ShowPercent);
 
             Document.Instance.updater.Notify(Observer.Cmd.RedrawPcdView);
+        }
+
+        private void Redraw3DViewCommand()
+        {
+            Document.Instance.mainPcdViewParam.pt_size = Double.Parse(PointSize);
+            Document.Instance.mainPcdViewParam.pt_show_percentage = Double.Parse(ShowPercent);
+
+            Document.Instance.updater.Notify(Observer.Cmd.Redraw3dView);
         }
         public bool CanExcute_StartButton(object parameter)
         {
@@ -662,7 +672,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 PointsVisual3D pv3ds_temp = new PointsVisual3D();
                 Point3DCollection p3dcs_temp = new Point3DCollection();
 
-                int show_factor = (int)(100 / 2); //view_param.pt_show_percentage
+                int show_factor = (int)(100 / view_param.pt_show_percentage); //view_param.pt_show_percentage
 
 
                 //pv3ds_temp[0] = new PointsVisual3D { Color = Color.FromRgb(0xFF, 0x00, 0x00), Size = view_param.pt_size };
@@ -856,7 +866,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                     UpdatePcdView();
                     break;
                 case Observer.Cmd.Redraw3dView:
-                    // 종우님 여기입니다!!
+                    Update3dView();
                     break;
             }
         }
