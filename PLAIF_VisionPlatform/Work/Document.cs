@@ -67,6 +67,9 @@ namespace PLAIF_VisionPlatform.Work
             xy_2d_color_img = new();
             xyz_3d_depth_img = new();
             xyz_pcd_list = new();
+            main3dViewParam = new();
+            main3dViewParam.pt_show_percentage = 1;
+            main3dViewParam.pt_size = 2;
             mainPcdViewParam = new();
             pickposePcdViewParam = new();
 
@@ -123,6 +126,7 @@ namespace PLAIF_VisionPlatform.Work
         public bool IsImported { get; set; }
 
         public string ZividSettingFile { get; set; }
+        public PcdViewParam main3dViewParam { get; set; }
         public PcdViewParam mainPcdViewParam { get; set; }
         public PcdViewParam pickposePcdViewParam { get; set; }
     }

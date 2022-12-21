@@ -99,21 +99,44 @@ namespace PLAIF_VisionPlatform.ViewModel
             get { return _vision_Result; }
         }
 
-        private string pointSize = "1";
 
-        public string PointSize
+        private string pointSize_3dview = "2";
+
+        public string PointSize_3dview
         {
-            get { return pointSize; }
-            set { pointSize = value; NotifyPropertyChanged(nameof(pointSize));
+            get { return pointSize_3dview; }
+            set
+            {
+                pointSize_3dview = value; NotifyPropertyChanged(nameof(pointSize_3dview));
             }
         }
 
-        private string showPercent = "10";
+        private string showPercent_3dview = "1";
 
-        public string ShowPercent
+        public string ShowPercent_3dview
         {
-            get { return showPercent; }
-            set { showPercent = value; NotifyPropertyChanged(nameof(showPercent));
+            get { return showPercent_3dview; }
+            set
+            {
+                showPercent_3dview = value; NotifyPropertyChanged(nameof(showPercent_3dview));
+            }
+        }
+        
+        private string pointSize_pcdview = "1";
+
+        public string PointSize_pcdview
+        {
+            get { return pointSize_pcdview; }
+            set { pointSize_pcdview = value; NotifyPropertyChanged(nameof(pointSize_pcdview));
+            }
+        }
+
+        private string showPercent_pcdview = "10";
+
+        public string ShowPercent_pcdview
+        {
+            get { return showPercent_pcdview; }
+            set { showPercent_pcdview = value; NotifyPropertyChanged(nameof(showPercent_pcdview));
             }
         }
 
@@ -359,16 +382,16 @@ namespace PLAIF_VisionPlatform.ViewModel
 
         private void RedrawViewCommand()
         {
-            Document.Instance.mainPcdViewParam.pt_size = Double.Parse(PointSize);
-            Document.Instance.mainPcdViewParam.pt_show_percentage = Double.Parse(ShowPercent);
+            Document.Instance.mainPcdViewParam.pt_size = Double.Parse(PointSize_pcdview);
+            Document.Instance.mainPcdViewParam.pt_show_percentage = Double.Parse(ShowPercent_pcdview);
 
             Document.Instance.updater.Notify(Observer.Cmd.RedrawPcdView);
         }
 
         private void Redraw3DViewCommand()
         {
-            Document.Instance.mainPcdViewParam.pt_size = Double.Parse(PointSize);
-            Document.Instance.mainPcdViewParam.pt_show_percentage = Double.Parse(ShowPercent);
+            Document.Instance.main3dViewParam.pt_size = Double.Parse(PointSize_3dview);
+            Document.Instance.main3dViewParam.pt_show_percentage = Double.Parse(ShowPercent_3dview);
 
             Document.Instance.updater.Notify(Observer.Cmd.Redraw3dView);
         }
@@ -659,7 +682,7 @@ namespace PLAIF_VisionPlatform.ViewModel
                 FlagGet2DImage = false;
                 FlagGet3DImage = false;
 
-                var view_param = Document.Instance.mainPcdViewParam;
+                var view_param = Document.Instance.main3dViewParam;
 
                 if (vgm_3d is null) return;
                 vgm_3d.ClearVisual3Ds();

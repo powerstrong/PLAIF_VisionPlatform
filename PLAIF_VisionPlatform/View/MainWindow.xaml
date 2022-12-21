@@ -69,9 +69,9 @@
 
                             <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
                                 <TextBlock Margin="5" Text="Point size"/>
-                                <TextBox Text="{Binding PointSize}" Width="40" Margin="5 5 15 5" />
+                                <TextBox Text="{Binding PointSize_3dview}" Width="40" Margin="5 5 15 5" />
                                 <TextBlock Margin="5" Text="Show points of"/>
-                                <TextBox Text="{Binding ShowPercent}" Width="40" Margin="5 5 2 5" />
+                                <TextBox Text="{Binding ShowPercent_3dview}" Width="40" Margin="5 5 2 5" />
                                 <TextBlock Margin="0 5 10 5" Text="%"/>
                                 <Button Content=" Redraw View " Margin="5 2" Command="{Binding Redraw3dViewClick}"></Button>
                             </StackPanel>
@@ -109,9 +109,9 @@
 
                             <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
                                 <TextBlock Margin="5" Text="Point size"/>
-                                <TextBox Text="{Binding PointSize}" Width="40" Margin="5 5 15 5" />
+                                <TextBox Text="{Binding PointSize_pcdview}" Width="40" Margin="5 5 15 5" />
                                 <TextBlock Margin="5" Text="Show points of"/>
-                                <TextBox Text="{Binding ShowPercent}" Width="40" Margin="5 5 2 5" />
+                                <TextBox Text="{Binding ShowPercent_pcdview}" Width="40" Margin="5 5 2 5" />
                                 <TextBlock Margin="0 5 15 5" Text="%"/>
                                 <TextBlock Margin="5" Text="min. z : " Foreground="Blue"/>
                                 <TextBlock Margin="0 5 5 5" Text="{Binding PcdSliderLowerValue}" Width="41" Foreground="Blue"/>
