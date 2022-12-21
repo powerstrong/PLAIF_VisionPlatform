@@ -6,3 +6,5 @@
 /PLAIF_VisionPlatform/scripts
 /.vscode
 /Rosbridge/bin/Release/net7.0-windows
+/Setup_PLAIF_VisionPlatform/Release
+/Setup_PLAIF_VisionPlatform/Debug

@@ -8,7 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:helix="http://helix-toolkit.org/wpf" xmlns:hv="clr-namespace:PLAIF_VisionPlatform.ViewModel.HelixView"
         mc:Ignorable="d"
         xmlns:mahctrl="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="PLAIF AI Vision Platform" Width="1920" Height="1080" Background="#FF272525">
+        Title="PLAIF AI Vision Platform" Width="1400" Height="800" Background="#FF272525">
 
     <Window.Resources>
         <ResourceDictionary Source="/Styles.xaml"></ResourceDictionary>
