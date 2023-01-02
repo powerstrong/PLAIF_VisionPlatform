@@ -13,11 +13,27 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
 {
     internal class CoordSysVis3DLocal : LabeledCoordSysVis3D
     {
-        public CoordSysVis3DLocal(Point3D _point, Vector3D _vector)
+        public CoordSysVis3DLocal(Point3D _point, Vector3D _angle)
         { 
             point = _point;
-            vector = _vector;
+            angle = _angle;
+            matQuaternion = ConverFromAngleToQuternion(angle.X, angle.Y, angle.Z);
             OnGeometryChanged();
+        }
+
+        public CoordSysVis3DLocal(Point3D _point, System.Numerics.Quaternion quaternion) 
+        {
+            point = _point;
+            matQuaternion = quaternion;
+            OnGeometryChanged();
+        }
+
+        private System.Numerics.Quaternion matQuaternion;
+
+        public System.Numerics.Quaternion MatQuaternion
+        {
+            get { return matQuaternion; }
+            set { matQuaternion = value; }
         }
 
         private Point3D point;
@@ -28,12 +44,12 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             set { point = value; }
         }
 
-        private Vector3D vector;
+        private Vector3D angle;
 
-        public Vector3D Vector
+        public Vector3D Angle
         {
-            get { return vector; }
-            set { vector = value; }
+            get { return angle; }
+            set { angle = value; }
         }
 
         protected override void OnGeometryChanged()
@@ -43,7 +59,7 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             double dia = len * 0.1;
             double lentxt = len * 1.2;
 
-            var vec_xyz = GetVectorXYZAxis(vector.X, vector.Y, vector.Z);
+            var vec_xyz = GetVectorXYZAxis(matQuaternion);
 
             var xaxis = new ArrowVisual3D();
             xaxis.BeginEdit();
@@ -96,29 +112,33 @@ namespace PLAIF_VisionPlatform.ViewModel.HelixView
             Children.Add(zlabel);
         }
 
-        private List<Vector3> GetVectorXYZAxis(double rx, double ry, double rz)
+        private System.Numerics.Quaternion ConverFromAngleToQuternion(double rx, double ry, double rz)
+        {
+            float yaw = (float)ry; //y
+            float pitch = (float)rx; //X
+            float roll = (float)rz; //z
+
+            //Quaternion 변환
+            System.Numerics.Quaternion quaternion = new System.Numerics.Quaternion();
+            quaternion = System.Numerics.Quaternion.CreateFromYawPitchRoll(Convert.ToSingle(yaw * (Math.PI / 180f)), Convert.ToSingle(pitch * (Math.PI / 180f)), Convert.ToSingle(roll * (Math.PI / 180f)));
+
+            return quaternion;
+        }
+
+        private List<Vector3> GetVectorXYZAxis(System.Numerics.Quaternion quaternion)
         {
             var vec_x = new Vector3();
             var vec_y = new Vector3();
             var vec_z = new Vector3();
             try
             {
-                float yaw = (float)ry; //y
-                float pitch = (float)rx; //X
-                float roll = -(float)rz; //z
-                                
-                //Quaternion 변환
-                System.Numerics.Quaternion quaternion = new System.Numerics.Quaternion();
-                quaternion = System.Numerics.Quaternion.CreateFromYawPitchRoll(Convert.ToSingle(yaw * (Math.PI / 180f)), Convert.ToSingle(pitch * (Math.PI / 180f)), Convert.ToSingle(roll * (Math.PI / 180f)));
-                //Roll Pitch yaw 각도 전환
+                //quaternion rotation 적용
                 System.Numerics.Matrix4x4 matrix = new System.Numerics.Matrix4x4();
-                matrix = System.Numerics.Matrix4x4.CreateFromYawPitchRoll(Convert.ToSingle(yaw * (Math.PI / 180f)), Convert.ToSingle(pitch * (Math.PI / 180f)), Convert.ToSingle(roll * (Math.PI / 180f)));
+                matrix = System.Numerics.Matrix4x4.CreateFromQuaternion(quaternion);
+
                 vec_x = System.Numerics.Vector3.Transform(new Vector3(1, 0, 0), matrix);
                 vec_y = System.Numerics.Vector3.Transform(new Vector3(0, 1, 0), matrix);
                 vec_z = System.Numerics.Vector3.Transform(new Vector3(0, 0, 1), matrix);
-
-                // quaternion을 yaw pitch roll로 변환
-                (yaw, pitch, roll) = QuaternionToYawPitchRoll(quaternion);
             }
             catch
             {
